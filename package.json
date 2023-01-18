@@ -1,0 +1,32 @@
+{
+  "name": "practica-typescript",
+  "version": "1.0.0",
+  "description": "practica de typescript",
+  "main": "index.js",
+  "scripts": {
+    "tsNode": "cd src && ts-node index.ts",
+    "start": "nodemon",
+    "transpilation": "tsc",
+    "build:prod": "rimraf ./build && tsc",
+    "start:prod": "npm run build:prod && node build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khammylv/DEV001-burger-queen-api-client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khammylv/DEV001-burger-queen-api-client/issues"
+  },
+  "homepage": "https://github.com/khammylv/DEV001-burger-queen-api-client#readme",
+  "dependencies": {
+    "@types/node": "^18.11.18",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "rimraf": "^4.1.1"
+  }
+}
