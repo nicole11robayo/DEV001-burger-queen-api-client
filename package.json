@@ -1,12 +1,21 @@
 {
   "name": "dev001-burger-queen-api-clientlient",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khammylv/DEV001-burger-queen-api-client.git"
+  },
+  "author": "Maria Camila Leal Vasquez, Nicole Robayo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khammylv/DEV001-burger-queen-api-client/issues"
   },
   "private": true,
   "dependencies": {
