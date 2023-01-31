@@ -9,7 +9,7 @@ export class AuthService {
  
   constructor(private http: HttpClient) {}
   login(user: any ): Observable <any>{
-    return this.http.post("http://localhost:3004/users", user);
+    return this.http.post("http://localhost:3004/login", user);
   }
   // login(user: any ): Observable <any> {
   //  http://localhost:3000/auth ;
