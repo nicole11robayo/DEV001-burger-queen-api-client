@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CookieService } from 'ngx-cookie-service';
 
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
@@ -29,7 +30,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
    
   ],
   
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
