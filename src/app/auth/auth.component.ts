@@ -18,12 +18,16 @@ export class AuthComponent {
 
   login() {
     const userAuth = {email: this.email, password: this.password}
-    this.authService.login(userAuth).subscribe( (data: any) => {
-      console.log(data.accessToken);
-      this.authService.setToken(data.accessToken);
-
-      this.router.navigateByUrl('/products');
-    });
-    //this.router.navigateByUrl('/products')
+    this.authService.login(userAuth).subscribe({
+      next: (data: any) => {
+        console.log(data.user.id)
+        this.authService.setToken(data.user.id)
+        //this.authService.setToken(data.accessToken);
+        this.router.navigateByUrl('/products');
+      },
+      error: (error) => {
+         console.log(error.error)
+      }
+    })
   }
 }

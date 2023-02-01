@@ -22,7 +22,14 @@ export class AuthService {
   deleteToken() {
     return this.cookies.delete("token");
   }
-  // login(user: any ): Observable <any> {
-  //  http://localhost:3000/auth ;
-  // }
+  getUser(token : string) {
+    const token1 = token
+    //return this.getToken()
+     return this.http.get(`http://localhost:3004/users/${token1}`);
+   }
+   getUserLogged() {
+     const token = this.getToken();
+     return token
+     // Aquí iría el endpoint para devolver el usuario para un token
+   }
 }
