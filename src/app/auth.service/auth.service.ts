@@ -19,6 +19,9 @@ export class AuthService {
   getToken() {
     return this.cookies.get("token");
   }
+  deleteToken() {
+    return this.cookies.delete("token");
+  }
   // login(user: any ): Observable <any> {
   //  http://localhost:3000/auth ;
   // }
