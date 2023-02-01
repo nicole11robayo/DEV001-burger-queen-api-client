@@ -20,10 +20,13 @@ export class AuthComponent {
     const userAuth = {email: this.email, password: this.password}
     this.authService.login(userAuth).subscribe({
       next: (data: any) => {
-        console.log(data.user.id)
-        this.authService.setToken(data.user.id)
-        //this.authService.setToken(data.accessToken);
-        this.router.navigateByUrl('/products');
+        if(data.user.rol === "mesero"){
+         this.authService.setToken(data.user.id)
+         this.authService.setToken(data.accessToken);
+         this.router.navigateByUrl('/products');
+        }
+        
+       
       },
       error: (error) => {
          console.log(error.error)

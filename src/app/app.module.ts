@@ -11,6 +11,7 @@ import { AuthComponent } from './auth/auth.component';
 import { ProductsComponent } from './products/products.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { CocinaComponent } from './cocina/cocina.component';
 
 
 
@@ -29,6 +30,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     ProductsComponent,
     PageNotFoundComponent,
     NavbarComponent,
+    CocinaComponent,
    
   ],
   
