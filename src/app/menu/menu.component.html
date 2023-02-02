@@ -1,0 +1,11 @@
+<button type="button" class="btn btn-warning" (click)= "showProductsDesayuno()">Desayuno</button>
+<button type="button" class="btn btn-info" (click)= "showProductsComida()">Almuerzo</button>
+<div *ngFor="let item of products">
+    <div class="card w-75">
+        <div class="card-body">
+          <h5 class="card-title">{{item.name}}</h5>
+          <p class="card-text">{{item.price}}.</p>
+          <a href="#" class="btn btn-primary">Añadir</a>
+        </div>
+    </div>
+</div>

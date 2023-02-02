@@ -22,7 +22,7 @@ export class AuthService {
   deleteToken() {
     return this.cookies.delete("token");
   }
-  // login(user: any ): Observable <any> {
-  //  http://localhost:3000/auth ;
-  // }
+  showProducts(){
+    return this.http.get("http://localhost:3000/products")
+  }
 }
