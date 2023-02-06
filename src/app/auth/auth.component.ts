@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service/auth.service';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-auth',
@@ -9,16 +9,19 @@ import { AuthService } from '../auth.service/auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
-  email!: string;
-  password!: string;
-
-  constructor(private authService: AuthService, public router: Router) {
-   
+  loginForm!: FormGroup;
+  
+  constructor(private authService: AuthService, public router: Router,private formBuilder: FormBuilder ) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
   login() {
-    const userAuth = {email: this.email, password: this.password}
-    this.authService.login(userAuth).subscribe({
+    if(this.loginForm.valid){
+      const userAuth = this.loginForm.value
+      this.authService.login(userAuth).subscribe({
       next: (data: any) => {
         if(data.user.rol === "mesero"){
          this.authService.setToken(data.user.id)
@@ -29,8 +32,15 @@ export class AuthComponent {
        
       },
       error: (error) => {
-         console.log(error.error)
+         alert(JSON.stringify(error.error))
       }
     })
+     
+    }else{
+      let userLogged = 'invalid_form';
+      alert(userLogged)
+    }
+    
+   
   }
 }
