@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthComponent } from './auth.component';
 import { AuthService } from '../auth.service/auth.service';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AuthComponent', () => {
   let component: AuthComponent;
@@ -9,7 +11,8 @@ describe('AuthComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AuthComponent ]
+      declarations: [ AuthComponent ],
+      providers: [AuthService, HttpClientTestingModule]
     })
     .compileComponents();
 
@@ -21,4 +24,9 @@ describe('AuthComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create the button', () => {
+    const compiled= fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('button[type="submit"]')).toBeDefined();
+  })
 });
