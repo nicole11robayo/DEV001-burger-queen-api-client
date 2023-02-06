@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CocinaComponent } from './cocina.component';
@@ -8,7 +9,9 @@ describe('CocinaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CocinaComponent ]
+      imports: [HttpClientModule],
+      providers: [CocinaComponent ]
+    
     })
     .compileComponents();
 
