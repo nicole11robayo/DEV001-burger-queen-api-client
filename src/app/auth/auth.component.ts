@@ -9,16 +9,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
-  loginForm!: FormGroup;
+  loginForm: FormGroup = new FormGroup({})
   
   constructor(private authService: AuthService, public router: Router,private formBuilder: FormBuilder ) {
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
     });
   }
 
   login() {
+    console.log(this.loginForm.value)
     if(this.loginForm.valid){
       const userAuth = this.loginForm.value
       this.authService.login(userAuth).subscribe({
