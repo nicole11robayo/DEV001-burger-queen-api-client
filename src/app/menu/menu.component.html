@@ -1,0 +1,15 @@
+<div class="menu">
+  <div class="buttonsMenu">
+    <button type="button" class="btn btn-warning" (click)="showProductsDesayuno()">Desayuno</button>
+    <button type="button" class="btn btn-info" (click)="showProductsComida()">Almuerzo</button>
+  </div>
+  <div *ngFor="let item of products">
+    <div class="card w-75">
+      <div class="card-body">
+        <h5 class="card-title">{{item.name}}</h5>
+        <p class="card-text">{{item.price}}.</p>
+        <button class="btn btn-primary" id={{item.id}} (click)='onClickMe(item.id)'>Añadir</button>
+      </div>
+    </div>
+  </div>
+</div>
