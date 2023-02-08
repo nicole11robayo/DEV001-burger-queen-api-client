@@ -26,7 +26,7 @@ export class AuthComponent {
       next: (data: any) => {
         if(data.user.rol === "mesero"){
          this.authService.setToken(data.user.id)
-         this.authService.setToken(data.accessToken);
+         //this.authService.setToken(data.accessToken);
          this.router.navigateByUrl('/products');
         }
         
