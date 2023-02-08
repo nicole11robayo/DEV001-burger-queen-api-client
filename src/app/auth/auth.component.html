@@ -21,6 +21,7 @@
   </div>
 -->
 <section class="vh-100" style="background-color: #F7D625;">
+  
   <div class="container-fluid h-custom" >
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-9 col-lg-5 col-xl-4" style="text-align: center;">
@@ -39,9 +40,9 @@
 
             <div class="form-outline mb-4">
               <label class="form-label" for="typePasswordX-2">Contraseña</label>
-              <input type="password" formControlName="password" id="password" class="form-control form-control-lg" />
+              <input type="password"  #passwordEyeRegister formControlName="password" id="password" class="form-control form-control-lg" />
             </div>
-
+            <button type="button" class="btn btn-primary btn-sm" (click)="togglePasswordMode(passwordEyeRegister)">Mostrar contraseña</button>
             <div class="col text-center">
               <button class="btn btn-success btn-lg btn-block" type="submit" >INGRESAR</button>
            </div>

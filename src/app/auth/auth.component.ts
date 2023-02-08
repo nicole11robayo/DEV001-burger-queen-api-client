@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-auth',
@@ -10,8 +12,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AuthComponent {
   loginForm: FormGroup = new FormGroup({})
+  elemento :any = document.getElementById('password');
   
   constructor(private authService: AuthService, public router: Router,private formBuilder: FormBuilder ) {
+   
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -19,7 +23,7 @@ export class AuthComponent {
   }
 
   login() {
-    console.log(this.loginForm.value)
+    //console.log(this.loginForm.value)
     if(this.loginForm.valid){
       const userAuth = this.loginForm.value
       this.authService.login(userAuth).subscribe({
@@ -38,10 +42,22 @@ export class AuthComponent {
     })
      
     }else{
-      let userLogged = 'invalid_form';
-      alert(userLogged)
+     
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Invalid Form!',
+        //text: 'Something went wrong!',
+      })
     }
     
    
   }
+ 
+  togglePasswordMode(input: any): any{
+    input.type = input.type === 'password' ? 'text' : 'password';
+     //console.log(this.elemento.type)
+  }
+ 
 }
+
