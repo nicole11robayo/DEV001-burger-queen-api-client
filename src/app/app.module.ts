@@ -14,6 +14,8 @@ import { ProductsComponent } from './products/products.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CocinaComponent } from './cocina/cocina.component';
+import { MenuComponent } from './menu/menu.component';
+import { CuentaComponent } from './cuenta/cuenta.component';
 
 
 
@@ -34,6 +36,8 @@ import { CocinaComponent } from './cocina/cocina.component';
     PageNotFoundComponent,
     NavbarComponent,
     CocinaComponent,
+    MenuComponent,
+    CuentaComponent,
    
   ],
   

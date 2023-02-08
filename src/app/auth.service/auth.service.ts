@@ -32,4 +32,5 @@ export class AuthService {
      return token
      // Aquí iría el endpoint para devolver el usuario para un token
    }
+
 }
