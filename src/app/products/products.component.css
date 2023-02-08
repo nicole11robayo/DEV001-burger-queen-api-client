@@ -1,0 +1,11 @@
+.products{
+
+    display: flex;
+}
+
+.menu{
+    width: 50%;
+}
+.cuenta{
+    width: 50%;
+}

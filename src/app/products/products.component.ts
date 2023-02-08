@@ -1,6 +1,7 @@
 import { Component , OnInit} from '@angular/core';
 import { AuthService } from '../auth.service/auth.service';
 
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -20,4 +21,5 @@ export class ProductsComponent implements OnInit {
       console.log(user);
     });
   }
+
 }
