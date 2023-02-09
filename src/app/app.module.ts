@@ -16,6 +16,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CocinaComponent } from './cocina/cocina.component';
 import { MenuComponent } from './menu/menu.component';
 import { CuentaComponent } from './cuenta/cuenta.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -39,6 +40,7 @@ import { CuentaComponent } from './cuenta/cuenta.component';
     CocinaComponent,
     MenuComponent,
     CuentaComponent,
+    AdminComponent,
    
   ],
   

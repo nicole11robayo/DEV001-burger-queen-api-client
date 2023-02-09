@@ -13,7 +13,9 @@ export class NavbarComponent {
   }
 
   deleteToken(){
+    sessionStorage.clear();
     this.authService.deleteToken();
+   
     this.router.navigateByUrl('/home');
 
   }
