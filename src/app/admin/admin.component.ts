@@ -12,14 +12,13 @@ export class AdminComponent implements OnInit{
    
   }
   getUserLogged() {
-    let isLoggedIn = this.authService.isAuthenticated();
-    if(isLoggedIn){
+    
       const token = this.authService.getUserLogged()
       //console.log(this.authService.getUserLogged())
       this.authService.getUser(token).subscribe(user => {
         console.log(user);
         
       });
-    }
+    
 }
 }
