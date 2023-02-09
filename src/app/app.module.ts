@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CookieService } from 'ngx-cookie-service';
-
+import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 
 
 import { HomeComponent } from './home/home.component';
@@ -16,6 +16,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CocinaComponent } from './cocina/cocina.component';
 import { MenuComponent } from './menu/menu.component';
 import { CuentaComponent } from './cuenta/cuenta.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -25,7 +26,8 @@ import { CuentaComponent } from './cuenta/cuenta.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SweetAlert2Module.forRoot()
    
   ],
   declarations: [
@@ -38,6 +40,7 @@ import { CuentaComponent } from './cuenta/cuenta.component';
     CocinaComponent,
     MenuComponent,
     CuentaComponent,
+    AdminComponent,
    
   ],
   

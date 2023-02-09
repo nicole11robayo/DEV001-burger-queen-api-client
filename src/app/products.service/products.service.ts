@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class ProductsService {
   productsArray: object[]=[];
-
+  isMesero = false;
   constructor(private http: HttpClient) { }
 
   showProducts() {
@@ -40,5 +40,14 @@ export class ProductsService {
 
     })
   }
+  getrole(){
+    return sessionStorage.getItem('role')!=null?sessionStorage.getItem('role')?.toString():'';
+  }
+  isMeseroRole() {
+    if(this.getrole() === 'mesero'){
+      this.isMesero = true;
+    }
 
+    return this.isMesero;
+  }
 }

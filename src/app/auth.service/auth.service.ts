@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class AuthService {
- 
+  
   constructor(private http: HttpClient, private cookies: CookieService) {}
   login(user: any ): Observable <any>{
     return this.http.post("http://localhost:3004/login", user);
@@ -33,4 +33,5 @@ export class AuthService {
      // Aquí iría el endpoint para devolver el usuario para un token
    }
 
+   
 }
