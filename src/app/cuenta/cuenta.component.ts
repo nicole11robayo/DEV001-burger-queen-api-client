@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { ProductsService } from '../products.service/products.service'
 
 @Component({
@@ -7,10 +7,14 @@ import { ProductsService } from '../products.service/products.service'
   styleUrls: ['./cuenta.component.css']
 })
 export class CuentaComponent implements OnInit {
-
+  valor:number=1;
   constructor(private productsService: ProductsService) { }
 
+
+  productsPedido: any = this.productsService.productsArray;
+
   ngOnInit(){
+    //this.productsPedido= this.productsService.getArrayProducts();
     //this.dataProducts()
   }
   addItem(newItem: number){
@@ -25,5 +29,16 @@ export class CuentaComponent implements OnInit {
     }
     console.log('holaa');
   }
+  valor1(){
+    return this.valor
+  }
+
+  totalPrice( precio:number){
+    //let cantidadNumber = parseInt(cantidad);
+    return this.valor1()*precio
+    //return cantidadNumber*precio;
+  }
+
+  
 
 }

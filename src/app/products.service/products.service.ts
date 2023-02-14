@@ -18,7 +18,10 @@ export class ProductsService {
     return this.http.get(`http://localhost:3000/products/${id}`);
   }
 
-  
+  getArrayProducts(){
+    return this.productsArray;
+  }
+
   getProductClick(id:number) {
     this.getProduct(id).subscribe(product => {
       this.productsArray.push(product)
