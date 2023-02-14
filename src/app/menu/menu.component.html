@@ -8,7 +8,7 @@
       <div class="card-body">
         <h5 class="card-title">{{item.name}}</h5>
         <p class="card-text">{{item.price}}.</p>
-        <button class="btn btn-primary" id={{item.id}} (click)='onClickMe(item.id)'>Añadir</button>
+        <button class="btn btn-primary" id={{item._id}} (click)='onClickMe(item._id)'>Añadir{{item._id}}  </button>
       </div>
     </div>
   </div>
