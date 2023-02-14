@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit{
 
   ngOnInit(){
     this.showProductsDesayuno();
-    this.onClickMe2();
+    //this.onClickMe2();
   }
 
   showProductsDesayuno() {
@@ -38,23 +38,30 @@ export class MenuComponent implements OnInit{
       this.products = comida;
     });
   }
-
+  
+  getInputValue(inputValue:string){
+    this.productsService.getInputValue(inputValue);
+  }
+  
   onClickMe(comida: number) {
 
     this.productsService.getProductClick(comida);
-      
+
+
+    //console.log(counter2);
+
+    //let  counter{{comida}}: string = 'counter' + comida;
+
+    console.log(this.productsService.getProductItem());
  
   }
-
+/*
   onClickMe2() {
 
     this.productsService.getProductItem().then((productos)=>{
       console.log(productos);
-    })
-
-
-    
+    })    
   }
-
+*/
   
 }

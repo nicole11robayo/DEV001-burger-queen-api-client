@@ -8,7 +8,10 @@
       <div class="card-body">
         <h5 class="card-title">{{item.name}}</h5>
         <p class="card-text">{{item.price}}.</p>
-        <button class="btn btn-primary" id={{item.id}} (click)='onClickMe(item.id)'>Añadir</button>
+        <span class='number2-wrapper'>
+          <input #valor type="number" min="1" value="0" />
+        </span>
+        <button class="btn btn-primary" id={{item.id}} (click)='getInputValue(valor.value); onClickMe(item.id)'>Añadir</button>
       </div>
     </div>
   </div>

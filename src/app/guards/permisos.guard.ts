@@ -19,6 +19,8 @@ export class PermisosGuard implements CanActivate {
       if (isLoggedIn){
         return true
       } else {
+        localStorage.clear();
+        this.products.productsArray = [];
         sessionStorage.clear();
         this.authService.deleteToken();
         this.router.navigate(['/home']);

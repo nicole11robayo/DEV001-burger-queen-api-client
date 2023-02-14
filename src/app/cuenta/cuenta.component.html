@@ -9,15 +9,10 @@
                 <td>amount</td>
                 <td>price</td>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr *ngFor="let product of productsPedido">
+                <td>{{product.name}}</td>
+                <td>{{cantidadProduct}}</td>
+                <td>{{product.price}}</td>
             </tr>
             <tr>
                 <td colspan="2">TOTAL</td>
