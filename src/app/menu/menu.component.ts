@@ -42,7 +42,7 @@ export class MenuComponent implements OnInit{
   onClickMe(comida: number) {
    //console.log(comida);
     this.newItemEvent.emit(comida);
-    // this.productsService.getProductClick(comida);
+    //this.productsService.getProductClick(comida);
       
     
   }

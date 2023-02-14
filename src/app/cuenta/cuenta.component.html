@@ -10,10 +10,17 @@
                 <td>amount</td>
                 <td>price</td>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr *ngFor="let product of productsPedido">
+                <td>{{product.name}}</td>
+                <td>
+                    <form>
+                    <span class='number2-wrapper'>
+                        <input #someInput type="number" min="1" value="1" [ngModel]="valor" name="cantidad"/>
+                    </span>
+                    <button type="submit" (click)="valor1()" id="botonCantidad">OK</button>
+                    </form>
+                </td>
+                <td>{{totalPrice(product.price)}}</td>
             </tr>
             <tr>
                 <td></td>
