@@ -33,12 +33,8 @@ export class ProductsService {
   }
 
   getProductItem(){
-
-    return new Promise ((resolve) =>{
-      
-        resolve(localStorage.getItem('product'))
-
-    })
+    
+    return localStorage.getItem('product')!=null?localStorage.getItem('product')?.toString():''
   }
   getrole(){
     return sessionStorage.getItem('role')!=null?sessionStorage.getItem('role')?.toString():'';

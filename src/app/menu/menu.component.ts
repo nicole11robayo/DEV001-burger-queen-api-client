@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../auth.service/auth.service';
 import { ProductsService } from '../products.service/products.service'
 
@@ -32,25 +32,26 @@ export class MenuComponent implements OnInit{
   showProductsComida() {
     this.productsService.showProducts().subscribe((data: any) => {
       let comida = data.filter((product: any) => product.type === "comida")
-
+      //console.log(data)
       //let showDesayuno = desayuno.map((des:any) => JSON.stringify(des))
       //console.log(showDesayuno);
       this.products = comida;
     });
   }
-
+  @Output() newItemEvent = new EventEmitter<number>();    
   onClickMe(comida: number) {
-
-    this.productsService.getProductClick(comida);
+   //console.log(comida);
+    this.newItemEvent.emit(comida);
+    // this.productsService.getProductClick(comida);
       
- 
+    
   }
-
+ 
   onClickMe2() {
-
-    this.productsService.getProductItem().then((productos)=>{
-      console.log(productos);
-    })
+    console.log(this.productsService.getProductItem()) 
+    // this.productsService.getProductItem().then((productos)=>{
+    //   console.log(productos);
+    // })
 
 
     
