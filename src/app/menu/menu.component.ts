@@ -48,7 +48,7 @@ export class MenuComponent implements OnInit{
   }
  
   onClickMe2() {
-    console.log(this.productsService.getProductItem()) 
+   // console.log(this.productsService.getProductItem()) 
     // this.productsService.getProductItem().then((productos)=>{
     //   console.log(productos);
     // })
