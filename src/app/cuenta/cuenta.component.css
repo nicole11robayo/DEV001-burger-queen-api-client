@@ -1,6 +1,15 @@
-#botonCantidad{
-    display:none;
+.productsView{
+
+    display: flex;
+    
 }
+.menu{
+    width: 50%;
+}
+.tableCuenta{
+    width: 50%;
+}
+
 .number2-wrapper {
     position: relative;
   }

@@ -51,7 +51,7 @@ export class AuthComponent {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Something went wrong!',
+            text: 'Something went wrong! check your email/password',
             //text: 'Something went wrong!',
           })
         }

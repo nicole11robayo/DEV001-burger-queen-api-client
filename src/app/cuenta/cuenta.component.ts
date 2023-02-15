@@ -9,7 +9,7 @@ import { ProductsService } from '../products.service/products.service'
 export class CuentaComponent implements OnInit {
   valor:number=1;
   constructor(private productsService: ProductsService) { }
-
+  cantidad:number=1;
 
   productsPedido: any = this.productsService.productsArray;
 
@@ -17,6 +17,12 @@ export class CuentaComponent implements OnInit {
     //this.productsPedido= this.productsService.getArrayProducts();
     //this.dataProducts()
   }
+
+  getInputValue(inputValue:string){
+    this.cantidad= parseInt(inputValue);
+    console.log(this.cantidad);
+  }
+
   addItem(newItem: number){
     this.productsService.getProductClick(newItem)
     console.log(newItem)
@@ -30,12 +36,12 @@ export class CuentaComponent implements OnInit {
     console.log('holaa');
   }
   valor1(){
-    return this.valor
+    return this.cantidad
   }
 
   totalPrice( precio:number){
     //let cantidadNumber = parseInt(cantidad);
-    return this.valor1()*precio
+    return (this.valor1()*precio)
     //return cantidadNumber*precio;
   }
 
