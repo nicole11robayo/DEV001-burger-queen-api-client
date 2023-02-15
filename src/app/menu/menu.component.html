@@ -7,7 +7,7 @@
     <div class="card w-75">
       <div class="card-body">
         <h5 class="card-title">{{item.name}}</h5>
-        <p class="card-text">{{item.price}}.</p>
+        <p class="card-text">${{item.price}}.</p>
         <button class="btn btn-primary" id={{item.id}} (click)='onClickMe(item.id)'>Añadir{{item.id}}  </button>
       </div>
     </div>

@@ -16,6 +16,7 @@ export class AuthComponent {
  
   
   constructor(private authService: AuthService, public router: Router,private formBuilder: FormBuilder ) {
+    localStorage.clear();
     sessionStorage.clear();
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -24,7 +25,7 @@ export class AuthComponent {
   }
   
   login() {
-   
+    
     //console.log(this.loginForm.value)
     if(this.loginForm.valid){
       const userAuth = this.loginForm.value
