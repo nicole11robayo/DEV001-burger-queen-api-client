@@ -40,9 +40,25 @@ export class CuentaComponent implements OnInit {
     // .subscribe((data: any) =>{
     //   console.log(data);
     // });
-   this.productsService.getProductClick(newItem)
+    //console.log(this.productsService.array())
+    //console.log(this.productsService.arrayNumber)
+    this.agregarElemento(newItem)
+    //this.productsService.crearObjetoNuevo(newItem)
+    //console.log(this.productsService.isMessage)
+   //this.productsService.getProductClick(newItem)
+   //console.log(this.productsService.showProducts2())
+  //  this.productsService.showProducts2().subscribe({
+  //   next: (data: any) => {
+  //     data.forEach((datos: any)=>{
+  //       console.log(datos.pedido)
+  //       console.log(this.filter(datos.pedido, newItem))
+  //       //datos.pedido.push(this.arraysRestantes())
+  //     })
+      //console.log(data)
+    //}
+   //})
     this.dataProducts()
-    console.log(this.productsService.isitemadd());
+    //console.log(this.productsService.isitemadd());
    //console.log(this.productsService.productsArray.length)
   //  for(let x in this.productsService.productsArray) {
   //   //console.log(this.productsService.productsArray[x])
@@ -55,7 +71,7 @@ export class CuentaComponent implements OnInit {
     if(item.id == id){
       //alert('producto agregado')
     }else{
-      this.productsService.getProductClick(id)
+     // this.productsService.getProductClick(id)
     }
    
   }
@@ -113,18 +129,60 @@ export class CuentaComponent implements OnInit {
     console.log(this.valor)
    }
    else{
-    this.arraysRestantes(item);
+  
     
    }
+  }
+  enviarDB(){
+
+    // const dataArr = new Set(this.productsService.arrayNumber);
+    // let result: Array<any> = [...dataArr];
+    // result.forEach((item: number) => this.productsService.deleteAll(item).subscribe({
+    //   next : () => alert('productos enviados')
+    // }));
+  }
+  agregarElemento(id: number){
+    this.productsService.showProducts2().subscribe({
+      next: (data: any) =>{
+        
+        data.forEach((datos: any)=>{
+         
+          if(datos.pedido.length == 0){
+            this.productsService.getProductClick(id);
+            
+          }else{
+            datos.pedido.forEach((el: any)=>{
+            
+              let array = []
+              array.push(el.id)
+              if(array.includes(id)){
+                alert('el producto ya existe')
+              }
+              else{
+                datos.pedido.forEach((data: any)=>{
+                  this.productsService.getProductClick2(id,data);
+                })
+                
+              }
+              
+            })
+          }
+           datos.pedido
+        })
+      },
+      error: (error) => {
+        console.log(error)
+      } 
+      
+    })
   }
   eliminarElementos(item: any){
     let indexArray;
 
   }
-  arraysRestantes(item: any){
-    let elemento = [];
-     elemento.push(item)
-     this.arrayRestantes = elemento
-     console.log(this.arrayRestantes)
+  
+  filter(item : [], id : number){
+    let filterId = item.filter((product: any) => product.id == id);
+    return filterId
   }
 }

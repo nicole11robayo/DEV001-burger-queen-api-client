@@ -17,7 +17,12 @@ export class NavbarComponent {
     sessionStorage.clear();
     this.authService.deleteToken();
     localStorage.clear();
-    this.router.navigateByUrl('/home');
+    const dataArr = new Set(this.productsService.arrayNumber);
+    let result: Array<any> = [...dataArr];
+    result.forEach((item: number) => this.productsService.deleteAll(item).subscribe({
+      next : () => this.router.navigateByUrl('/home')
+    }));
+    //this.router.navigateByUrl('/home');
 
   }
 }
