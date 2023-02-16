@@ -6,7 +6,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductsService {
   productsArray: object [] = [];
+  productsArray2: any = {};
   isMesero = false;
+  isProduct = false;
   constructor(private http: HttpClient) {}
 
   showProducts() {
@@ -22,13 +24,12 @@ export class ProductsService {
   }
 
   getProductClick(id: number) {
-    this.getProduct(id).subscribe((product) => {
-      
-      this.productsArray.push(product);
-      
-      this.setProductItem(this.productsArray);
+    return this.getProduct(id).subscribe((product) => {
+
+
+      this.crearObjeto(product)
     });
-    return id;
+
 }
 
 getProductItem() {
@@ -40,6 +41,55 @@ setProductItem(item: object[]) {
    return localStorage.setItem('product', JSON.stringify(item));
 }
 
+crearObjeto(item:any){
+  let objetoNuevo = {
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    image: item.image,
+    type : item.type,
+    dateEntry: item.dateEntry,
+    cant : 1
+  };
+  this.productsArray2 = objetoNuevo
+  this.productsArray.push(objetoNuevo);
+  this.addProduct(objetoNuevo).subscribe({
+    next:(data: any) => {this.isProduct = true;},
+    error: (error) => {this.isProduct = false;}
+  })
+
+
+
+  this.setProductItem(this.productsArray);
+  //console.log(objetoNuevo);
+  return objetoNuevo
+}
+addProduct(item: any) {
+ return this.http.post("http://localhost:3000/productsTemporal",item)
+}
+isitemadd(){
+ 
+ 
+  return this.isProduct = true;
+}
+addItemNew(id: number){
+  let  isAdd = false;
+  for(let x in this.productsArray) {
+    isAdd = this.itemP(this.productsArray[x], id)
+  }
+
+  return isAdd
+}
+
+itemP(item: any, id : number){
+  let  isAdd = false;
+  if(item.id == id){
+    isAdd = true;}
+  else{
+      isAdd = false;
+  }
+  return isAdd
+}
   getrole() {
     return sessionStorage.getItem('role') != null
       ? sessionStorage.getItem('role')?.toString()
