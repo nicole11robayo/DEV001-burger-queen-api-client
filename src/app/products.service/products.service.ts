@@ -84,7 +84,7 @@ getProductClick2(id: number,item: any){
       next : (data) => {producto = 'agregado'},
       error:(error)=>{producto = 'error'}
      })
-     console.log(item2)
+     //console.log(item2)
   })
  return producto
 }
@@ -97,14 +97,20 @@ objetoNew(item : any) {
   return objetoEditar
 }
 agregarItem(item : any, item2: any) {
-
+  
   let objetoEditar = {
     id: 1,
     pedido: [
 
      item,
-     item2
+    
   ]}
+  objetoEditar.pedido.push()
+  item2.forEach((item: any) => {
+    objetoEditar.pedido.push(item)
+   
+  })
+ 
   return objetoEditar
 }
 getProductItem2(item: any): Observable <any>{

@@ -13,91 +13,40 @@ export class CuentaComponent implements OnInit {
   constructor(private productsService: ProductsService) { }
   
  //productsPedido: object[]=[];
- productsPedido: any = this.productsService.productsArray;
+ productsPedido: any = [];
+// productsPedido: any = this.productsService.productsArray;
  localArray : object[]=[];
- objetoelem : any = {};
+ objetoelem : any = [];
  arrayRestantes : object[]=[];
   ngOnInit(){
    
     //this.productsPedido= this.productsService.getArrayProducts();
-    this.dataProducts()
+    
+    this.arrayItem()
+    this.mostrarProduct()
+   
     //this.productsService.addProduct();
   }
+  mostrarProduct(){
+    this.productsService.showProducts2().subscribe({
+      next: (data: any) =>{
+       
+        data.forEach((product: any)=>{
+          this.productsPedido = product.pedido
+          console.log(product.pedido);
+        })
+      }})
+  }
   addItem(newItem: number){
-    //this.productsService.getProductClick(newItem)
-    // if(this.isAdd){
-    //   alert('producto agregado')
-    // }else{
-    //   
-    // }
-   // console.log(this.productsService.addItemNew(newItem))
-    // if(this.productsService.productsArray.length == 0){
-    //   this.productsService.getProductClick(newItem)
-    // }
-  
-    //this.productsService.getProductClick(newItem)
-    //this.productsService.addProduct()
-    // .subscribe((data: any) =>{
-    //   console.log(data);
-    // });
-    //console.log(this.productsService.array())
-    //console.log(this.productsService.arrayNumber)
+ 
+    this.arrayItem()
     this.agregarElemento(newItem)
-    //this.productsService.crearObjetoNuevo(newItem)
-    //console.log(this.productsService.isMessage)
-   //this.productsService.getProductClick(newItem)
-   //console.log(this.productsService.showProducts2())
-  //  this.productsService.showProducts2().subscribe({
-  //   next: (data: any) => {
-  //     data.forEach((datos: any)=>{
-  //       console.log(datos.pedido)
-  //       console.log(this.filter(datos.pedido, newItem))
-  //       //datos.pedido.push(this.arraysRestantes())
-  //     })
-      //console.log(data)
-    //}
-   //})
-    this.dataProducts()
-    //console.log(this.productsService.isitemadd());
-   //console.log(this.productsService.productsArray.length)
-  //  for(let x in this.productsService.productsArray) {
-  //   //console.log(this.productsService.productsArray[x])
-  //   this.addElement(this.productsService.productsArray[x], newItem)
-  // }
-   //console.log(this.productsService.getProductItem())
-    //console.log(newItem)
-  }
-  addElement(item: any, id: number){
-    if(item.id == id){
-      //alert('producto agregado')
-    }else{
-     // this.productsService.getProductClick(id)
-    }
+    this.mostrarProduct()
+   
    
   }
-  dataProducts(){
-   this.arrayRestantes = []
-   let isLoggedIn = this.productsService.isMeseroRole();
-   this.localArray = this.productsService.getProductItem();
-  
-  //if(this.productsService.getrole() != ''){
-    if(isLoggedIn){
-    if(this.localArray.length > this.productsService.productsArray.length){
-     
-      this.localArray.forEach(Element =>{
-      
-        this.productsService.productsArray.push(Element)
-      })
-     
-    }
-  }else{
-    this.productsPedido = []
-    this.localArray = [];
-    localStorage.clear();
-  }
-   
-    
-  }
+
+ 
   valor1(numero: string, id:string){
     //this.arrayRestantes = []
    
@@ -141,7 +90,20 @@ export class CuentaComponent implements OnInit {
     //   next : () => alert('productos enviados')
     // }));
   }
+  arrayItem(){
+    this.productsService.showProducts2().subscribe({
+      next: (data: any) =>{
+        data.forEach((datos: any)=>{
+          datos.pedido.forEach((el: any)=>{
+            this.objetoelem.push(el.id)
+
+          })
+        })
+      }
+    })
+  }
   agregarElemento(id: number){
+    let array3: any[] = [];
     this.productsService.showProducts2().subscribe({
       next: (data: any) =>{
         
@@ -151,21 +113,22 @@ export class CuentaComponent implements OnInit {
             this.productsService.getProductClick(id);
             
           }else{
-            datos.pedido.forEach((el: any)=>{
-            
-              let array = []
-              array.push(el.id)
-              if(array.includes(id)){
-                alert('el producto ya existe')
-              }
-              else{
+            if(this.objetoelem.includes(id)){
+              console.log(this.objetoelem.includes(id))
+              console.log('el producto ya existe');
+            }else{
+             
+                console.log('en el else');
+                console.log(this.objetoelem.includes(id))
+                this.productsService.getProductClick2(id,datos.pedido);
                 datos.pedido.forEach((data: any)=>{
                   this.productsService.getProductClick2(id,data);
+                  this.mostrarProduct();
                 })
-                
-              }
+                this.mostrarProduct();
               
-            })
+            }
+ 
           }
            datos.pedido
         })

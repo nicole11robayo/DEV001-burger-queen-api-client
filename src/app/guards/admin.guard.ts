@@ -35,19 +35,19 @@ export class AdminGuard implements CanActivate {
     if (isLoggedIn) {
       return true;
     } else {
-      
-      const dataArr = new Set(this.products.arrayNumber);
-      let result: Array<any> = [...dataArr];
-      result.forEach((item: number) =>
-        this.products.deleteAll(item).subscribe({
-          next: () => {
-          sessionStorage.clear();
-          localStorage.clear();
-          this.authService.deleteToken();
-          this.router.navigateByUrl('/home')
-        }
-        })
-      );
+
+      // const dataArr = new Set(this.products.arrayNumber);
+      // let result: Array<any> = [...dataArr];
+      // result.forEach((item: number) =>
+      //   this.products.deleteAll(item).subscribe({
+      //     next: () => {
+      //     sessionStorage.clear();
+      //     localStorage.clear();
+      //     this.authService.deleteToken();
+      //     this.router.navigateByUrl('/home')
+      //   }
+      //   })
+      // );
     }
     return false;
   }
