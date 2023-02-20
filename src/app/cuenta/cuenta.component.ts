@@ -7,66 +7,145 @@ import { ProductsService } from '../products.service/products.service'
   styleUrls: ['./cuenta.component.css']
 })
 export class CuentaComponent implements OnInit {
-  valor:number=1;
+  valor:string = '';
+  id:string = '';
+  
   constructor(private productsService: ProductsService) { }
   
  //productsPedido: object[]=[];
- productsPedido: any = this.productsService.productsArray;
+ productsPedido: any = [];
+// productsPedido: any = this.productsService.productsArray;
  localArray : object[]=[];
+ objetoelem : any = [];
+ arrayRestantes : object[]=[];
   ngOnInit(){
    
     //this.productsPedido= this.productsService.getArrayProducts();
-    this.dataProducts()
-    console.log('local array')
-    console.log(this.localArray)
-    console.log('product pedido')
-    console.log(this.productsPedido)
+    
+    this.arrayItem()
+    this.mostrarProduct()
+   
+    //this.productsService.addProduct();
+  }
+  mostrarProduct(){
+    this.productsService.showProducts2().subscribe({
+      next: (data: any) =>{
+       
+        data.forEach((product: any)=>{
+          this.productsPedido = product.pedido
+          console.log(product.pedido);
+        })
+      }})
   }
   addItem(newItem: number){
-    //this.productsService.getProductClick(newItem)
-   this.productsService.getProductClick(newItem)
+ 
+    this.arrayItem()
+    this.agregarElemento(newItem)
+    this.mostrarProduct()
    
-   this.dataProducts()
-   console.log('local array')
-   console.log(this.localArray)
-   console.log('product pedido')
-   console.log(this.productsPedido)
-   //console.log(this.productsService.getProductItem())
-    //console.log(newItem)
+   
   }
 
-  dataProducts(){
-   let isLoggedIn = this.productsService.isMeseroRole();
-   this.localArray = this.productsService.getProductItem();
-   console.log(this.productsService.getrole() != '')
-  //if(this.productsService.getrole() != ''){
-    if(isLoggedIn){
-    if(this.localArray.length > this.productsService.productsArray.length){
-     
-      this.localArray.forEach(Element =>{
-      
-        this.productsService.productsArray.push(Element)
-      })
-     
-    }
-  }else{
-    this.productsPedido = []
-    this.localArray = [];
-    localStorage.clear();
-  }
+ 
+  valor1(numero: string, id:string){
+    //this.arrayRestantes = []
    
-    
-  }
-  valor1(){
+    this.valor = numero
+    this.id = id
+    //console.log(id)
+    for(let x in this.productsService.productsArray) {
+      //console.log(this.productsService.productsArray[x])
+      this.elementosEditados(this.productsService.productsArray[x])
+    }
+   
     return this.valor
   }
 
   totalPrice( precio:number){
+    let cantidadNumber = parseInt(this.valor)
     //let cantidadNumber = parseInt(cantidad);
-    return this.valor1()*precio
-    //return cantidadNumber*precio;
+    //return this.valor1()*precio
+    return cantidadNumber*precio;
   }
 
+  elementosEditados(item: any) {
+    
+   if(item.id == this.id) {
+    console.log('cambio')
+    console.log(item.id);
+    
+    console.log(this.id)
+    console.log(this.valor)
+   }
+   else{
   
+    
+   }
+  }
+  enviarDB(){
 
+    // const dataArr = new Set(this.productsService.arrayNumber);
+    // let result: Array<any> = [...dataArr];
+    // result.forEach((item: number) => this.productsService.deleteAll(item).subscribe({
+    //   next : () => alert('productos enviados')
+    // }));
+  }
+  arrayItem(){
+    this.productsService.showProducts2().subscribe({
+      next: (data: any) =>{
+        data.forEach((datos: any)=>{
+          datos.pedido.forEach((el: any)=>{
+            this.objetoelem.push(el.id)
+
+          })
+        })
+      }
+    })
+  }
+  agregarElemento(id: number){
+    let array3: any[] = [];
+    this.productsService.showProducts2().subscribe({
+      next: (data: any) =>{
+        
+        data.forEach((datos: any)=>{
+         
+          if(datos.pedido.length == 0){
+            this.productsService.getProductClick(id);
+            
+          }else{
+            if(this.objetoelem.includes(id)){
+              console.log(this.objetoelem.includes(id))
+              console.log('el producto ya existe');
+            }else{
+             
+                console.log('en el else');
+                console.log(this.objetoelem.includes(id))
+                this.productsService.getProductClick2(id,datos.pedido);
+                datos.pedido.forEach((data: any)=>{
+                  this.productsService.getProductClick2(id,data);
+                  this.mostrarProduct();
+                })
+                this.mostrarProduct();
+              
+            }
+ 
+          }
+           datos.pedido
+        })
+      },
+      error: (error) => {
+        console.log(error)
+      } 
+      
+    })
+  }
+  eliminarElementos(item: any){
+    let indexArray;
+
+  }
+  
+  filter(item : [], id : number){
+    let filterId = item.filter((product: any) => product.id == id);
+    return filterId
+  }
 }
