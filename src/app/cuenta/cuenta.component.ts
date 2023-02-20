@@ -33,7 +33,7 @@ export class CuentaComponent implements OnInit {
        
         data.forEach((product: any)=>{
           this.productsPedido = product.pedido
-          console.log(product.pedido);
+       
         })
       }})
   }
@@ -42,23 +42,47 @@ export class CuentaComponent implements OnInit {
     this.arrayItem()
     this.agregarElemento(newItem)
     this.mostrarProduct()
-   
+    
    
   }
 
  
-  valor1(numero: string, id:string){
-    //this.arrayRestantes = []
+  valor1(numero: string, id:number){
+   // console.log(numero, id)
+    this.productsService.showProducts2().subscribe({
+      next: (data: any) =>{
+        data.forEach((datos: any)=>{
+           if(datos.pedido.id == id){
+            console.log(datos.pedido)
+           }
+          //console.log(datos.pedido)
+           let edit: never[] = []
+          this.filter(datos.pedido, id).forEach((datos2: any)=>{
+            return edit = datos2
+           
+          })
+          //agregarItem
+         
+         this.elementosEditados(edit, numero)
+         let itemEl = this.productsService.agregarItem(this.elementosEditados(edit, numero), this.filter2(datos.pedido, id))
+         this.productsService.getProductItem2(itemEl).subscribe(data => {
+          console.log('cambios agregados')
+          this.mostrarProduct()
+         })
+        // console.log(this.filter2(datos.pedido, id))
+        })
+      }
+    })
+    this.mostrarProduct()
+    // this.valor = numero
+    // this.id = id
+    // //console.log(id)
+    // for(let x in this.productsService.productsArray) {
+    //   //console.log(this.productsService.productsArray[x])
+    //   this.elementosEditados(this.productsService.productsArray[x])
+    // }
    
-    this.valor = numero
-    this.id = id
-    //console.log(id)
-    for(let x in this.productsService.productsArray) {
-      //console.log(this.productsService.productsArray[x])
-      this.elementosEditados(this.productsService.productsArray[x])
-    }
-   
-    return this.valor
+    // return this.valor
   }
 
   totalPrice( precio:number){
@@ -68,19 +92,19 @@ export class CuentaComponent implements OnInit {
     return cantidadNumber*precio;
   }
 
-  elementosEditados(item: any) {
-    
-   if(item.id == this.id) {
-    console.log('cambio')
-    console.log(item.id);
-    
-    console.log(this.id)
-    console.log(this.valor)
-   }
-   else{
-  
-    
-   }
+  elementosEditados(item: any, numero: string) {
+   
+    let objetoNuevo ={
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      type: item.type,
+      dateEntry: item.dateEntry,
+      cant: numero,
+    }
+
+    return objetoNuevo
   }
   enviarDB(){
 
@@ -106,32 +130,38 @@ export class CuentaComponent implements OnInit {
     let array3: any[] = [];
     this.productsService.showProducts2().subscribe({
       next: (data: any) =>{
-        
-        data.forEach((datos: any)=>{
+       
+        if(data.length == 0){
          
-          if(datos.pedido.length == 0){
-            this.productsService.getProductClick(id);
-            
-          }else{
-            if(this.objetoelem.includes(id)){
-              console.log(this.objetoelem.includes(id))
-              console.log('el producto ya existe');
-            }else{
+          this.productsService.getProductClick(id);
+          this.mostrarProduct();
+        }
+        else{
+         
+          data.forEach((datos: any)=>{
+               
+               if(this.objetoelem.includes(id)){
+                 console.log(this.objetoelem.includes(id))
+                 this.mostrarProduct()
+                 console.log('el producto ya existe');
+               }else{
+                  
+                   console.log('en el else');
+                   console.log(this.objetoelem.includes(id))
+                   this.productsService.getProductClick2(id,datos.pedido);
+                   datos.pedido.forEach((data: any)=>{
+                     this.productsService.getProductClick2(id,data);
+                     this.mostrarProduct();
+                   })
+                   this.mostrarProduct();
+                 
+               }
+               this.mostrarProduct()
              
-                console.log('en el else');
-                console.log(this.objetoelem.includes(id))
-                this.productsService.getProductClick2(id,datos.pedido);
-                datos.pedido.forEach((data: any)=>{
-                  this.productsService.getProductClick2(id,data);
-                  this.mostrarProduct();
-                })
-                this.mostrarProduct();
-              
-            }
- 
-          }
-           datos.pedido
-        })
+          })
+          this.mostrarProduct()
+        }
+        this.mostrarProduct();
       },
       error: (error) => {
         console.log(error)
@@ -144,8 +174,12 @@ export class CuentaComponent implements OnInit {
 
   }
   
-  filter(item : [], id : number){
+  filter(item : any, id : number){
     let filterId = item.filter((product: any) => product.id == id);
+    return filterId
+  }
+  filter2(item : any, id : number){
+    let filterId = item.filter((product: any) => product.id != id);
     return filterId
   }
 }
