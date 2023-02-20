@@ -82,15 +82,26 @@ export class CuentaComponent implements OnInit {
    
     
   }
-  valor1(numero: string, id:string){
+  valor1(id:string){
     //this.arrayRestantes = []
    
-    this.valor = numero
     this.id = id
     //console.log(id)
     for(let x in this.productsService.productsArray) {
       //console.log(this.productsService.productsArray[x])
       this.elementosEditados(this.productsService.productsArray[x])
+    }
+   
+    return this.valor
+  }
+  valor2(id:string){
+    //this.arrayRestantes = []
+   
+    this.id = id
+    //console.log(id)
+    for(let x in this.productsService.productsArray) {
+      //console.log(this.productsService.productsArray[x])
+      this.elementosEditados2(this.productsService.productsArray[x])
     }
    
     return this.valor
@@ -106,6 +117,7 @@ export class CuentaComponent implements OnInit {
   elementosEditados(item: any) {
     
    if(item.id == this.id) {
+    item.cant +=1;
     console.log('cambio')
     console.log(item.id);
     
@@ -117,6 +129,26 @@ export class CuentaComponent implements OnInit {
     
    }
   }
+  elementosEditados2(item: any) {
+    
+    if(item.id == this.id) {
+      if(item.cant > 1){
+        item.cant -= 1;
+      }
+      else{
+        item.cant=1;
+      }
+     console.log('cambio')
+     console.log(item.id);
+     
+     console.log(this.id)
+     console.log(this.valor)
+    }
+    else{
+     this.arraysRestantes(item);
+     
+    }
+   }
   eliminarElementos(item: any){
     let indexArray;
 
@@ -127,4 +159,10 @@ export class CuentaComponent implements OnInit {
      this.arrayRestantes = elemento
      console.log(this.arrayRestantes)
   }
+
+  increase(item:number){
+    
+  }
 }
+
+

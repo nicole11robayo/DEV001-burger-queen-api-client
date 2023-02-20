@@ -13,11 +13,11 @@
             <tr *ngFor="let product of productsPedido">
                 <td>{{product.name}}</td>
                 <td>
-                   <input type="number" value = '{{product.cant}}' min="1"  #identificador >
-                   <button (click)="valor1(identificador.value, product.id)">OK {{product.id}}</button>
-                    
+                    <button (click)="valor2(product.id)">-</button>
+                    {{product.cant}}
+                    <button (click)="valor1(product.id)">+</button>
                 </td>
-                <td>${{product.price}}</td>
+                <td>${{product.price*product.cant}}</td>
             </tr>
             
             <tr>

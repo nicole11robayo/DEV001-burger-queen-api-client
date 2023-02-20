@@ -65,7 +65,7 @@ crearObjeto(item:any){
   return objetoNuevo
 }
 addProduct(item: any) {
- return this.http.post("http://localhost:3000/productsTemporal",item)
+ return this.http.post("http://localhost:3001/orders",item)
 }
 isitemadd(){
  
