@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { ProductsService } from '../products.service/products.service'
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-cuenta',
@@ -10,7 +11,9 @@ export class CuentaComponent implements OnInit {
   valor:string = '';
   id:string = '';
   
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService) { 
+    
+  }
   
  //productsPedido: object[]=[];
  productsPedido: any = [];
@@ -24,6 +27,18 @@ export class CuentaComponent implements OnInit {
     
     this.arrayItem()
     this.mostrarProduct()
+    const date = moment();
+
+    const ahora = date.format('YYYY-MM-DD hh:mm:ss');
+    console.log(ahora)
+    let hi = '2023-02-20 08:26:42';
+    let hf = '2023-02-20 09:32:41';
+    const momentHi = moment(hi)
+    const momentHf = moment(hf)
+    let diferenciaEnMinutos = momentHf.diff(momentHi, "minutes")
+   
+    console.log(diferenciaEnMinutos) 
+    
    
     //this.productsService.addProduct();
   }
@@ -74,15 +89,7 @@ export class CuentaComponent implements OnInit {
       }
     })
     this.mostrarProduct()
-    // this.valor = numero
-    // this.id = id
-    // //console.log(id)
-    // for(let x in this.productsService.productsArray) {
-    //   //console.log(this.productsService.productsArray[x])
-    //   this.elementosEditados(this.productsService.productsArray[x])
-    // }
    
-    // return this.valor
   }
 
   totalPrice( precio:number){

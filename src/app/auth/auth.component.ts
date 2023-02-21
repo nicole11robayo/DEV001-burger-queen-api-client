@@ -50,6 +50,7 @@ export class AuthComponent {
       error: (error) => {
         if(error.name == 'HttpErrorResponse'){
           Swal.fire({
+            confirmButtonColor: '#FFC900',
             icon: 'error',
             title: 'Oops...',
             text: 'Something went wrong!',
@@ -65,6 +66,7 @@ export class AuthComponent {
       this.authService.deleteToken()
      console.log(this.authService.getToken())
       Swal.fire({
+        confirmButtonColor: '#FFC900',
         icon: 'error',
         title: 'Oops...',
         text: 'Invalid Form!',
