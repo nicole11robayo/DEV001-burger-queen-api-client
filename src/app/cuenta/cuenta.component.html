@@ -1,32 +1,45 @@
 <app-menu (newItemEvent)="addItem($event)"></app-menu>
 <div class="tableCuenta">
-    <table class="table table-bordered">
-        <tbody>
-            <tr>
-                <td colspan="3">MESA 14</td>
-            </tr>
-            <tr>
-                <td>product name</td>
-                <td>amount</td>
-                <td>price</td>
-            </tr>
-            <tr *ngFor="let product of productsPedido">
-                <td>{{product.name}}</td>
-                <td>
-                   <input type="number" value = '{{product.cant}}' min="1"  #identificador >
-                   <button (click)="valor1(identificador.value, product.id)">OK {{product.id}}</button>
-                    
-                </td>
-                <td>${{product.price}}</td>
-            </tr>
-            
-            <tr>
-                <td colspan="2">TOTAL</td>
-                <td>final price</td>
-            </tr>
-            <tr>
-                <td colspan="3"><button (click) = "enviarDB()">ENVIAR</button></td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td colspan="4">MESA 14</td>
+      </tr>
+      <tr>
+        <td>product name</td>
+        <td>amount</td>
+        <td>unit price</td>
+        <td>total price</td>
+      </tr>
+      <tr *ngFor="let product of productsPedido">
+        <td>{{product.name}}</td>
+        <td>
+          <div class="form-row justify-content-center">
+            <div class="form-group mb-0">
+              <div class="input-group mx-auto mb-0">
+                <div class="number-input">
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+                  <input class="quantity bg-light" min="1" name="quantity" value='{{product.cant}}' type="number" #identificador>
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <button (click)="valor1(identificador.value, product.id)">OK {{product.id}}</button>
+
+        </td>
+        <td>${{product.price}}</td>
+        <td>${{product.price*product.cant}}</td>
+      </tr>
+
+      <tr>
+        <td colspan="3">TOTAL</td>
+        <td>{{total}}</td>
+      </tr>
+      <tr>
+        <td colspan="4"><button (click)="enviarDB()">ENVIAR</button></td>
+      </tr>
+    </tbody>
+  </table>
 </div>

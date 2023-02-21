@@ -18,8 +18,8 @@ export class CuentaComponent implements OnInit {
  localArray : object[]=[];
  objetoelem : any = [];
  arrayRestantes : object[]=[];
+ total: number=0;
   ngOnInit(){
-   
     //this.productsPedido= this.productsService.getArrayProducts();
     
     this.arrayItem()
@@ -33,6 +33,12 @@ export class CuentaComponent implements OnInit {
        
         data.forEach((product: any)=>{
           this.productsPedido = product.pedido
+          this.total = this.productsPedido.reduce((
+            acc:any,
+            obj:any,
+          ) => acc + (obj.price * obj.cant),
+          0);
+          console.log("Total: ", this.total)
        
         })
       }})
