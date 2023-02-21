@@ -30,6 +30,11 @@
     "@popperjs/core": "^2.11.6",
     "@sweetalert2/ngx-sweetalert2": "^12.1.0",
     "bootstrap": "^5.2.3",
+<<<<<<< HEAD
+=======
+    "jquery": "^3.6.3",
+    "moment": "^2.29.4",
+>>>>>>> 419b12a42821fb67abc65001514b7d5e2697a169
     "ngx-cookie-service": "^15.0.0",
     "rxjs": "~7.8.0",
     "sweetalert": "^2.1.2",

@@ -17,7 +17,7 @@ export class NavbarComponent {
     this.productsService.deleteAll().subscribe({
       next : () => {
        
-        
+        sessionStorage.clear();
       }
     })
     this.authService.deleteToken();
