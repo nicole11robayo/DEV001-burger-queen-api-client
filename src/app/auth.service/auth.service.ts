@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
   
   constructor(private http: HttpClient, private cookies: CookieService) {}
-  login(user: any ): Observable <any>{
+  login(user: any ){
     return this.http.post("http://localhost:3004/login", user);
   }
   setToken(token: string) {

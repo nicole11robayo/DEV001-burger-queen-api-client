@@ -1,4 +1,5 @@
 //import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule,FormsModule} from '@angular/forms';
@@ -12,7 +13,8 @@ describe('AuthComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule, 
+        HttpClientTestingModule,
+        HttpClientModule,
         ReactiveFormsModule,
         FormsModule],
       providers: [ AuthComponent]

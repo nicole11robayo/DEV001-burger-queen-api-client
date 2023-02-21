@@ -1,20 +1,22 @@
-// import { HttpClientTestingModule } from '@angular/common/http/testing';
-// import { TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+//import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { AuthService } from 'app/auth.service/auth.service';
 
-// import { ProductsService } from '../products.service/products.service';
+import { ProductsService } from '../products.service/products.service';
 
-// describe('ProductsService', () => {
-//   let service: ProductsService;
-//   TestBed.configureTestingModule({
-//     imports: [HttpClientTestingModule],
-//     providers: [ProductsService],
-//   });
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({});
-//     service = TestBed.inject(ProductsService);
-//   });
+describe('ProductsService', () => {
+ let service: ProductsService;
+  beforeEach(() => {
+   
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule],
+      providers: [ProductsService, AuthService],
+    });
+   service = TestBed.inject(ProductsService)
+  });
 
-//   it('should be created', () => {
-//     expect(service).toBeTruthy();
-//   });
-// });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});

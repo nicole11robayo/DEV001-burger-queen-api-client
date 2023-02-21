@@ -14,10 +14,15 @@ export class NavbarComponent {
 
   deleteToken(){
     this.productsService.productsArray = []
-    sessionStorage.clear();
+    this.productsService.deleteAll().subscribe({
+      next : () => {
+       
+        sessionStorage.clear();
+      }
+    })
     this.authService.deleteToken();
-    localStorage.clear();
-    this.router.navigateByUrl('/home');
+    sessionStorage.clear();
+    this.router.navigateByUrl('/home')
 
   }
 }
