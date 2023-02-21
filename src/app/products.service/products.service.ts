@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { Observable } from 'rxjs';
+import { AuthService } from 'app/auth.service/auth.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  productsArray: object [] = [];
+  productsArray: object[] = [];
   isMesero = false;
-  constructor(private http: HttpClient) {}
 
+
+  constructor(private http: HttpClient ,private authService: AuthService) {}
+  idProductNew =  this.authService.getToken();
   showProducts() {
     return this.http.get('http://localhost:3000/products');
   }
@@ -16,29 +19,95 @@ export class ProductsService {
   getProduct(id: number) {
     return this.http.get(`http://localhost:3000/products/${id}`);
   }
-
   getArrayProducts() {
     return this.productsArray;
   }
 
   getProductClick(id: number) {
+    let producto = '';
+   
     this.getProduct(id).subscribe((product) => {
-      
-      this.productsArray.push(product);
-      
-      this.setProductItem(this.productsArray);
+    let item = this.objetoNew(this.crearObjeto(product));
+    console.log(item);
+      this.getProductItem(item).subscribe({
+        next: (data) => {
+          console.log(data);
+          producto = 'agregado';
+        },
+        error: (error) => {
+          producto = 'error';
+        },
+      });
+     });
+    return producto;
+  }
+  getProductClick2(id: number, item: any) {
+    
+    let producto = '';
+    this.getProduct(id).subscribe((product) => {
+      let item2 = this.agregarItem(this.crearObjeto(product), item);
+      this.getProductItem2(item2).subscribe({
+        next: (data) => {
+          producto = 'agregado';
+        },
+        error: (error) => {
+          producto = 'error';
+        },
+      });
+      //console.log(item2)
     });
-    return id;
-}
+    return producto;
+  }
+  objetoNew(item: any) {
+    let objetoEditar = {
+      id: this.idProductNew,
+      pedido: [item]
+    };
+    return objetoEditar;
+  }
+  agregarItem(item: any, item2: any) {
+    let objetoEditar = {
+      id: this.idProductNew,
+      pedido: [item]
+    };
+    objetoEditar.pedido.push();
+    item2.forEach((item: any) => {
+      objetoEditar.pedido.push(item);
+    });
 
-getProductItem() {
-    return JSON.parse(localStorage.getItem('product')!);
-    //localStorage.getItem('product')!=null?localStorage.getItem('product')?.toString():''
-}
-//item: object[]
-setProductItem(item: object[]) {
-   return localStorage.setItem('product', JSON.stringify(item));
-}
+    return objetoEditar;
+  }
+  getProductItem2(item: any): Observable<any> {
+    return this.http.put(`http://localhost:3000/productsTemporal/${this.idProductNew}`, item);
+  }
+  getProductItem(item: any): Observable<any> {
+    return this.http.post('http://localhost:3000/productsTemporal', item);
+    
+  }
+
+  crearObjeto(item: any) {
+    let objetoNuevo = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      type: item.type,
+      dateEntry: item.dateEntry,
+      cant: 1,
+    };
+
+    return objetoNuevo;
+  }
+
+  showProducts2() {
+    return this.http.get('http://localhost:3000/productsTemporal');
+  }
+
+  deleteAll() {
+    return this.http.delete(`http://localhost:3000/productsTemporal/${this.idProductNew}`);
+  }
+
+  addItemNew(id: number) {}
 
   getrole() {
     return sessionStorage.getItem('role') != null

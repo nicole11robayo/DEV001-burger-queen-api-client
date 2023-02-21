@@ -15,7 +15,8 @@ export class MenuComponent implements OnInit{
 
   ngOnInit(){
     this.showProductsDesayuno();
-    this.onClickMe2();
+    console.log(this.products)
+    //this.onClickMe2();
   }
 
   showProductsDesayuno() {
