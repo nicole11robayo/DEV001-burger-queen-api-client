@@ -1,11 +1,9 @@
 .products{
 
-    display: flex;
+   
+    width: 100%;
 }
 
-.menu{
-    width: 50%;
-}
 .cuenta{
-    width: 50%;
+    width: 100%;
 }
