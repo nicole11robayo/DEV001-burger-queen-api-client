@@ -21,11 +21,16 @@ export class PermisosGuard implements CanActivate {
       } else {
         this.products.productsArray = []
         this.products.deleteAll().subscribe({
+          next : () => {
+           
+            sessionStorage.clear();
+          }
         })
         this.authService.deleteToken();
         sessionStorage.clear();
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/home')
       }
+      
      return false;
   }
   

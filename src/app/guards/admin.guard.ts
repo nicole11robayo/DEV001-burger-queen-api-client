@@ -39,12 +39,12 @@ export class AdminGuard implements CanActivate {
       this.products.deleteAll().subscribe({
         next : () => {
          
-          
+          sessionStorage.clear();
         }
       })
       this.authService.deleteToken();
       sessionStorage.clear();
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/home')
     }
     return false;
   }
