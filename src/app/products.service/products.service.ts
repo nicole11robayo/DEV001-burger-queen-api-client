@@ -77,6 +77,16 @@ export class ProductsService {
 
     return objetoEditar;
   }
+
+  eliminarItem(item: any) {
+    let objetoEditar = {
+      id: this.idProductNew,
+      pedido: []
+    };
+    objetoEditar.pedido = item
+
+    return objetoEditar;
+  }
   getProductItem2(item: any): Observable<any> {
     return this.http.put(`http://localhost:3000/productsTemporal/${this.idProductNew}`, item);
   }
@@ -112,6 +122,11 @@ export class ProductsService {
   getrole() {
     return sessionStorage.getItem('role') != null
       ? sessionStorage.getItem('role')?.toString()
+      : '';
+  }
+  getCliente() {
+    return sessionStorage.getItem('cliente') != null
+      ? sessionStorage.getItem('cliente')?.toString()
       : '';
   }
   isMeseroRole() {

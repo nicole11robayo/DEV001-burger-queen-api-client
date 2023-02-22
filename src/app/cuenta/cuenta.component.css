@@ -1,3 +1,19 @@
+.containerPrincipal{
+  display: flex;
+  width: 80%;
+  height: 100vh;
+  
+}
+.ordenes{
+  width: 60%;
+  height: 90%;
+  overflow: scroll;
+}
+#cuentaContenedor{
+  width: 40%;
+  height: 100%;
+ 
+}
 /* #botonCantidad{
     display:none;
 }
