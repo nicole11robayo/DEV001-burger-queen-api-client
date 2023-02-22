@@ -1,15 +1,21 @@
-<app-menu (newItemEvent)="addItem($event)"></app-menu>
-<div class="tableCuenta">
+<section class="containerPrincipal">
+<div class="ordenes">
+   <app-menu (newItemEvent)="addItem($event)"></app-menu>
+</div>
+
+<div class="tableCuenta" id="cuentaContenedor">
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <td colspan="4">MESA 14</td>
+        <td colspan="4">CLIENTE NOMBRE DEL CLIENTE</td>
+        <td><button type="button" class="btn btn-success"  (click)="agregarUsuario()">Agregar cliente</button></td>
       </tr>
       <tr>
         <td>product name</td>
         <td>amount</td>
         <td>unit price</td>
         <td>total price</td>
+       
       </tr>
       <tr *ngFor="let product of productsPedido">
         <td>{{product.name}}</td>
@@ -27,19 +33,24 @@
           </div>
           
           <button (click)="valor1(identificador.value, product.id)">OK {{product.id}}</button>
-
+         
         </td>
         <td>${{product.price}}</td>
         <td>${{product.price*product.cant}}</td>
+        <td> <button type="button" class="btn btn-danger" (click)="eliminarElementos(product.id)">eliminar</button></td>
       </tr>
 
       <tr>
         <td colspan="3">TOTAL</td>
         <td>{{total}}</td>
+       
       </tr>
+      
       <tr>
         <td colspan="4"><button (click)="enviarDB()">ENVIAR</button></td>
       </tr>
     </tbody>
   </table>
 </div>
+
+</section>
