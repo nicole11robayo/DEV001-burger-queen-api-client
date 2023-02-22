@@ -94,7 +94,10 @@ export class ProductsService {
     return this.http.post('http://localhost:3000/productsTemporal', item);
     
   }
-
+  setProductItem(): Observable<any> {
+    return this.http.get(`http://localhost:3000/productsTemporal/${this.idProductNew}`, );
+    
+  }
   crearObjeto(item: any) {
     let objetoNuevo = {
       id: item.id,
