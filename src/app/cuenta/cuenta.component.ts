@@ -200,10 +200,11 @@ export class CuentaComponent implements OnInit {
       Swal.fire('agrega un nombre')
     }else{
       sessionStorage.setItem('cliente', nombre );
-      Swal.fire(`Entered email: ${nombre}`)
+      Swal.fire(`Entered name: ${nombre}`)
       console.log(this.productsService.getCliente())
     }
   }
+
 
   filter(item: any, id: number) {
     let filterId = item.filter((product: any) => product.id == id);
