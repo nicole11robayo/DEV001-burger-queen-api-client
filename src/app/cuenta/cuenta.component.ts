@@ -21,6 +21,7 @@ export class CuentaComponent implements OnInit {
   objetoelem: any = [];
   arrayRestantes: object[] = [];
   total: number = 0;
+  nombreCliente :any = '';
   ngOnInit() {
     this.productsService.getCliente()
     this.arrayItem();
@@ -187,24 +188,28 @@ export class CuentaComponent implements OnInit {
     });
   }
   
-  async agregarUsuario() {
-    const { value:  nombre } =  await Swal.fire({
-      title: 'Nombre del cliente',
-      input: 'text',
-      inputLabel: 'Escribe su nombre',
-      inputValue: '',
-      //showCancelButton: true,
-     
+   agregarUsuario() {
+    Swal.fire({
+        title: "Tu nombre",
+        input: "text",
+        showCancelButton: true,
+        confirmButtonText: "Guardar",
+        cancelButtonText: "Cancelar",
+        
     })
-    if (nombre == '') {
-      Swal.fire('agrega un nombre')
-    }else{
-      sessionStorage.setItem('cliente', nombre );
-      Swal.fire(`Entered email: ${nombre}`)
-      console.log(this.productsService.getCliente())
-    }
+    .then(resultado => {
+        if (resultado.value) {
+            
+            let nombre = resultado.value;
+            sessionStorage.setItem('cliente', nombre );
+            Swal.fire('Nombre agregado exitosamente' + nombre);
+            this.productsService.getCliente();
+            this.nombreCliente = this.productsService.getCliente();
+        }
+    });
+    
   }
-
+ 
   filter(item: any, id: number) {
     let filterId = item.filter((product: any) => product.id == id);
     return filterId;
