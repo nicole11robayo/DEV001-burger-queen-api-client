@@ -239,6 +239,8 @@ export class CuentaComponent implements OnInit {
                     'success'
                   );
                   this.mostrarProduct();
+                  this.objetoelem = [];
+                  //this.arrayItem();
                 },
                
               });
