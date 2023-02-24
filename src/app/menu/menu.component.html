@@ -4,19 +4,30 @@
     <button type="button" class="btn btn-info" (click)="showProductsComida()">Almuerzo</button>
   </div>
   <div class="card-categorias">
-  <div *ngFor="let item of products">
+    <div *ngFor="let item of products">
+      <div class="product-card">
+        <div class="{{item.type}}">{{item.type}}</div>
+        <div class="product-tumb">
+          <img src="{{item.image}}" alt="{{item.name}}">
+        </div>
+        <div class="product-details">
+          <span class="product-catagory">{{item.name}}</span>
+          <div class="product-bottom-details">
+            <div class="product-price">${{item.price}}</div>
+              <div class="product-links">
+                <button class="btn-card" id={{item.id}} (click)='onClickMe(item.id)'><i class='bx bxs-cart-add'></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div class="card-individual">
-        <img src={{item.image}} alt="" class="img-card">
-            <p>{{item.name}}</p>
-            <p>${{item.price}}</p>
-            <button class="btn btn-primary btn-sm" id={{item.id}} (click)='onClickMe(item.id)'>Añadir</button>
-       </div>
+
+        
 
 
-  </div>
-  </div>
-  <!-- <div class="card" style="width: 10rem; height: 10rem;" *ngFor="let item of products">
+      </div>
+    </div>
+    <!-- <div class="card" style="width: 10rem; height: 10rem;" *ngFor="let item of products">
     <img src={{item.image}} class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">Card title</h5>
@@ -24,7 +35,7 @@
       <a href="#" class="btn btn-primary">Go somewhere</a>
     </div>
   </div> -->
-  <!-- <div *ngFor="let item of products">
+    <!-- <div *ngFor="let item of products">
     <div class="card" style="width: 10rem;height: 10rem; margin: 10px;">
       <img src={{item.image}} class="card-img-top"
         alt="Hollywood Sign on The Hill" />
@@ -36,7 +47,7 @@
     </div>
 
   </div> -->
-  <!-- <div *ngFor="let item of products">
+    <!-- <div *ngFor="let item of products">
     <div class="card w-75">
       <div class="card-body">
         <h5 class="card-title">{{item.name}}</h5>
@@ -46,4 +57,4 @@
     </div>
   </div> -->
 
-</div>
+  </div>

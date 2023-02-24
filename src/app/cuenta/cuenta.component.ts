@@ -109,41 +109,55 @@ export class CuentaComponent implements OnInit {
     return objetoNuevo;
   }
   enviarDB() {
-    let orderProduct: any[] =[
-       
-    ]
-    this.productsService.setProductItem().subscribe( {
-      next: (data: any) => {
-        data.pedido.forEach((datos: any) => {
-         
-          let productos ={
-            product: datos.name,
-            qty : datos.cant
-          }
-          orderProduct.push(productos)
-          
-          
-         })
-         const dataOrder = this.orderService.crearOrder(orderProduct)
-         console.log(dataOrder)
-         this.crearOrden(dataOrder)
-      }
-     
+    if(this.nombreCliente === ''){
+      Swal.fire(
+        'Bad job!',
+        'agrega un nombre!',
+        'warning'
+      )
       
-    })
+    }else{
+      let orderProduct: any[] =[
+       
+      ]
+      this.productsService.setProductItem().subscribe( {
+        next: (data: any) => {
+          data.pedido.forEach((datos: any) => {
+           
+            let productos ={
+              product: datos.name,
+              qty : datos.cant
+            }
+            orderProduct.push(productos)
+            
+            
+           })
+           const dataOrder = this.orderService.crearOrder(orderProduct)
+           console.log(dataOrder)
+          
+           this.crearOrden(dataOrder)
+           this.limpiarPantalla();
+           
+        }
+        
+        
+      })
+     
   
-
+    }
+   
     
   }
   crearOrden(item: any) {
      this.orderService.getOrderItem(item).subscribe({
       next: (data: any) => {
+      
         Swal.fire(
           'Good job!',
           'You clicked the button!',
           'success'
         )
-      
+        
       },
       error: (error) => {
         Swal.fire(
@@ -151,7 +165,7 @@ export class CuentaComponent implements OnInit {
           'You clicked the button!',
           'error'
         )
-      
+       
       }
     })
     
@@ -225,6 +239,8 @@ export class CuentaComponent implements OnInit {
                     'success'
                   );
                   this.mostrarProduct();
+                  this.objetoelem = [];
+                  //this.arrayItem();
                 },
                
               });
@@ -257,7 +273,19 @@ export class CuentaComponent implements OnInit {
     });
     
   }
- 
+  limpiarPantalla(){
+   
+      this.productsService.productsArray = []
+      this.productsService.deleteAll().subscribe({
+        next : () => {
+          this.productsPedido = [];
+          this.nombreCliente = '';
+          this.total = 0;
+          sessionStorage.removeItem('cliente');
+        }
+      })
+     
+  }
   filter(item: any, id: number) {
     let filterId = item.filter((product: any) => product.id == id);
     return filterId;
