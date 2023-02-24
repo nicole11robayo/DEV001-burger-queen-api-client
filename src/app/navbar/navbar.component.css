@@ -31,7 +31,9 @@ nav {
     justify-content: end;
 }
 
-.botones a {
+
+  
+  .botones button {
     position: relative;
     width: 33.333%;
     display: table-cell;
@@ -43,10 +45,12 @@ nav {
     padding: 10px 20px;
     transition: 0.2s ease color;
     text-transform: uppercase;
+    border: none;
+    background: none;
   }
   
-  .botones a:before,
-  .botones a:after {
+  .botones button:before,
+  .botones button:after {
     content: "";
     position: absolute;
     border-radius: 50%;
@@ -54,46 +58,48 @@ nav {
     transition: 0.2s ease transform;
   }
   
-  .botones a:before {
+  .botones button:before {
     top: 0;
     left: 10px;
     width: 6px;
     height: 6px;
   }
   
-  .botones a:after {
+  .botones button:after {
     top: 5px;
     left: 18px;
     width: 4px;
     height: 4px;
   }
   
-  .botones a:nth-child(1):before {
+  .botones button:nth-child(1):before {
     background-color: yellow;
   }
   
-  .botones a:nth-child(1):after {
+  .botones button:nth-child(1):after {
     background-color: red;
   }
   
-  .botones a:nth-child(2):before {
+  .botones button:nth-child(2):before {
     background-color: #00e2ff;
   }
   
-  .botones a:nth-child(2):after {
+  .botones button:nth-child(2):after {
     background-color: #89ff00;
   }
   
   
   
-  .botones a:hover {
+  .botones button:hover {
     color: #fff;
   }
   
-  .botones a:hover:before,
-  .botones a:hover:after {
+  .botones button:hover:before,
+  .botones button:hover:after {
     transform: scale(1);
   }
   
   
+  
+
   
