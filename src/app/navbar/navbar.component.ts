@@ -28,6 +28,6 @@ export class NavbarComponent {
   }
 
   pedidos(){
-    this.router.navigateByUrl('/orders')
+    this.router.navigateByUrl('/cocina')
   }
 }
