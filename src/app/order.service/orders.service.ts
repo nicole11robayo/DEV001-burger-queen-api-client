@@ -18,6 +18,10 @@ export class OrdersService {
     
   }
 
+  getAllOrder(){
+    return this.http.get('http://localhost:3000/orders')
+  }
+
   crearOrder(item: any){
     let objetoEditar = {
       userId: this.idProductNew,
@@ -29,5 +33,9 @@ export class OrdersService {
     };
     objetoEditar.products = item
     return objetoEditar
+  }
+
+  deleteOrder(id:any){
+    return this.http.delete(`http://localhost:3000/orders/${id}`)
   }
 }

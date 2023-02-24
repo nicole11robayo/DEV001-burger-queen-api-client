@@ -1,31 +1,32 @@
 <app-navbar></app-navbar>
-<div class="card" style="width: 18rem;">
-    <div class="card-header">
-      Pedido #
-    </div>
-    <table class="card-table table">
-      <thead>
-        <tr>
-          <th scope="col">Products</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Agua</td>
-          <td>2</td>
-          <td>$10</td>
-        </tr>
+<div class="todo">
+  <div *ngFor="let order of orders">
 
-        <tr>
-          <th colspan="2">Total</th>
-          <td>$10</td>
-        </tr>
-        <tr>
+    <div class="card" style="width: 18rem;">
+
+      <div class="card-header">
+        <p>Pedido # {{order.id}}</p>
+        <button type="button" class="btn btn-danger" *ngIf="role=='mesero'" (click)="deleteOrder(order.id)">Eliminar</button>
+      </div>
+      <table class="card-table table">
+        <thead>
+          <tr>
+            <th scope="col">Products</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of order.products">
+            <td>{{item.product}}</td>
+            <td>{{item.qty}}</td>
+          </tr>
+
+          <tr>
             <button type="button" class="btn btn-warning">Finish</button>
 
-        </tr>
-      </tbody>
-    </table>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+</div>
