@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit{
 
   showProductsDesayuno() {
     this.productsService.showProducts().subscribe((data: any) => {
+      
       let desayuno = data.filter((product: any) => product.type === "desayuno")
 
       //let showDesayuno = desayuno.map((des:any) => JSON.stringify(des))
