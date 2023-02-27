@@ -84,6 +84,7 @@ export class AuthComponent {
   togglePasswordMode(input: any): any{
     input.type = input.type === 'password' ? 'text' : 'password';
      //console.log(this.elemento.type)
+  
   }
  
 }

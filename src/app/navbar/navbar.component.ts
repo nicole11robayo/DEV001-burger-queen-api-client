@@ -12,6 +12,7 @@ export class NavbarComponent {
    
   }
 
+
   deleteToken(){
     this.productsService.productsArray = []
     this.productsService.deleteAll().subscribe({
@@ -24,5 +25,9 @@ export class NavbarComponent {
     sessionStorage.clear();
     this.router.navigateByUrl('/home')
 
+  }
+
+  pedidos(){
+    this.router.navigateByUrl('/cocina')
   }
 }
