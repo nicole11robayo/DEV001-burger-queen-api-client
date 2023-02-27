@@ -44,7 +44,11 @@ export class AuthComponent {
           sessionStorage.setItem('role', data.user.rol);
           this.router.navigateByUrl('/admin');
          }
-        
+         if(data.user.rol === "cocinero"){
+          this.authService.setToken(data.user.id)
+          sessionStorage.setItem('role', data.user.rol);
+          this.router.navigateByUrl('/cocina');
+         }
         
       },
       error: (error) => {

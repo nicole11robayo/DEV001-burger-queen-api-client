@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
 import { AdminComponent } from './admin/admin.component';
+import { CocinaComponent} from './cocina/cocina.component';
 import { ProductsComponent } from './products/products.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PermisosGuard } from './guards/permisos.guard';
@@ -15,6 +16,7 @@ const appRoutes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'admin', component: AdminComponent ,canActivate: [AdminGuard] },
   { path: 'products', component: ProductsComponent ,canActivate: [PermisosGuard] },
+  { path: 'cocina', component: CocinaComponent },
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];

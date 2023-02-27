@@ -13,21 +13,123 @@
    
 }
 
-.card-individual{
-    display:flex;
-    flex-direction: column;
+
+.product-card {
+    width: 250px;
+    height: 300px;
+    position: relative;
+    box-shadow: 0 2px 7px #dfdfdf;
+    margin: 50px auto;
+    background: #fafafa;
    
-    width: 190px;
-    height: 250px;
-    margin-top: 0.5em;
-    line-height: 1.4em;
-}
-.card-individual p{
-    margin-top: 0;
 }
 
-.card-individual .img-card{
-    display: block;
-    width: 100%;
-    height: 130px;
+.desayuno {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 700;
+    background: #eb5e28;
+    color: #fff;
+    padding: 3px 10px;
 }
+.comida{
+    position: absolute;
+    left: 0;
+    top: 10px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 700;
+    background: #00e2ff;
+    color: #fff;
+    padding: 3px 10px;
+}
+.product-tumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70%;
+    
+    background: #f0f0f0;
+    
+}
+
+.product-tumb img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.product-details {
+    padding: 15px;
+   
+    height: 30%;
+}
+
+.product-catagory {
+   
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #0f0f0f;
+    margin-bottom: 10px;
+    height: 10%;
+}
+
+
+.product-bottom-details {
+    display: flex;
+    justify-content: space-between;
+   
+    border-top: 1px solid #eee;
+    
+    height: 90%;
+   
+}
+
+
+
+.product-price {
+    font-size: 20px;
+    color: #fbb72c;
+    font-weight: 600;
+    padding-top: 15px;
+   
+    width: 50%;
+    height: 95%;
+}
+
+.product-links {
+   width: 50%;
+   height: 95%;
+   padding-top: 5px;
+   
+   display: flex;
+   justify-content: end;
+}
+
+.btn-card{
+    font-weight: 500;
+    font-size: 35px;
+    text-transform: uppercase;
+    color:  #fbb72c;;
+    text-decoration: none;
+    transition: 0.3s;
+    width: 50px;
+    height: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-card:hover{
+    opacity: 0.5;
+}
+
+/*
+boton comida : #00e2ff
+boton desayuno :
+*/

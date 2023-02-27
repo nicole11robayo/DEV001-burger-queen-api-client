@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ProductsService } from '../products.service/products.service';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
+import { OrdersService } from 'app/order.service/orders.service';
 
 @Component({
   selector: 'app-cuenta',
@@ -12,31 +13,33 @@ export class CuentaComponent implements OnInit {
   valor: string = '';
   id: string = '';
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService, private orderService : OrdersService) {}
 
  
   productsPedido: any = [];
 
   localArray: object[] = [];
   objetoelem: any = [];
-  arrayRestantes: object[] = [];
+  arrayOrder: any = [];
   total: number = 0;
   nombreCliente :any = '';
   ngOnInit() {
     this.productsService.getCliente()
     this.arrayItem();
     this.mostrarProduct();
-    const date = moment();
+    if(this.productsService.getCliente() != undefined){
+      this.nombreCliente = this.productsService.getCliente();    
+    }
+    // const date = moment();
+    // const ahora = date.format('YYYY-MM-DD hh:mm:ss');
+    // console.log(ahora);
+    // let hi = '2023-02-20 08:26:42';
+    // let hf = '2023-02-20 09:32:41';
+    // const momentHi = moment(hi);
+    // const momentHf = moment(hf);
+    // let diferenciaEnMinutos = momentHf.diff(momentHi, 'minutes');
 
-    const ahora = date.format('YYYY-MM-DD hh:mm:ss');
-    console.log(ahora);
-    let hi = '2023-02-20 08:26:42';
-    let hf = '2023-02-20 09:32:41';
-    const momentHi = moment(hi);
-    const momentHf = moment(hf);
-    let diferenciaEnMinutos = momentHf.diff(momentHi, 'minutes');
-
-    console.log(diferenciaEnMinutos);
+    // console.log(diferenciaEnMinutos);
 
    
   }
@@ -106,6 +109,65 @@ export class CuentaComponent implements OnInit {
     return objetoNuevo;
   }
   enviarDB() {
+    if(this.nombreCliente === ''){
+      Swal.fire(
+        'Bad job!',
+        'agrega un nombre!',
+        'warning'
+      )
+      
+    }else{
+      let orderProduct: any[] =[
+       
+      ]
+      this.productsService.setProductItem().subscribe( {
+        next: (data: any) => {
+          data.pedido.forEach((datos: any) => {
+           
+            let productos ={
+              product: datos.name,
+              qty : datos.cant
+            }
+            orderProduct.push(productos)
+            
+            
+           })
+           const dataOrder = this.orderService.crearOrder(orderProduct)
+           console.log(dataOrder)
+          
+           this.crearOrden(dataOrder)
+           this.limpiarPantalla();
+           
+        }
+        
+        
+      })
+     
+  
+    }
+   
+    
+  }
+  crearOrden(item: any) {
+     this.orderService.getOrderItem(item).subscribe({
+      next: (data: any) => {
+      
+        Swal.fire(
+          'Good job!',
+          'You clicked the button!',
+          'success'
+        )
+        
+      },
+      error: (error) => {
+        Swal.fire(
+          'Good job!',
+          'You clicked the button!',
+          'error'
+        )
+       
+      }
+    })
     
   }
   arrayItem() {
@@ -177,6 +239,8 @@ export class CuentaComponent implements OnInit {
                     'success'
                   );
                   this.mostrarProduct();
+                  this.objetoelem = [];
+                  //this.arrayItem();
                 },
                
               });
@@ -209,7 +273,19 @@ export class CuentaComponent implements OnInit {
     });
     
   }
- 
+  limpiarPantalla(){
+   
+      this.productsService.productsArray = []
+      this.productsService.deleteAll().subscribe({
+        next : () => {
+          this.productsPedido = [];
+          this.nombreCliente = '';
+          this.total = 0;
+          sessionStorage.removeItem('cliente');
+        }
+      })
+     
+  }
   filter(item: any, id: number) {
     let filterId = item.filter((product: any) => product.id == id);
     return filterId;
