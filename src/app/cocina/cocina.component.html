@@ -9,7 +9,7 @@
 </nav>
 <div class="todo">
   
-  <div *ngFor="let order of orders">
+  <div *ngFor="let order of orders | paginate: { itemsPerPage: 10, currentPage: p }">
 
     <div class="card" style="width: 18rem;" >
 
@@ -41,6 +41,7 @@
       </table>
     </div>
   </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 
 

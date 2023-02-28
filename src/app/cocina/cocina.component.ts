@@ -12,6 +12,7 @@ import { OrdersService } from 'app/order.service/orders.service';
 export class CocinaComponent implements OnInit {
 
   role!: any;
+  p: number = 1;
 
   constructor(private productsService: ProductsService, private orderService: OrdersService) { }
 
