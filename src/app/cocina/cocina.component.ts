@@ -12,51 +12,24 @@ import { OrdersService } from 'app/order.service/orders.service';
 export class CocinaComponent implements OnInit {
 
   role!: any;
-  p: number = 1;
-  total: number = 0;
 
   constructor(private productsService: ProductsService, private orderService: OrdersService) { }
-
+ 
+  p: number = 1;
+  total: number = 0;
   orders: any = [];
 
   ngOnInit(): void {
     this.getRole();
-    this.mostrarOrders();
-    //this.showOrdersPending();
+  
+    this.orderPending()
   }
 
   getRole() {
     this.role = this.productsService.getrole()
   }
+ 
   /*
-  mostrarProduct() {
-    this.orderService.getAllOrder().subscribe({
-      next: (data: any) => {
-        data.forEach((product: any) => {
-          this.productsOrder = product.products;
-          console.log(this.productsOrder)
-        });
-      },
-    });
-  }
-  */
-  
-  mostrarOrders() {
-    this.orderService.getOrders(this.p).subscribe({
-      next: (data: any) => {
-        this.orders= data;
-        this.total=data.length
-
-      },
-    });
-  }
-  pageChangeEvent(event: number){
-    this.p = event;
-    this.mostrarOrders();
-    //this.showOrdersPending();
-}
-  
-
   showOrdersPending() {
     this.orderService.getAllOrder().subscribe((data: any) => {
 
@@ -87,7 +60,7 @@ export class CocinaComponent implements OnInit {
     });
 
   }
-  /*
+  
   finishOrder(id: any) {
 
     this.orderService.getOrder(id).subscribe({
@@ -123,17 +96,16 @@ export class CocinaComponent implements OnInit {
               `Your file has been deleted. ${id}`,
               'success'
             );
-            this.mostrarOrders()
-            //this.showOrdersPending()
-
+            this.orderPending()
+    
           },
 
         });
       }
     })
-    this.mostrarOrders()
-    //this.showOrdersPending()
-
+    
+   
+    
   }
   
   cambiarStatus(id: number, statusOrder: any){
@@ -143,7 +115,7 @@ export class CocinaComponent implements OnInit {
           this.orderService.editarOrder(id, this.orderService.objetoStatus(data, statusOrder)).subscribe({
             next: (datos: any) => {
                alert('Orden editada con exito')
-               this.mostrarOrders()
+               this.orderPending()
             }
           })
       },
@@ -165,4 +137,55 @@ export class CocinaComponent implements OnInit {
  
  
   }
+
+  orderPending(){
+     this.orderService.getAllOrder('pending').subscribe({
+      next: (data: any) => {
+        this.orders= data;
+        this.total = data.length;
+      
+        this.pageChangeEvent(1)
+      },
+    });
+  }
+ 
+  orderDelivering(){
+    this.orderService.getAllOrder('delivering').subscribe({
+      next: (data: any) => {
+        this.orders= data;
+        this.total = data.length;
+       
+        this.pageChangeEvent(1)
+      },
+    });
+
+  }
+  
+  orderCanceled(){
+    this.orderService.getAllOrder('canceled').subscribe({
+      next: (data: any) => {
+        this.orders= data;
+        this.total = data.length;
+      
+        this.pageChangeEvent(1)
+      },
+    });
+  }
+  
+  orderDelivered(){
+    this.orderService.getAllOrder('delivered').subscribe({
+      next: (data: any) => {
+        this.orders= data;
+        this.total = data.length;
+     
+        this.pageChangeEvent(1)
+      },
+    });
+  }
+  
+
+pageChangeEvent(event: number){
+  this.p = event;
+ }
 }
+

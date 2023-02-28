@@ -12,14 +12,12 @@ export class ProductsService {
 
   constructor(private http: HttpClient ,private authService: AuthService) {}
   idProductNew =  this.authService.getToken();
-  showProducts() {
-    return this.http.get('http://localhost:3000/products');
-  }
+ 
 
-  products(page: number) {
-    return this.http.get('http://localhost:3000/products' + '?page=' + page);
+  showProducts(type: string) {
+    return this.http.get(`http://localhost:3000/products?type=${type}`);
   }
-
+ 
   getProduct(id: number) {
     return this.http.get(`http://localhost:3000/products/${id}`);
   }
