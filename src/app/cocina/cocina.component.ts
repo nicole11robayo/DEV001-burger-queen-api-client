@@ -76,5 +76,34 @@ export class CocinaComponent implements OnInit {
     this.mostrarOrders()
     
   }
+  
+  cambiarStatus(id: number, statusOrder: any){
+    this.orderService.obtenerOrden(id).subscribe({
+      next: (data: any) => {
+          //console.log(data);
+          this.orderService.editarOrder(id, this.orderService.objetoStatus(data, statusOrder)).subscribe({
+            next: (datos: any) => {
+               alert('Orden editada con exito')
+               this.mostrarOrders()
+            }
+          })
+      },
+    })
+  }
 
+  tiempoOrders(tp1: any, tp2: any){
+    const momentHi = moment(tp1);
+    const momentHf = moment(tp2);
+    let diferenciaEnMinutos = momentHf.diff(momentHi, 'minutes');
+    let hora =  diferenciaEnMinutos/ 60;
+    let min = diferenciaEnMinutos % 60
+     Swal.fire(
+              'Tiempo',
+              ` ${Math.floor(hora)} horas y ${min} minutos`,
+              'info'
+            );
+   console.log(diferenciaEnMinutos);
+ 
+ 
+  }
 }

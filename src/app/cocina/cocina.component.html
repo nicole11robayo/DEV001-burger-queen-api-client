@@ -1,32 +1,44 @@
 <app-navbar></app-navbar>
+<nav class="menu-order">
+  <ul>
+    <li><button type="button" class="btn btn-outline-success">Todos los pedidos</button></li>
+    <li><button type="button" class="btn btn-outline-info">delivering</button></li>
+    <li><button type="button" class="btn btn-outline-warning">delivered</button></li>
+    <li><button type="button" class="btn btn-outline-danger">pending</button></li>
+  </ul>
+</nav>
 <div class="todo">
   <div *ngFor="let order of orders">
 
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem;" >
 
-      <div class="card-header">
-        <p>Pedido # {{order.id}}</p>
+      <div class="card-header" id="{{order.status}}">
+        <p>Pedido # {{order.id}}</p> <button type="button" *ngIf="order.status == 'delivered'" (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
         <button type="button" class="btn btn-danger" *ngIf="role=='mesero'" (click)="deleteOrder(order.id)">Eliminar</button>
       </div>
-      <table class="card-table table">
+      <table class="card-table table" >
         <thead>
           <tr>
             <th scope="col">Products</th>
             <th scope="col">Amount</th>
+           
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of order.products">
             <td>{{item.product}}</td>
             <td>{{item.qty}}</td>
+            
           </tr>
 
           <tr>
-            <button type="button" class="btn btn-warning">Finish</button>
-
+            <button type="button" class="btn btn-warning" *ngIf="role=='cocinero'" (click)="cambiarStatus(order.id, 'delivering')">Finish</button>
+            <button type="button" class="btn btn-warning" *ngIf="role=='mesero'" (click)="cambiarStatus(order.id, 'delivered')">Entregado</button>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
+
