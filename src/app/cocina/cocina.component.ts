@@ -20,6 +20,7 @@ export class CocinaComponent implements OnInit {
   ngOnInit(): void {
     this.getRole();
     this.mostrarOrders();
+    //this.showOrdersPending();
   }
 
   getRole() {
@@ -37,7 +38,7 @@ export class CocinaComponent implements OnInit {
     });
   }
   */
-
+  
   mostrarOrders() {
     this.orderService.getAllOrder().subscribe({
       next: (data: any) => {
@@ -46,8 +47,47 @@ export class CocinaComponent implements OnInit {
       },
     });
   }
+  
+  
 
-  deleteOrder(id:any){
+  showOrdersPending() {
+    this.orderService.getAllOrder().subscribe((data: any) => {
+
+      let pending = data.filter((order: any) => order.status === "pending")
+
+      this.orders = pending;
+    });
+
+  }
+
+  showOrdersDelivering() {
+    this.orderService.getAllOrder().subscribe((data: any) => {
+
+      let delivering = data.filter((order: any) => order.status === "delivering")
+
+      this.orders = delivering;
+    });
+
+  }
+  /*
+  finishOrder(id: any) {
+
+    this.orderService.getOrder(id).subscribe({
+      next: (data: any) => {
+        data.status = "delivering";
+        console.log('cambiado')
+
+        this.showOrdersPending()
+
+      },
+
+    });
+
+    this.showOrdersPending()
+
+  }
+*/
+  deleteOrder(id: any) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -66,15 +106,16 @@ export class CocinaComponent implements OnInit {
               'success'
             );
             this.mostrarOrders()
-    
+            //this.showOrdersPending()
+
           },
-        
+
         });
       }
     })
-    
     this.mostrarOrders()
-    
+    //this.showOrdersPending()
+
   }
 
 }

@@ -1,5 +1,13 @@
 <app-navbar></app-navbar>
+<div>
+  <button (click)="mostrarOrders()">TODOS LOS PEDIDOS</button>
+  <button (click)="showOrdersPending()">PEDIDOS PENDIENTES</button>
+  <button (click)="showOrdersDelivering()">PEDIDOS LISTOS</button>
+  <button>PEDIDOS ENTREGADOS</button>
+  <button>PEDIDOS CANCELADOS</button>
+</div>
 <div class="todo">
+  
   <div *ngFor="let order of orders">
 
     <div class="card" style="width: 18rem;">
@@ -22,7 +30,7 @@
           </tr>
 
           <tr>
-            <button type="button" class="btn btn-warning">Finish</button>
+            <button type="button" class="btn btn-warning" >Finish</button>
 
           </tr>
         </tbody>
