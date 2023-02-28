@@ -33,7 +33,8 @@
           </tr>
 
           <tr>
-            <button type="button" class="btn btn-warning">Finish</button>
+            <button type="button" class="btn btn-warning" *ngIf="role=='cocinero'" (click)="cambiarStatus(order.id, 'delivering')">Finish</button>
+            <button type="button" class="btn btn-warning" *ngIf="role=='mesero'" (click)="cambiarStatus(order.id, 'delivered')">Entregado</button>
 
           </tr>
         </tbody>
