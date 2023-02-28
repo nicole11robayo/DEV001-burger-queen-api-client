@@ -1,14 +1,52 @@
 <app-navbar></app-navbar>
 <nav class="menu-order">
   <ul>
-    <li><button type="button" class="btn btn-outline-success">Todos los pedidos</button></li>
-    <li><button type="button" class="btn btn-outline-info">delivering</button></li>
-    <li><button type="button" class="btn btn-outline-warning">delivered</button></li>
-    <li><button type="button" class="btn btn-outline-danger">pending</button></li>
+    <li><button type="button" class="btn btn-outline-warning" (click)="orderPending()">pending</button></li>
+    <li><button type="button" class="btn btn-outline-info" (click)="orderDelivering()">delivering</button></li>
+    <li><button type="button" class="btn btn-outline-success" (click)="orderDelivered()">delivered</button></li>
+    <li><button type="button" class="btn btn-outline-danger" (click)="orderCanceled()">canceled</button></li>
   </ul>
 </nav>
-<div class="todo">
-  <div *ngFor="let order of orders">
+<pagination-controls   (pageChange)="pageChangeEvent($event)"></pagination-controls>
+<section class="todo">
+  <div class="cards " *ngFor="let order of orders  | paginate: { itemsPerPage: 6, currentPage: p, totalItems: total}">
+    <figure class="card card--{{order.status}}">
+            
+      <figcaption class="card__caption">
+          <h1 class="card__name">Pedido # {{order.id}}</h1>
+
+          <h3 class="card__type card__type_{{order.status}}">
+            {{order.status}}
+          </h3>
+
+          <table class="card__stats">
+              <tbody>
+                <tr *ngFor="let item of order.products">
+                  <th>{{item.product}}</th>
+                  <td>{{item.qty}}</td>
+                  
+                </tr>
+                
+              </tbody>
+          </table>
+
+          <div class="card__abilities">
+              <h4 class="card__ability">
+                  <span class="card__label">Ability</span>
+                  Run Away
+              </h4>
+              <h4 class="card__ability">
+                  <span class="card__label">Hidden Ability</span>
+                  Anticipation
+              </h4>
+          </div>
+      </figcaption>
+  </figure>
+  </div>
+</section>
+
+<!--<div class="todo">
+  <div >
 
     <div class="card" style="width: 18rem;" >
 
@@ -39,6 +77,6 @@
       </table>
     </div>
   </div>
-</div>
+</div>-->
 
 

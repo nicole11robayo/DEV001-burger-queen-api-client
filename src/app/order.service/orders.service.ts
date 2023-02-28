@@ -18,8 +18,8 @@ export class OrdersService {
     
   }
 
-  getAllOrder(){
-    return this.http.get('http://localhost:3000/orders')
+  getAllOrder(status: string){
+    return this.http.get(`http://localhost:3000/orders?status=${status}`)
   }
 
   crearOrder(item: any, nameUs: any){

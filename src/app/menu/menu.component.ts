@@ -9,55 +9,56 @@ import { ProductsService } from '../products.service/products.service'
 })
 export class MenuComponent implements OnInit{
   products: any = [];
-
-
+  p: number = 1;
+  total: number = 0;
+  
   constructor(private authService: AuthService, private productsService: ProductsService) { }
 
   ngOnInit(){
     this.showProductsDesayuno();
-    console.log(this.products)
-    //this.onClickMe2();
+    this.showProductsComida();
+    
+
   }
-
+  
   showProductsDesayuno() {
-    this.productsService.showProducts().subscribe((data: any) => {
-      
-      let desayuno = data.filter((product: any) => product.type === "desayuno")
-
-      //let showDesayuno = desayuno.map((des:any) => JSON.stringify(des))
-      //console.log(showDesayuno);
-      this.products = desayuno;
-    });
-    //this.router.navigateByUrl('/products')
+    this.productsService.showProducts('desayuno').subscribe({
+      next: (data: any) => {
+        this.products = data;
+        this.total = data.length;
+       
+        this.pageChangeEvent(1)
+      }
+    })
+  
   }
 
   showProductsComida() {
-    this.productsService.showProducts().subscribe((data: any) => {
-      let comida = data.filter((product: any) => product.type === "comida")
-      //console.log(data)
-      //let showDesayuno = desayuno.map((des:any) => JSON.stringify(des))
-      //console.log(showDesayuno);
-      this.products = comida;
-    });
+    this.productsService.showProducts('comida').subscribe({
+      next: (data: any) => {
+        this.products = data;
+        this.total = data.length;
+       
+        this.pageChangeEvent(1)
+      }
+    })
+   
   }
+pageChangeEvent(event: number){
+    this.p = event;
+   
+
+}
+
   @Output() newItemEvent = new EventEmitter<number>();    
   onClickMe(comida: number) {
-   //console.log(comida);
+   
     this.newItemEvent.emit(comida);
-    //this.productsService.getProductClick(comida);
+  
       
     
   }
  
-  onClickMe2() {
-   // console.log(this.productsService.getProductItem()) 
-    // this.productsService.getProductItem().then((productos)=>{
-    //   console.log(productos);
-    // })
-
-
-    
-  }
-
+ 
   
 }
