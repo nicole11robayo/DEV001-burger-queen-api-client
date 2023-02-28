@@ -88,6 +88,13 @@ nav {
     background-color: #89ff00;
   }
   
+  .botones button:nth-child(3):before {
+    background-color: #ff00f2;
+  }
+  
+  .botones button:nth-child(3):after {
+    background-color: #00ccff;
+  }
   
   
   .botones button:hover {
