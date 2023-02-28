@@ -13,6 +13,7 @@ export class CocinaComponent implements OnInit {
 
   role!: any;
   p: number = 1;
+  total: number = 0;
 
   constructor(private productsService: ProductsService, private orderService: OrdersService) { }
 
@@ -41,14 +42,19 @@ export class CocinaComponent implements OnInit {
   */
   
   mostrarOrders() {
-    this.orderService.getAllOrder().subscribe({
+    this.orderService.getOrders(this.p).subscribe({
       next: (data: any) => {
         this.orders= data;
+        this.total=data.length
 
       },
     });
   }
-  
+  pageChangeEvent(event: number){
+    this.p = event;
+    this.mostrarOrders();
+    //this.showOrdersPending();
+}
   
 
   showOrdersPending() {
@@ -57,6 +63,7 @@ export class CocinaComponent implements OnInit {
       let pending = data.filter((order: any) => order.status === "pending")
 
       this.orders = pending;
+      //this.total= pending.length
     });
 
   }
@@ -67,6 +74,16 @@ export class CocinaComponent implements OnInit {
       let delivering = data.filter((order: any) => order.status === "delivering")
 
       this.orders = delivering;
+    });
+
+  }
+
+  showOrdersDelivered() {
+    this.orderService.getAllOrder().subscribe((data: any) => {
+
+      let delivered = data.filter((order: any) => order.status === "delivered")
+
+      this.orders = delivered;
     });
 
   }

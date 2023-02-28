@@ -1,15 +1,15 @@
 <app-navbar></app-navbar>
 <nav class="menu-order">
   <ul>
-    <li><button type="button" class="btn btn-outline-success">Todos los pedidos</button></li>
-    <li><button type="button" class="btn btn-outline-info">delivering</button></li>
-    <li><button type="button" class="btn btn-outline-warning">delivered</button></li>
-    <li><button type="button" class="btn btn-outline-danger">pending</button></li>
+    <li><button type="button" class="btn btn-outline-success" (click)="mostrarOrders()">Todos los pedidos</button></li>
+    <li><button type="button" class="btn btn-outline-info" (click)="showOrdersDelivering()">delivering</button></li>
+    <li><button type="button" class="btn btn-outline-warning" (click)="showOrdersDelivered()">delivered</button></li>
+    <li><button type="button" class="btn btn-outline-danger" (click)="showOrdersPending()">pending</button></li>
   </ul>
 </nav>
 <div class="todo">
   
-  <div *ngFor="let order of orders | paginate: { itemsPerPage: 10, currentPage: p }">
+  <div *ngFor="let order of orders | paginate: { itemsPerPage: 10, currentPage: p, totalItems:total }">
 
     <div class="card" style="width: 18rem;" >
 
@@ -41,7 +41,7 @@
       </table>
     </div>
   </div>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
 </div>
 
 

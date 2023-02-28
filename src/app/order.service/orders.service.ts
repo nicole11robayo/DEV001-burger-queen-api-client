@@ -21,6 +21,9 @@ export class OrdersService {
   getAllOrder(){
     return this.http.get('http://localhost:3000/orders')
   }
+  getOrders(page: number){
+    return this.http.get('http://localhost:3000/orders' + '?page=' + page);
+  }
 
   crearOrder(item: any, nameUs: any){
     let objetoEditar = {

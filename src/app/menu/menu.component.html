@@ -5,7 +5,7 @@
     <button type="button" class="btn btn-info" (click)="showProductsComida()">Almuerzo</button>
   </div>
   <div class="card-categorias">
-    <div *ngFor="let item of products">
+    <div *ngFor="let item of products | paginate: { itemsPerPage: 4, currentPage: p, totalItems:total }">
       <div class="product-card">
         <div class="{{item.type}}">{{item.type}}</div>
         <div class="product-tumb">
@@ -27,6 +27,7 @@
 
 
       </div>
+      <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
     </div>
     <!-- <div class="card" style="width: 10rem; height: 10rem;" *ngFor="let item of products">
     <img src={{item.image}} class="card-img-top" alt="...">

@@ -16,6 +16,10 @@ export class ProductsService {
     return this.http.get('http://localhost:3000/products');
   }
 
+  products(page: number) {
+    return this.http.get('http://localhost:3000/products' + '?page=' + page);
+  }
+
   getProduct(id: number) {
     return this.http.get(`http://localhost:3000/products/${id}`);
   }

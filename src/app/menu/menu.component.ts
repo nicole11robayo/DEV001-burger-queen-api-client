@@ -9,7 +9,8 @@ import { ProductsService } from '../products.service/products.service'
 })
 export class MenuComponent implements OnInit{
   products: any = [];
-
+  p: number = 1;
+  total: number = 0;
 
   constructor(private authService: AuthService, private productsService: ProductsService) { }
 
@@ -20,24 +21,32 @@ export class MenuComponent implements OnInit{
   }
 
   showProductsDesayuno() {
-    this.productsService.showProducts().subscribe((data: any) => {
+    this.productsService.products(this.p).subscribe((data: any) => {
       
       let desayuno = data.filter((product: any) => product.type === "desayuno")
 
       //let showDesayuno = desayuno.map((des:any) => JSON.stringify(des))
       //console.log(showDesayuno);
       this.products = desayuno;
+      this.total= desayuno.length;
     });
     //this.router.navigateByUrl('/products')
   }
+  pageChangeEvent(event: number){
+    this.p = event;
+    this.showProductsDesayuno();
+    this.showProductsComida();
+  }
 
   showProductsComida() {
-    this.productsService.showProducts().subscribe((data: any) => {
+    this.productsService.products(this.p).subscribe((data: any) => {
       let comida = data.filter((product: any) => product.type === "comida")
       //console.log(data)
       //let showDesayuno = desayuno.map((des:any) => JSON.stringify(des))
       //console.log(showDesayuno);
       this.products = comida;
+      this.total=comida.length
+      
     });
   }
   @Output() newItemEvent = new EventEmitter<number>();    
