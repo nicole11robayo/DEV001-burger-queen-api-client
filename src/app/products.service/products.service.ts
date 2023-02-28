@@ -61,6 +61,7 @@ export class ProductsService {
   objetoNew(item: any) {
     let objetoEditar = {
       id: this.idProductNew,
+      nameCliente :this.getCliente(),
       pedido: [item]
     };
     return objetoEditar;
@@ -68,6 +69,7 @@ export class ProductsService {
   agregarItem(item: any, item2: any) {
     let objetoEditar = {
       id: this.idProductNew,
+      nameCliente :this.getCliente(),
       pedido: [item]
     };
     objetoEditar.pedido.push();
@@ -81,6 +83,7 @@ export class ProductsService {
   eliminarItem(item: any) {
     let objetoEditar = {
       id: this.idProductNew,
+      nameCliente :this.getCliente(),
       pedido: []
     };
     objetoEditar.pedido = item

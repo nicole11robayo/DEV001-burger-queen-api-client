@@ -22,10 +22,10 @@ export class OrdersService {
     return this.http.get('http://localhost:3000/orders')
   }
 
-  crearOrder(item: any){
+  crearOrder(item: any, nameUs: any){
     let objetoEditar = {
       userId: this.idProductNew,
-      client: this.nombreUs,
+      client: nameUs,
       products: [],
       status: 'pending',
       dateEntry: moment().format('YYYY-MM-DD hh:mm:ss'),
@@ -37,5 +37,26 @@ export class OrdersService {
 
   deleteOrder(id:any){
     return this.http.delete(`http://localhost:3000/orders/${id}`)
+  }
+
+  editarOrder(id:any,item: any ){
+    return this.http.put(`http://localhost:3000/orders/${id}`, item)
+  }
+  
+  obtenerOrden(id:any){
+    return this.http.get(`http://localhost:3000/orders/${id}`)
+  }
+
+  objetoStatus(item: any, statusOrder: any){
+    let objetoEditar = {
+      userId: item.userId,
+      client: item.client,
+      products: item.products,
+      status: statusOrder,
+      dateEntry: item.dateEntry,
+      dateProcessed: moment().format('YYYY-MM-DD hh:mm:ss'),
+    };
+
+    return objetoEditar
   }
 }

@@ -27,6 +27,7 @@ export class CuentaComponent implements OnInit {
     this.productsService.getCliente()
     this.arrayItem();
     this.mostrarProduct();
+    console.log( this.productsService.getCliente());
     if(this.productsService.getCliente() != undefined){
       this.nombreCliente = this.productsService.getCliente();    
     }
@@ -58,6 +59,7 @@ export class CuentaComponent implements OnInit {
     });
   }
   addItem(newItem: number) {
+    console.log( this.productsService.getCliente());
     this.arrayItem();
     this.agregarElemento(newItem);
     this.mostrarProduct();
@@ -132,11 +134,16 @@ export class CuentaComponent implements OnInit {
             
             
            })
-           const dataOrder = this.orderService.crearOrder(orderProduct)
-           console.log(dataOrder)
-          
+           const dataOrder = this.orderService.crearOrder(orderProduct, this.nombreCliente)
+           //console.log(dataOrder)
+           
            this.crearOrden(dataOrder)
            this.limpiarPantalla();
+           this.productsPedido = [];
+           this.nombreCliente = '';
+           this.total = 0;
+           this.objetoelem = [];
+           sessionStorage.removeItem('cliente');
            
         }
         
@@ -276,6 +283,7 @@ export class CuentaComponent implements OnInit {
   limpiarPantalla(){
    
       this.productsService.productsArray = []
+     
       this.productsService.deleteAll().subscribe({
         next : () => {
           this.productsPedido = [];

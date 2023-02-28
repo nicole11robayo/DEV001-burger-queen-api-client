@@ -7,15 +7,15 @@ import { ProductsService } from 'app/products.service/products.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit{
-  role!: any;
+export class NavbarComponent implements OnInit {
+role: any;
   constructor(private authService: AuthService, public router: Router, private productsService: ProductsService) {
    
   }
-  ngOnInit(): void {
-    this.getRole();
+  ngOnInit() {
+    this.obtenerRol()
   }
-
+  
   deleteToken(){
     this.productsService.productsArray = []
     this.productsService.deleteAll().subscribe({
@@ -30,11 +30,8 @@ export class NavbarComponent implements OnInit{
 
   }
 
-  pedidos(){
-    this.router.navigateByUrl('/cocina')
+  obtenerRol(){
+    return this.role = this.productsService.getrole();
   }
 
-  getRole() {
-    this.role = this.productsService.getrole()
-  }
 }
