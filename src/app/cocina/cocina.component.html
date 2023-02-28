@@ -7,34 +7,92 @@
     <li><button type="button" class="btn btn-outline-danger" (click)="showOrdersPending()">pending</button></li>
   </ul>
 </nav>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="page-content container note-has-grid">
+  <ul class="nav nav-pills p-3 bg-white mb-3 rounded-pill align-items-center">
+    <li class="nav-item">
+      <a href="javascript:void(0)"
+        class="nav-link rounded-pill note-link d-flex align-items-center px-2 px-md-3 mr-0 mr-md-2 active"
+        id="all-category">
+        <i class="icon-layers mr-1"></i><span class="d-none d-md-block">Todos los pedidos</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="javascript:void(0)"
+        class="nav-link rounded-pill note-link d-flex align-items-center px-2 px-md-3 mr-0 mr-md-2" id="note-business">
+        <i class="icon-briefcase mr-1"></i><span class="d-none d-md-block">Pending</span></a>
+    </li>
+    <li class="nav-item">
+      <a href="javascript:void(0)"
+        class="nav-link rounded-pill note-link d-flex align-items-center px-2 px-md-3 mr-0 mr-md-2" id="note-social"> <i
+          class="icon-share-alt mr-1"></i><span class="d-none d-md-block">Delivering</span></a>
+    </li>
+    <li class="nav-item">
+      <a href="javascript:void(0)"
+        class="nav-link rounded-pill note-link d-flex align-items-center px-2 px-md-3 mr-0 mr-md-2" id="note-important">
+        <i class="icon-tag mr-1"></i><span class="d-none d-md-block">Delivered</span></a>
+    </li>
+    
+  </ul>
+  <div class="tab-content bg-transparent" *ngFor="let order of orders | paginate: { itemsPerPage: 10, currentPage: p, totalItems:total }">
+    <div id="note-full-container" class="note-has-grid row">
+      <div class="col-md-4 single-note-item all-category note-important" style="">
+        <div class="card card-body">
+          <span class="side-stick"></span>
+          <h5 class="note-title text-truncate w-75 mb-0" data-noteheading="Go for lunch">Go for lunch <i
+              class="point fa fa-circle ml-1 font-10"></i></h5>
+          <p class="note-date font-12 text-muted">01 April 2002</p>
+          <div class="note-content">
+            <p class="note-inner-content text-muted"
+              data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">Blandit tempus
+              porttitor aasfs. Integer posuere erat a ante venenatis.</p>
+          </div>
+          <div class="d-flex align-items-center">
+            <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
+            <span class="mr-1"><i class="fa fa-trash remove-note"></i></span>
+            <div class="ml-auto">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="todo">
-  
+
   <div *ngFor="let order of orders | paginate: { itemsPerPage: 10, currentPage: p, totalItems:total }">
 
-    <div class="card" style="width: 18rem;" >
+    <div class="card" style="width: 18rem;">
 
       <div class="card-header" id="{{order.status}}">
-        <p>Pedido # {{order.id}}</p> <button type="button" *ngIf="order.status == 'delivered'" (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
-        <button type="button" class="btn btn-danger" *ngIf="role=='mesero'" (click)="deleteOrder(order.id)">Eliminar</button>
+        <p>Pedido # {{order.id}}</p> <button type="button" *ngIf="order.status == 'delivered'"
+          (click)="tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
+        <button type="button" class="btn btn-danger" *ngIf="role=='mesero'"
+          (click)="deleteOrder(order.id)">Eliminar</button>
       </div>
-      <table class="card-table table" >
+      <table class="card-table table">
         <thead>
           <tr>
             <th scope="col">Products</th>
             <th scope="col">Amount</th>
-           
+
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of order.products">
             <td>{{item.product}}</td>
             <td>{{item.qty}}</td>
-            
+
           </tr>
 
           <tr>
-            <button type="button" class="btn btn-warning" *ngIf="role=='cocinero'" (click)="cambiarStatus(order.id, 'delivering')">Finish</button>
-            <button type="button" class="btn btn-warning" *ngIf="role=='mesero'" (click)="cambiarStatus(order.id, 'delivered')">Entregado</button>
+            <button type="button" class="btn btn-warning" *ngIf="role=='cocinero'"
+              (click)="cambiarStatus(order.id, 'delivering')">Finish</button>
+            <button type="button" class="btn btn-warning" *ngIf="role=='mesero'"
+              (click)="cambiarStatus(order.id, 'delivered')">Entregado</button>
 
           </tr>
         </tbody>
@@ -43,5 +101,3 @@
   </div>
   <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
 </div>
-
-
