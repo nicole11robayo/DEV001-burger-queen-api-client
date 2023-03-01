@@ -21,9 +21,6 @@
           <h1 class="card__name">Pedido # {{order.id}}</h1>
           <h2 class="card__name">Mesero: {{order.userId}}</h2>
           <h2 class="card__name">Cliente: {{order.client}}</h2>
-          <div class="card__time" *ngIf="order.status == 'delivered'">
-            <button type="button"  (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
-          </div>
 
           <div class="card__time" *ngIf="order.status == 'delivered'">
             <button type="button" (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
@@ -44,7 +41,7 @@
           </table>
 
           <div class="card__abilities">
-            <button type="button" class="btn-eliminar-order" *ngIf="role=='mesero' && order.status == 'pending' ">
+            <button type="button" class="btn-eliminar-order" *ngIf="role=='mesero' && order.status == 'pending' " (click)="cambiarStatus(order.id, 'canceled')">
               <i class='bx bx-x-circle'   ></i>
 
             </button>
