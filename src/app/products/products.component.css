@@ -2,8 +2,22 @@
 
    
     width: 100%;
+    height: 100%;
 }
 
-.cuenta{
+.header-productos{
     width: 100%;
+    height: 10%;
+}
+
+.body-productos{
+  width: 100%;
+  height: 80%;
+  
+}
+
+.footer-productos{
+  width: 100%;
+  height: 10%;
+  background-color: forestgreen;
 }

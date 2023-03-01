@@ -1,13 +1,15 @@
 <div class="menu">
-  
+
   <div class="buttonsMenu">
     <button type="button" class="btn btn-warning" (click)="showProductsDesayuno()">Desayuno</button>
     <button type="button" class="btn btn-info" (click)="showProductsComida()">Almuerzo</button>
   </div>
-  <pagination-controls  (pageChange)="pageChangeEvent($event)"></pagination-controls>
- 
+  <div class="paginacion">
+    <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
+  </div>
+
   <div class="card-categorias">
-    <div *ngFor="let item of products | paginate: { itemsPerPage: 3, currentPage: p, totalItems: total}">
+    <div *ngFor="let item of products | paginate: { itemsPerPage: 4, currentPage: p, totalItems: total}">
       <div class="product-card">
         <div class="{{item.type}}">{{item.type}}</div>
         <div class="product-tumb">
@@ -17,22 +19,22 @@
           <span class="product-catagory">{{item.name}}</span>
           <div class="product-bottom-details">
             <div class="product-price">${{item.price}}</div>
-              <div class="product-links">
-                <button class="btn-card" id={{item.id}} (click)='onClickMe(item.id)'><i class='bx bxs-cart-add'></i></button>
-              </div>
+            <div class="product-links">
+              <button class="btn-card" id={{item.id}} (click)='onClickMe(item.id)'><i
+                  class='bx bxs-cart-add'></i></button>
             </div>
           </div>
         </div>
-
-
-        
-
-
       </div>
-      
     </div>
    
-    <!-- <div class="card" style="width: 10rem; height: 10rem;" *ngFor="let item of products">
+   
+  </div>
+  <!--<div>
+    <button (click)="arriba()">arriba</button> 
+  </div>-->
+</div>
+<!-- <div class="card" style="width: 10rem; height: 10rem;" *ngFor="let item of products">
     <img src={{item.image}} class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">Card title</h5>
@@ -40,7 +42,7 @@
       <a href="#" class="btn btn-primary">Go somewhere</a>
     </div>
   </div> -->
-    <!-- <div *ngFor="let item of products">
+<!-- <div *ngFor="let item of products">
     <div class="card" style="width: 10rem;height: 10rem; margin: 10px;">
       <img src={{item.image}} class="card-img-top"
         alt="Hollywood Sign on The Hill" />
@@ -52,7 +54,7 @@
     </div>
 
   </div> -->
-    <!-- <div *ngFor="let item of products">
+<!-- <div *ngFor="let item of products">
     <div class="card w-75">
       <div class="card-body">
         <h5 class="card-title">{{item.name}}</h5>
@@ -61,5 +63,3 @@
       </div>
     </div>
   </div> -->
-
-  </div>

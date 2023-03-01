@@ -1,19 +1,29 @@
-<app-navbar></app-navbar>
-<nav class="menu-order">
-  <ul>
-    <li><button type="button" class="btn btn-outline-warning" (click)="orderPending()">pending</button></li>
-    <li><button type="button" class="btn btn-outline-info" (click)="orderDelivering()">delivering</button></li>
-    <li><button type="button" class="btn btn-outline-success" (click)="orderDelivered()">delivered</button></li>
-    <li><button type="button" class="btn btn-outline-danger" (click)="orderCanceled()">canceled</button></li>
-  </ul>
-</nav>
-<pagination-controls   (pageChange)="pageChangeEvent($event)"></pagination-controls>
-<section class="todo">
-  <div class="cards " *ngFor="let order of orders  | paginate: { itemsPerPage: 6, currentPage: p, totalItems: total}">
-    <figure class="card card--{{order.status}}">
-            
-      <figcaption class="card__caption">
+
+<section class="cocina">
+  
+    <app-navbar></app-navbar>
+  
+  
+  <nav class="menu-order">
+    <ul>
+      <li><button type="button" class="btn btn-outline-warning" (click)="orderPending()">pending</button></li>
+      <li><button type="button" class="btn btn-outline-info" (click)="orderDelivering()">delivering</button></li>
+      <li><button type="button" class="btn btn-outline-success" (click)="orderDelivered()">delivered</button></li>
+      <li><button type="button" class="btn btn-outline-danger" (click)="orderCanceled()">canceled</button></li>
+    </ul>
+  </nav>
+  <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
+  <section class="todo">
+    <div class="cards " *ngFor="let order of orders  | paginate: { itemsPerPage: 6, currentPage: p, totalItems: total}">
+      <figure class="card card--{{order.status}}">
+
+        <figcaption class="card__caption">
           <h1 class="card__name">Pedido # {{order.id}}</h1>
+          <h2 class="card__name">Mesero: {{order.userId}}</h2>
+          <h2 class="card__name">Cliente: {{order.client}}</h2>
+          <div class="card__time" *ngIf="order.status == 'delivered'">
+            <button type="button"  (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
+          </div>
 
           <div class="card__time" *ngIf="order.status == 'delivered'">
             <button type="button" (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
@@ -23,31 +33,33 @@
           </h3>
 
           <table class="card__stats">
-              <tbody>
-                <tr *ngFor="let item of order.products">
-                  <th>{{item.product}}</th>
-                  <td>{{item.qty}}</td>
-                  
-                </tr>
-                
-              </tbody>
+            <tbody>
+              <tr *ngFor="let item of order.products">
+                <th>{{item.product}}</th>
+                <td>{{item.qty}}</td>
+
+              </tr>
+
+            </tbody>
           </table>
 
           <div class="card__abilities">
-              <h4 class="card__ability">
-                  <span class="card__label">Ability</span>
-                  Run Away
-              </h4>
-              <h4 class="card__ability">
-                  <span class="card__label">Hidden Ability</span>
-                  Anticipation
-              </h4>
-          </div>
-      </figcaption>
-  </figure>
-  </div>
-</section>
+            <button type="button" class="btn-eliminar-order" *ngIf="role=='mesero' && order.status == 'pending' ">
+              <i class='bx bx-x-circle'   ></i>
 
+            </button>
+            <button class="btn-order-check" *ngIf="role=='cocinero' && order.status == 'pending'" (click)="cambiarStatus(order.id, 'delivering')">
+              <i class='bx bxs-check-circle'></i>
+            </button>
+            <button class="btn-order-check"*ngIf="role=='mesero' && order.status == 'delivering'" (click)="cambiarStatus(order.id, 'delivered')" >
+              <i class='bx bxs-check-circle'></i>
+            </button>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+</section>
 <!--<div class="todo">
   <div >
 
@@ -82,5 +94,3 @@
     </div>
   </div>
 </div>-->
-
-
