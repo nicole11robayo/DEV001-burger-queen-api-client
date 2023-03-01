@@ -1,19 +1,35 @@
 .containerPrincipal{
   display: flex;
-  width: 80%;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   
+  border: 1px solid red;
+  flex-wrap: wrap;
 }
 .ordenes{
-  width: 60%;
-  height: 90%;
-  overflow: scroll;
-}
-#cuentaContenedor{
-  width: 40%;
+  width: 75%;
   height: 100%;
- 
+  overflow: scroll;
+  border: 1px solid rgb(0, 183, 255);
 }
+.ordenes::-webkit-scrollbar{
+  display: none;
+  
+} 
+  
+
+
+#cuentaContenedor{
+  width: 25%;
+  height: 100%;
+  overflow: scroll;
+  border: 1px solid rgb(0, 255, 64);
+}
+
+#cuentaContenedor::-webkit-scrollbar{
+  display: none;
+  
+} 
 /* #botonCantidad{
     display:none;
 }
