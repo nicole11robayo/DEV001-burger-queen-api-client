@@ -113,8 +113,8 @@ export class CuentaComponent implements OnInit {
   enviarDB() {
     if(this.nombreCliente === ''){
       Swal.fire(
-        'Bad job!',
-        'agrega un nombre!',
+        'Error!',
+        'Agrega el nombre de tu cliente',
         'warning'
       )
       
@@ -160,16 +160,16 @@ export class CuentaComponent implements OnInit {
       next: (data: any) => {
       
         Swal.fire(
-          'Good job!',
-          'You clicked the button!',
+          'Pedido enviado con éxito!',
+          'Podrás ver el estado de tu orden en pedidos',
           'success'
         )
         
       },
       error: (error) => {
         Swal.fire(
-          'Good job!',
-          'You clicked the button!',
+          'error!',
+          'No se ha podido enviar tu orden',
           'error'
         )
        
@@ -224,13 +224,14 @@ export class CuentaComponent implements OnInit {
   }
   eliminarElementos(id: number) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Estás seguro?',
+      text: "No podrás revertir esta acción!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.productsService.showProducts2().subscribe({
@@ -241,9 +242,9 @@ export class CuentaComponent implements OnInit {
               this.productsService.getProductItem2(pedido).subscribe({
                 next: () => {
                   Swal.fire(
-                    'Deleted!',
-                    `Your file has been deleted. ${id}`,
-                    'success'
+                    'Eliminado!',
+                    `El producto ha sido eliminado. ${id}`,
+                    'success',  
                   );
                   this.mostrarProduct();
                   this.objetoelem = [];
@@ -261,11 +262,13 @@ export class CuentaComponent implements OnInit {
   
    agregarUsuario() {
     Swal.fire({
-        title: "Tu nombre",
+        title: "Nombre Cliente",
         input: "text",
         showCancelButton: true,
         confirmButtonText: "Guardar",
         cancelButtonText: "Cancelar",
+        confirmButtonColor: '#6096B4',
+        cancelButtonColor: '#F55050'
         
     })
     .then(resultado => {
@@ -273,7 +276,7 @@ export class CuentaComponent implements OnInit {
             
             let nombre = resultado.value;
             sessionStorage.setItem('cliente', nombre );
-            Swal.fire('Nombre agregado exitosamente' + nombre);
+            Swal.fire('Nombre agregado exitosamente ' + nombre);
             this.productsService.getCliente();
             this.nombreCliente = this.productsService.getCliente();
         }

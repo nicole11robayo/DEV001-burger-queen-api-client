@@ -8,14 +8,14 @@
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <td colspan="4">CLIENTE {{nombreCliente}}</td>
+        <td colspan="4">CLIENTE: {{nombreCliente}}</td>
         <td><button type="button" class="btn btn-success"  (click)="agregarUsuario()">Agregar cliente</button></td>
       </tr>
       <tr>
-        <td>product name</td>
-        <td>amount</td>
-        <td>unit price</td>
-        <td>total price</td>
+        <td>Nombre producto</td>
+        <td>Cantidad</td>
+        <td>Precio Unitario</td>
+        <td>Precio total</td>
        
       </tr>
       <tr *ngFor="let product of productsPedido">

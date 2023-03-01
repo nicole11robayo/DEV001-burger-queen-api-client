@@ -2,15 +2,12 @@
 
 .todo{
     width: 100%;
-    height: 100%;
     display: flex;
     flex-wrap: wrap;
     overflow: scroll;
     font-family: "Open Sans", Helvetica, sans-serif;
     text-align: center;
-
 }
-
 
 
 .card {
@@ -64,6 +61,16 @@
   background: #bbbbbb;
  font-size: 25px;
 }
+.card__time {
+    position: absolute;
+    top: 0;
+    right: 9em;
+    padding: 0.25em;
+    line-height: 1;
+    border-radius: 2px;
+    background: #bbbbbb;
+   font-size: 25px;
+  }
 
 .card__label {
   font-size: 10px;
