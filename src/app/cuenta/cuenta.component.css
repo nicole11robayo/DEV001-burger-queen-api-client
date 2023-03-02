@@ -7,7 +7,7 @@
   flex-wrap: wrap;
 }
 .ordenes{
-  width: 75%;
+  width: 60%;
   height: 100%;
   overflow: scroll;
   border: 1px solid rgb(0, 183, 255);
@@ -20,7 +20,7 @@
 
 
 #cuentaContenedor{
-  width: 25%;
+  width: 40%;
   height: 100%;
   overflow: scroll;
   border: 1px solid rgb(0, 255, 64);

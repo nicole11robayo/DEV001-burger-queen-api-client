@@ -26,15 +26,15 @@
             <div class="form-group mb-0">
               <div class="input-group mx-auto mb-0">
                 <div class="number-input">
-                  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"  (click)="valorMas(identificador.value, product.id)"></button>
                   <input class="quantity bg-light" min="1" name="quantity" value='{{product.cant}}' type="number" #identificador>
-                  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus" (click)="valorMas(identificador.value, product.id)"></button>
                 </div>
               </div>
             </div>
           </div>
           
-          <button (click)="valor1(identificador.value, product.id)">OK</button>
+          
          
         </td>
         <td>${{product.price}}</td>

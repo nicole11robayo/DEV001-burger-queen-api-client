@@ -45,18 +45,31 @@ export class CuentaComponent implements OnInit {
    
   }
   mostrarProduct() {
-    this.productsService.showProducts2().subscribe({
+    this.productsService.showProductsItem().subscribe({
       next: (data: any) => {
-        data.forEach((product: any) => {
-          this.productsPedido = product.pedido;
-          this.total = this.productsPedido.reduce(
+        this.productsPedido = data.pedido;
+               this.total = this.productsPedido.reduce(
             (acc: any, obj: any) => acc + obj.price * obj.cant,
             0
           );
-          console.log('Total: ', this.total);
-        });
-      },
-    });
+         
+      }
+    })
+
+
+    //toDo codigo para API
+    // this.productsService.showProducts2().subscribe({
+    //   next: (data: any) => {
+    //     data.forEach((product: any) => {
+    //       this.productsPedido = product.pedido;
+    //       this.total = this.productsPedido.reduce(
+    //         (acc: any, obj: any) => acc + obj.price * obj.cant,
+    //         0
+    //       );
+    //       console.log('Total: ', this.total);
+    //     });
+    //   },
+    // });
   }
   addItem(newItem: number) {
    
@@ -64,9 +77,30 @@ export class CuentaComponent implements OnInit {
     this.agregarElemento(newItem);
     this.mostrarProduct();
   }
-
+  valorMas(numero: string, id: number) {
+   
+   
+     this.productsService.showProductsItem().subscribe({
+      next: (data: any) => {
+        let edit: never[] = [];
+        console.log(data.pedido);
+        this.filter(data.pedido, id).forEach((datos2: any) => {
+          return (edit = datos2);
+        });
+        this.elementosEditados(edit, numero);
+        let itemEl = this.productsService.agregarItem(
+          this.elementosEditados(edit, numero),
+          this.filter2(data.pedido, id)
+        );
+       this.productsService.getProductItemDemo(itemEl).subscribe((data) => {
+        console.log('cambios agregados');
+        this.mostrarProduct();
+      ;})
+      }
+     })  
+  }
   valor1(numero: string, id: number) {
- 
+    
     this.productsService.showProducts2().subscribe({
       next: (data: any) => {
         data.forEach((datos: any) => {
