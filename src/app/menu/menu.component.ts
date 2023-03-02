@@ -22,14 +22,27 @@ export class MenuComponent implements OnInit{
   }
   
   showProductsDesayuno() {
-    this.productsService.showProducts('desayuno').subscribe({
+    this.productsService.showAllProducts().subscribe({
       next: (data: any) => {
-        this.products = data;
-        this.total = data.length;
-       
+        let item = data.products;
+        
+        let desayuno = item.filter((product: any) => product.type == "desayuno");
+        
+        this.products = desayuno;
+        this.total = desayuno.length;
         this.pageChangeEvent(1)
+      
       }
-    })
+    });
+    //toDo codigo para Api
+    // this.productsService.showProducts('desayuno').subscribe({
+    //   next: (data: any) => {
+    //     this.products = data;
+    //     this.total = data.length;
+       
+    //     this.pageChangeEvent(1)
+    //   }
+    // })
   
   }
   /*
@@ -41,14 +54,25 @@ export class MenuComponent implements OnInit{
   */
 
   showProductsComida() {
-    this.productsService.showProducts('comida').subscribe({
+
+    this.productsService.showAllProducts().subscribe({
       next: (data: any) => {
-        this.products = data;
-        this.total = data.length;
-       
+        let item = data.products;
+        let comida= item.filter((product: any) => product.type == "comida");
+        this.products = comida;
+        this.total = comida.length;
         this.pageChangeEvent(1)
       }
     })
+    //toDo codigo para Api
+    // this.productsService.showProducts('comida').subscribe({
+    //   next: (data: any) => {
+    //     this.products = data;
+    //     this.total = data.length;
+       
+    //     this.pageChangeEvent(1)
+    //   }
+    // })
    
   }
 pageChangeEvent(event: number){
