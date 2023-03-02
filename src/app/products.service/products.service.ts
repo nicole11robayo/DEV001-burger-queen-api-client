@@ -17,9 +17,15 @@ export class ProductsService {
   showProducts(type: string) {
     return this.http.get(`http://localhost:3000/products?type=${type}`);
   }
- 
+  //all los productos
+  showAllProducts(){
+    return this.http.get('https://api.npoint.io/13831094a52f73187288')
+ }
   getProduct(id: number) {
     return this.http.get(`http://localhost:3000/products/${id}`);
+  }
+  getProductDemo(id: number) {
+    return this.http.get(`https://api.npoint.io/13831094a52f73187288/products/${id}`);
   }
   getArrayProducts() {
     return this.productsArray;
@@ -27,7 +33,8 @@ export class ProductsService {
 
   getProductClick(id: number) {
     let producto = '';
-   
+  
+     //toDo codigo para Api
     this.getProduct(id).subscribe((product) => {
     let item = this.objetoNew(this.crearObjeto(product));
     console.log(item);
@@ -42,6 +49,52 @@ export class ProductsService {
       });
      });
     return producto;
+  }
+  getProductClickDemo(id: number){
+    let producto = '';
+    this.showAllProducts().subscribe({
+      next: (data: any) => {
+        let item1 = data.products;
+        const item = this.filter(data.products, id)
+        const product = this.objetoNew(this.crearObjeto(item[0]));
+        
+        this.getProductItemDemo(product).subscribe({
+        next: (data) => {
+         
+          producto = 'agregado';
+        },
+        error: (error) => {
+          producto = 'error';
+        },
+      });
+      }
+    })
+   
+  }
+  getProductClickDemo2(id: number,  item: any){
+    let producto = '';
+    this.showAllProducts().subscribe({
+      next: (data: any) => {
+        let item1 = data.products;
+        const item2 = this.filter(data.products, id);
+        //console.log(item);
+        let item3 = this.agregarItem(this.crearObjeto(item2[0]),item);
+        this.getProductItemDemo(item3).subscribe({
+          next: (data) => {
+           
+            producto = 'agregado';
+          },
+          error: (error) => {
+            producto = 'error';
+          },
+        });
+
+      }
+    })
+  }
+  filter(item: any, id: number) {
+    let filterId = item.filter((product: any) => product.id == id);
+    return filterId;
   }
   getProductClick2(id: number, item: any) {
     
@@ -63,7 +116,7 @@ export class ProductsService {
   objetoNew(item: any) {
     let objetoEditar = {
       id: this.idProductNew,
-      nameCliente :this.getCliente(),
+     
       pedido: [item]
     };
     return objetoEditar;
@@ -71,7 +124,7 @@ export class ProductsService {
   agregarItem(item: any, item2: any) {
     let objetoEditar = {
       id: this.idProductNew,
-      nameCliente :this.getCliente(),
+      
       pedido: [item]
     };
     objetoEditar.pedido.push();
@@ -99,11 +152,15 @@ export class ProductsService {
     return this.http.post('http://localhost:3000/productsTemporal', item);
     
   }
+  getProductItemDemo(item: any) {
+    return this.http.post('https://api.npoint.io/923ad69ed7baabe68197', item)
+  }
   setProductItem(): Observable<any> {
     return this.http.get(`http://localhost:3000/productsTemporal/${this.idProductNew}`, );
     
   }
   crearObjeto(item: any) {
+    
     let objetoNuevo = {
       id: item.id,
       name: item.name,
@@ -119,6 +176,10 @@ export class ProductsService {
 
   showProducts2() {
     return this.http.get('http://localhost:3000/productsTemporal');
+  }
+  //products Temporal
+  showProductsItem(){
+    return this.http.get('https://api.npoint.io/923ad69ed7baabe68197')
   }
 
   deleteAll() {

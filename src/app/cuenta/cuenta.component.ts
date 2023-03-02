@@ -59,7 +59,7 @@ export class CuentaComponent implements OnInit {
     });
   }
   addItem(newItem: number) {
-    console.log( this.productsService.getCliente());
+   
     this.arrayItem();
     this.agregarElemento(newItem);
     this.mostrarProduct();
@@ -178,49 +178,85 @@ export class CuentaComponent implements OnInit {
     
   }
   arrayItem() {
-    this.productsService.showProducts2().subscribe({
+    this.productsService.showProductsItem().subscribe({
       next: (data: any) => {
-        data.forEach((datos: any) => {
-          datos.pedido.forEach((el: any) => {
-            this.objetoelem.push(el.id);
-          });
-        });
-      },
-    });
+        data.pedido.forEach((item: any) => {
+          this.objetoelem.push(item.id);
+        })  
+      }
+    })
+    // this.productsService.showProducts2().subscribe({
+    //   next: (data: any) => {
+    //     data.forEach((datos: any) => {
+    //       datos.pedido.forEach((el: any) => {
+    //         this.objetoelem.push(el.id);
+    //       });
+    //     });
+    //   },
+    // });
   }
   agregarElemento(id: number) {
-    let array3: any[] = [];
-    this.productsService.showProducts2().subscribe({
+    this.productsService.showProductsItem().subscribe({
+     
       next: (data: any) => {
-        if (data.length == 0) {
-          this.productsService.getProductClick(id);
-          this.mostrarProduct();
-        } else {
-          data.forEach((datos: any) => {
-            if (this.objetoelem.includes(id)) {
-              console.log(this.objetoelem.includes(id));
-              this.mostrarProduct();
-              console.log('el producto ya existe');
-            } else {
-              console.log('en el else');
-              console.log(this.objetoelem.includes(id));
-              this.productsService.getProductClick2(id, datos.pedido);
-              datos.pedido.forEach((data: any) => {
-                this.productsService.getProductClick2(id, data);
-                this.mostrarProduct();
-              });
-              this.mostrarProduct();
-            }
+       
+      
+        if(data.pedido === undefined){
+          console.log('en el if')
+          
+          //const item = this.filter(data.pedido, id)
+         this.productsService.getProductClickDemo(id);
+          //this.mostrarProduct();
+        }
+        else{
+          console.log('en el else')
+          //console.log(data.pedido.id);
+          data.pedido.forEach((item: any) => {
+            console.log(item.id);
+            console.log(this.objetoelem.includes(id));
+            this.productsService.getProductClickDemo2(id, data.pedido)
             this.mostrarProduct();
           });
           this.mostrarProduct();
         }
         this.mostrarProduct();
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+      }
+    })
+
+
+    //toDo codigo para API
+    // let array3: any[] = [];
+    // this.productsService.showProducts2().subscribe({
+    //   next: (data: any) => {
+    //     if (data.length == 0) {
+    //       this.productsService.getProductClick(id);
+    //       this.mostrarProduct();
+    //     } else {
+    //       data.forEach((datos: any) => {
+    //         if (this.objetoelem.includes(id)) {
+    //           console.log(this.objetoelem.includes(id));
+    //           this.mostrarProduct();
+    //           console.log('el producto ya existe');
+    //         } else {
+    //           console.log('en el else');
+    //           console.log(this.objetoelem.includes(id));
+    //           this.productsService.getProductClick2(id, datos.pedido);
+    //           datos.pedido.forEach((data: any) => {
+    //             this.productsService.getProductClick2(id, data);
+    //             this.mostrarProduct();
+    //           });
+    //           this.mostrarProduct();
+    //         }
+    //         this.mostrarProduct();
+    //       });
+    //       this.mostrarProduct();
+    //     }
+    //     this.mostrarProduct();
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
+    // });
   }
   eliminarElementos(id: number) {
     Swal.fire({
