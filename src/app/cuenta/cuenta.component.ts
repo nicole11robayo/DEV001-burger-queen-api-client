@@ -189,8 +189,106 @@ export class CuentaComponent implements OnInit {
    
     
   }
+  enviarDbDemo(){
+    if(this.nombreCliente === ''){
+      Swal.fire(
+        'Bad job!',
+        'agrega un nombre!',
+        'warning'
+      )
+      
+    }else{
+    let orderProduct: any[] =[];
+   
+    this.productsService.showProductsItem().subscribe({
+      next: (data: any) => {
+        data.pedido.forEach((product: any) => {
+           
+           let productos ={
+            product: product.name,
+            qty : product.cant
+          }
+          //orderEl.orders.push(productos)
+          orderProduct.push(productos)
+        })
+       
+        const dataOrder = this.orderService.crearOrder(orderProduct, this.nombreCliente)
+        //console.log(dataOrder)
+        let orderEl : any = {
+          orders: [
+            dataOrder
+          ]
+        }
+        //console.log(orderEl)
+        this.orderService.getOrderDemo().subscribe({
+          next: (data: any) => {
+           
+            
+            if(data.orders === undefined){
+              this.crearOrderDemo(orderEl)
+              this.limpiarPantalla();
+              this.productsPedido = [];
+              this.nombreCliente = '';
+              this.total = 0;
+              this.objetoelem = [];
+              sessionStorage.removeItem('cliente');
+            }else{
+              //.log(dataOrder)
+              const ordenMul =this.crearOrdenMul(data.orders, dataOrder)
+              console.log(ordenMul)
+              this.crearOrderDemo(ordenMul)
+              this.limpiarPantalla();
+              this.productsPedido = [];
+              this.nombreCliente = '';
+              this.total = 0;
+              this.objetoelem = [];
+              sessionStorage.removeItem('cliente');
+            }
+
+            
+          }
+        })
+        
+      }
+    })
+  }
+  }
+  crearOrdenMul(item: any, item1: any){
+    let orderEl : any = {
+      orders: [
+        item1
+      ]
+    }
+    item.forEach((item2: any) => {
+       orderEl.orders.push(item2)
+    })
+    return orderEl
+  }
   crearOrden(item: any) {
      this.orderService.getOrderItem(item).subscribe({
+      next: (data: any) => {
+      
+        Swal.fire(
+          'Good job!',
+          'You clicked the button!',
+          'success'
+        )
+        
+      },
+      error: (error) => {
+        Swal.fire(
+          'Good job!',
+          'You clicked the button!',
+          'error'
+        )
+       
+      }
+    })
+    
+  }
+
+  crearOrderDemo(item: any){
+    this.orderService.setOrderDemo(item).subscribe({
       next: (data: any) => {
       
         Swal.fire(
@@ -236,7 +334,7 @@ export class CuentaComponent implements OnInit {
        
       
         if(data.pedido === undefined){
-          console.log('en el if')
+         
           
           //const item = this.filter(data.pedido, id)
          this.productsService.getProductClickDemo(id);
@@ -246,10 +344,19 @@ export class CuentaComponent implements OnInit {
           console.log('en el else')
           //console.log(data.pedido.id);
           data.pedido.forEach((item: any) => {
-            console.log(item.id);
-            console.log(this.objetoelem.includes(id));
-            this.productsService.getProductClickDemo2(id, data.pedido)
-            this.mostrarProduct();
+           
+            if (this.objetoelem.includes(id)) {
+              Swal.fire(
+                'Error!',
+                'El producto ya existe',
+                'error'
+              )
+              
+            }else{
+              this.productsService.getProductClickDemo2(id, data.pedido)
+              this.mostrarProduct();
+            }
+            
           });
           this.mostrarProduct();
         }
@@ -292,6 +399,8 @@ export class CuentaComponent implements OnInit {
     //   },
     // });
   }
+
+  //todo codigo para API
   eliminarElementos(id: number) {
     Swal.fire({
       title: 'Are you sure?',
@@ -328,7 +437,39 @@ export class CuentaComponent implements OnInit {
       }
     });
   }
-  
+  eliminarElDemo(id: number){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productsService.showProductsItem().subscribe({
+          next: (data: any) => {
+            const filter = this.filter2(data.pedido, id);
+            const pedido = this.productsService.eliminarItem(filter);
+            console.log(pedido);
+           this.productsService.getProductItemDemo(pedido).subscribe({
+            next: (data: any) => {
+              Swal.fire(
+                'Deleted!',
+                `Producto eliminado`,
+                'success'
+              );
+              this.mostrarProduct();
+              this.objetoelem = [];
+
+            }
+           })
+          }
+        })
+      }
+    })
+  }
    agregarUsuario() {
     Swal.fire({
         title: "Tu nombre",
@@ -353,15 +494,28 @@ export class CuentaComponent implements OnInit {
   limpiarPantalla(){
    
       this.productsService.productsArray = []
-     
-      this.productsService.deleteAll().subscribe({
-        next : () => {
-          this.productsPedido = [];
-          this.nombreCliente = '';
-          this.total = 0;
-          sessionStorage.removeItem('cliente');
-        }
-      })
+      let item = {}
+      this.productsService.getProductItemDemo(item).subscribe({
+          next : () => {
+            this.productsPedido = [];
+            this.nombreCliente = '';
+            this.total = 0;
+            sessionStorage.removeItem('cliente');
+          }
+        })
+        this.productsPedido = [];
+        this.nombreCliente = '';
+        this.total = 0;
+        sessionStorage.removeItem('cliente');
+        //todo modelo para API
+      // this.productsService.deleteAll().subscribe({
+      //   next : () => {
+      //     this.productsPedido = [];
+      //     this.nombreCliente = '';
+      //     this.total = 0;
+      //     sessionStorage.removeItem('cliente');
+      //   }
+      // })
      
   }
   filter(item: any, id: number) {

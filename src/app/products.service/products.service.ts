@@ -19,7 +19,7 @@ export class ProductsService {
   }
   //all los productos
   showAllProducts(){
-    return this.http.get('https://api.npoint.io/13831094a52f73187288')
+    return this.http.get('https://mocki.io/v1/32313748-b4d4-47c9-8cc9-196b03fe0350')
  }
   getProduct(id: number) {
     return this.http.get(`http://localhost:3000/products/${id}`);
@@ -153,11 +153,16 @@ export class ProductsService {
     
   }
   getProductItemDemo(item: any) {
-    return this.http.post('https://api.npoint.io/923ad69ed7baabe68197', item)
+    return this.http.post('https://api.npoint.io/923ad69ed7baabe68197 ',item)
   }
   setProductItem(): Observable<any> {
     return this.http.get(`http://localhost:3000/productsTemporal/${this.idProductNew}`, );
     
+  }
+
+  //optener todos los productos
+  setApiLocal(){
+    return this.http.get('https://mocki.io/v1/32313748-b4d4-47c9-8cc9-196b03fe0350')
   }
   crearObjeto(item: any) {
     

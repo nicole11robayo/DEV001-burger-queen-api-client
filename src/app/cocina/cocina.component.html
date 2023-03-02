@@ -1,7 +1,9 @@
 
 <section class="cocina">
-  
+  <div class="mnu">
     <app-navbar></app-navbar>
+  </div>
+    
   
   
   <nav class="menu-order">
@@ -41,7 +43,7 @@
           </table>
 
           <div class="card__abilities">
-            <button type="button" class="btn-eliminar-order" *ngIf="role=='mesero' && order.status == 'pending' ">
+            <button type="button" class="btn-eliminar-order" *ngIf="role=='mesero' && order.status == 'pending' " (click)="cambiarStatus(order.id, 'canceled')">
               <i class='bx bx-x-circle'   ></i>
 
             </button>
