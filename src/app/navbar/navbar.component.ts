@@ -17,13 +17,13 @@ role: any;
   }
   
   deleteToken(){
-    this.productsService.productsArray = []
-    this.productsService.deleteAll().subscribe({
-      next : () => {
+    // this.productsService.productsArray = []
+    // this.productsService.deleteAll().subscribe({
+    //   next : () => {
        
-        sessionStorage.clear();
-      }
-    })
+    //     sessionStorage.clear();
+    //   }
+    // })
     this.authService.deleteToken();
     sessionStorage.clear();
     this.router.navigateByUrl('/home')

@@ -20,6 +20,7 @@ export class CuentaComponent implements OnInit {
 
   localArray: object[] = [];
   objetoelem: any = [];
+  objetoelemDemo: any = [];
   arrayOrder: any = [];
   total: number = 0;
   nombreCliente :any = '';
@@ -27,10 +28,14 @@ export class CuentaComponent implements OnInit {
     this.productsService.getCliente()
     this.arrayItem();
     this.mostrarProduct();
-    console.log( this.productsService.getCliente());
+   
     if(this.productsService.getCliente() != undefined){
       this.nombreCliente = this.productsService.getCliente();    
     }
+    localStorage.setItem('product', JSON.stringify(this.objetoelemDemo));
+    let local = JSON.parse(sessionStorage.getItem('products')!);
+    //console.log(local);
+      // this.objetoelemDemo
     // const date = moment();
     // const ahora = date.format('YYYY-MM-DD hh:mm:ss');
     // console.log(ahora);
@@ -45,16 +50,23 @@ export class CuentaComponent implements OnInit {
    
   }
   mostrarProduct() {
-    this.productsService.showProductsItem().subscribe({
-      next: (data: any) => {
-        this.productsPedido = data.pedido;
-               this.total = this.productsPedido.reduce(
-            (acc: any, obj: any) => acc + obj.price * obj.cant,
-            0
-          );
+    let local = JSON.parse(sessionStorage.getItem('products')!);
+    //console.log(local);
+    this.productsPedido = local.pedido
+    this.total = this.productsPedido.reduce(
+              (acc: any, obj: any) => acc + obj.price * obj.cant,
+              0
+            );
+    // this.productsService.showProductsItem().subscribe({
+    //   next: (data: any) => {
+    //     this.productsPedido = data.pedido;
+    //            this.total = this.productsPedido.reduce(
+    //         (acc: any, obj: any) => acc + obj.price * obj.cant,
+    //         0
+    //       );
          
-      }
-    })
+    //   }
+    //})
 
 
     //toDo codigo para API
@@ -72,32 +84,42 @@ export class CuentaComponent implements OnInit {
     // });
   }
   addItem(newItem: number) {
-   
-    this.arrayItem();
     this.agregarElemento(newItem);
     this.mostrarProduct();
+    this.arrayItem();
   }
   valorMas(numero: string, id: number) {
-   
-   
-     this.productsService.showProductsItem().subscribe({
-      next: (data: any) => {
-        let edit: never[] = [];
-        console.log(data.pedido);
-        this.filter(data.pedido, id).forEach((datos2: any) => {
+    let local = JSON.parse(sessionStorage.getItem('products')!);
+    let edit: never[] = [];
+         this.filter(local.pedido, id).forEach((datos2: any) => {
           return (edit = datos2);
         });
         this.elementosEditados(edit, numero);
-        let itemEl = this.productsService.agregarItem(
+            let itemEl = this.productsService.agregarItem(
           this.elementosEditados(edit, numero),
-          this.filter2(data.pedido, id)
+          this.filter2(local.pedido, id)
         );
-       this.productsService.getProductItemDemo(itemEl).subscribe((data) => {
-        console.log('cambios agregados');
-        this.mostrarProduct();
-      ;})
-      }
-     })  
+        //console.log(itemEl);
+        sessionStorage.setItem('products', JSON.stringify(itemEl))
+        this.mostrarProduct()
+    //  this.productsService.showProductsItem().subscribe({
+    //   next: (data: any) => {
+    //     let edit: never[] = [];
+    //     console.log(data.pedido);
+    //     this.filter(data.pedido, id).forEach((datos2: any) => {
+    //       return (edit = datos2);
+    //     });
+    //     this.elementosEditados(edit, numero);
+    //     let itemEl = this.productsService.agregarItem(
+    //       this.elementosEditados(edit, numero),
+    //       this.filter2(data.pedido, id)
+    //     );
+    //    this.productsService.getProductItemDemo(itemEl).subscribe((data) => {
+    //     console.log('cambios agregados');
+    //     this.mostrarProduct();
+    //   ;})
+    //   }
+    //  })  
   }
   valor1(numero: string, id: number) {
     
@@ -172,7 +194,6 @@ export class CuentaComponent implements OnInit {
            //console.log(dataOrder)
            
            this.crearOrden(dataOrder)
-           this.limpiarPantalla();
            this.productsPedido = [];
            this.nombreCliente = '';
            this.total = 0;
@@ -199,58 +220,101 @@ export class CuentaComponent implements OnInit {
       
     }else{
     let orderProduct: any[] =[];
-   
-    this.productsService.showProductsItem().subscribe({
-      next: (data: any) => {
-        data.pedido.forEach((product: any) => {
+    let data = JSON.parse(sessionStorage.getItem('products')!);
+         data.pedido.forEach((product: any) => {
            
            let productos ={
             product: product.name,
             qty : product.cant
           }
-          //orderEl.orders.push(productos)
+         
           orderProduct.push(productos)
         })
-       
-        const dataOrder = this.orderService.crearOrder(orderProduct, this.nombreCliente)
+       const dataOrder = this.orderService.crearOrder(orderProduct, this.nombreCliente)
         //console.log(dataOrder)
         let orderEl : any = {
           orders: [
             dataOrder
           ]
         }
-        //console.log(orderEl)
+        console.log(orderEl)
         this.orderService.getOrderDemo().subscribe({
           next: (data: any) => {
+              if(data.orders === undefined){
+              this.crearOrderDemo(orderEl)
+             
+              this.productsPedido = [];
+              this.nombreCliente = '';
+              this.total = 0;
+              this.objetoelem = [];
+              this.objetoelemDemo = [];
+              sessionStorage.removeItem('cliente');
+              sessionStorage.removeItem('products');
+          }else{
+            const ordenMul =this.crearOrdenMul(data.orders, dataOrder)
+            this.crearOrderDemo(ordenMul);
+            this.productsPedido = [];
+            this.nombreCliente = '';
+            this.total = 0;
+            this.objetoelem = [];
+            this.objetoelemDemo = [];
+            sessionStorage.removeItem('cliente');
+            sessionStorage.removeItem('products');
+          }
+        }
+        })
+
+    // this.productsService.showProductsItem().subscribe({
+    //   next: (data: any) => {
+    //     data.pedido.forEach((product: any) => {
+           
+    //        let productos ={
+    //         product: product.name,
+    //         qty : product.cant
+    //       }
+    //       //orderEl.orders.push(productos)
+    //       orderProduct.push(productos)
+    //     })
+       
+    //     const dataOrder = this.orderService.crearOrder(orderProduct, this.nombreCliente)
+    //     //console.log(dataOrder)
+    //     let orderEl : any = {
+    //       orders: [
+    //         dataOrder
+    //       ]
+    //     }
+    //     //console.log(orderEl)
+    //     this.orderService.getOrderDemo().subscribe({
+    //       next: (data: any) => {
            
             
-            if(data.orders === undefined){
-              this.crearOrderDemo(orderEl)
-              this.limpiarPantalla();
-              this.productsPedido = [];
-              this.nombreCliente = '';
-              this.total = 0;
-              this.objetoelem = [];
-              sessionStorage.removeItem('cliente');
-            }else{
-              //.log(dataOrder)
-              const ordenMul =this.crearOrdenMul(data.orders, dataOrder)
-              console.log(ordenMul)
-              this.crearOrderDemo(ordenMul)
-              this.limpiarPantalla();
-              this.productsPedido = [];
-              this.nombreCliente = '';
-              this.total = 0;
-              this.objetoelem = [];
-              sessionStorage.removeItem('cliente');
-            }
+    //         if(data.orders === undefined){
+    //           this.crearOrderDemo(orderEl)
+    //           this.limpiarPantalla();
+    //           this.productsPedido = [];
+    //           this.nombreCliente = '';
+    //           this.total = 0;
+    //           this.objetoelem = [];
+    //           sessionStorage.removeItem('cliente');
+    //         }else{
+    //           //.log(dataOrder)
+    //           const ordenMul =this.crearOrdenMul(data.orders, dataOrder)
+    //           console.log(ordenMul)
+    //           this.crearOrderDemo(ordenMul)
+    //           this.limpiarPantalla();
+    //           this.productsPedido = [];
+    //           this.nombreCliente = '';
+    //           this.total = 0;
+    //           this.objetoelem = [];
+    //           sessionStorage.removeItem('cliente');
+    //         }
 
             
-          }
-        })
+    //       }
+    //     })
         
-      }
-    })
+    //   }
+    // })
   }
   }
   crearOrdenMul(item: any, item1: any){
@@ -286,7 +350,7 @@ export class CuentaComponent implements OnInit {
     })
     
   }
-
+ 
   crearOrderDemo(item: any){
     this.orderService.setOrderDemo(item).subscribe({
       next: (data: any) => {
@@ -310,13 +374,17 @@ export class CuentaComponent implements OnInit {
     
   }
   arrayItem() {
-    this.productsService.showProductsItem().subscribe({
-      next: (data: any) => {
-        data.pedido.forEach((item: any) => {
-          this.objetoelem.push(item.id);
-        })  
-      }
+    let local = JSON.parse(sessionStorage.getItem('products')!);
+    local.pedido.forEach((item: any)=>{
+      this.objetoelem.push(item.id);
     })
+    // this.productsService.showProductsItem().subscribe({
+    //   next: (data: any) => {
+    //     data.pedido.forEach((item: any) => {
+    //       this.objetoelem.push(item.id);
+    //     })  
+    //   }
+    // })
     // this.productsService.showProducts2().subscribe({
     //   next: (data: any) => {
     //     data.forEach((datos: any) => {
@@ -328,41 +396,50 @@ export class CuentaComponent implements OnInit {
     // });
   }
   agregarElemento(id: number) {
-    this.productsService.showProductsItem().subscribe({
+   //console.log('hola mundo')
+
+
+   this.localStorageDemo(id)
+   this.mostrarProduct() 
+    //let local = JSON.parse(sessionStorage.getItem('products')!);
+    // console.log(local);
+
+    //sessionStorage.setItem('pr', toString(id));
+    // this.productsService.showProductsItem().subscribe({
      
-      next: (data: any) => {
+    //   next: (data: any) => {
        
       
-        if(data.pedido === undefined){
+    //     if(data.pedido === undefined){
          
           
-          //const item = this.filter(data.pedido, id)
-         this.productsService.getProductClickDemo(id);
-          //this.mostrarProduct();
-        }
-        else{
-          console.log('en el else')
-          //console.log(data.pedido.id);
-          data.pedido.forEach((item: any) => {
+    //       //const item = this.filter(data.pedido, id)
+    //      this.productsService.getProductClickDemo(id);
+    //       //this.mostrarProduct();
+    //     }
+    //     else{
+    //       console.log('en el else')
+    //       //console.log(data.pedido.id);
+    //       data.pedido.forEach((item: any) => {
            
-            if (this.objetoelem.includes(id)) {
-              Swal.fire(
-                'Error!',
-                'El producto ya existe',
-                'error'
-              )
+    //         if (this.objetoelem.includes(id)) {
+    //           Swal.fire(
+    //             'Error!',
+    //             'El producto ya existe',
+    //             'error'
+    //           )
               
-            }else{
-              this.productsService.getProductClickDemo2(id, data.pedido)
-              this.mostrarProduct();
-            }
+    //         }else{
+    //           this.productsService.getProductClickDemo2(id, data.pedido)
+    //           this.mostrarProduct();
+    //         }
             
-          });
-          this.mostrarProduct();
-        }
-        this.mostrarProduct();
-      }
-    })
+    //       });
+    //       this.mostrarProduct();
+    //     }
+    //     this.mostrarProduct();
+    //   }
+    // })
 
 
     //toDo codigo para API
@@ -398,6 +475,48 @@ export class CuentaComponent implements OnInit {
     //     console.log(error);
     //   },
     // });
+  }
+
+  localStorageDemo(id: number){
+    //this.objetoelemDemo
+    let local = JSON.parse(sessionStorage.getItem('products')!);
+    //console.log(local);
+    this.productsService.showAllProducts().subscribe({
+      next: (data: any) => {
+        let item1 = data.products;
+        const item = this.filter(data.products, id) 
+        //console.log(local)
+        if(local === null){
+        
+        const product = this.productsService.objetoNew(this.productsService.crearObjeto(item[0]));
+        sessionStorage.setItem('products', JSON.stringify(product))
+        this.mostrarProduct()
+          
+        }else{
+           //const idEl =item[0].id;
+           if(this.objetoelem.includes(id)){
+                       Swal.fire(
+                'Error!',
+                'El producto ya existe',
+                'error'
+              )
+           }
+           else{
+            const item3 = local.pedido
+            //console.log(item3)
+            let item2 = this.productsService.agregarItem(this.productsService.crearObjeto(item[0]), item3);
+            console.log(item2);
+            sessionStorage.setItem('products', JSON.stringify(item2))
+            this.mostrarProduct()
+           }
+          
+        } 
+
+
+      }
+     
+    })
+   
   }
 
   //todo codigo para API
@@ -448,25 +567,42 @@ export class CuentaComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productsService.showProductsItem().subscribe({
-          next: (data: any) => {
-            const filter = this.filter2(data.pedido, id);
-            const pedido = this.productsService.eliminarItem(filter);
-            console.log(pedido);
-           this.productsService.getProductItemDemo(pedido).subscribe({
-            next: (data: any) => {
-              Swal.fire(
+        let data = JSON.parse(sessionStorage.getItem('products')!);
+          const filter = this.filter2(data.pedido, id);
+          const pedido = this.productsService.eliminarItem(filter);
+          sessionStorage.setItem('products', JSON.stringify(pedido))
+          this.mostrarProduct()
+             
+               Swal.fire(
                 'Deleted!',
                 `Producto eliminado`,
                 'success'
               );
               this.mostrarProduct();
               this.objetoelem = [];
+              this.objetoelemDemo = [];
+              this.arrayItem();
+            
+           
+        // this.productsService.showProductsItem().subscribe({
+        //   next: (data: any) => {
+        //     const filter = this.filter2(data.pedido, id);
+        //     const pedido = this.productsService.eliminarItem(filter);
+        //     console.log(pedido);
+        //    this.productsService.getProductItemDemo(pedido).subscribe({
+        //     next: (data: any) => {
+        //       Swal.fire(
+        //         'Deleted!',
+        //         `Producto eliminado`,
+        //         'success'
+        //       );
+        //       this.mostrarProduct();
+        //       this.objetoelem = [];
 
-            }
-           })
-          }
-        })
+        //     }
+        //    })
+        //   }
+        // })
       }
     })
   }
