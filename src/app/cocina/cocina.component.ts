@@ -156,11 +156,11 @@ export class CocinaComponent implements OnInit {
   let diferenciaEnMinutos = momentHf.diff(momentHi, 'minutes');
     let hora =  diferenciaEnMinutos/ 60;
     let min = diferenciaEnMinutos % 60
-    //  Swal.fire(
-    //           'Tiempo',
-    //           ` ${Math.floor(hora)} horas y ${min} minutos`,
-    //           'info'
-    //         );
+     Swal.fire(
+              'Tiempo',
+              ` ${Math.floor(hora)} horas y ${min} minutos`,
+              'info'
+            );
  
    console.log( ` ${Math.floor(hora)} horas y ${min} minutos`)
   }
