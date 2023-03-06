@@ -33,5 +33,8 @@ export class AuthService {
      // Aquí iría el endpoint para devolver el usuario para un token
    }
 
+   getAllUsers(){
+    return this.http.get('https://mocki.io/v1/e33dd6a6-dc7a-4b0a-a5c7-544ba6d0ff31')
+   }
    
 }

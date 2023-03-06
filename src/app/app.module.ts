@@ -18,6 +18,7 @@ import { CocinaComponent } from './cocina/cocina.component';
 import { MenuComponent } from './menu/menu.component';
 import { CuentaComponent } from './cuenta/cuenta.component';
 import { AdminComponent } from './admin/admin.component';
+import { ModalProductComponent } from './modal-product/modal-product.component';
 
 
 
@@ -43,6 +44,7 @@ import { AdminComponent } from './admin/admin.component';
     MenuComponent,
     CuentaComponent,
     AdminComponent,
+    ModalProductComponent,
    
   ],
   
