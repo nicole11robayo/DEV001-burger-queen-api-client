@@ -8,8 +8,8 @@
         <ul>
           <li><button type="button" class="btn btn-outline-warning" (click)="showDBProducts()">PRODUCTOS</button></li>
           <li><button type="button" class="btn btn-outline-info" (click)="showDBUsers()">EMPLEADOS</button></li>
-          <li><button type="button" class="btn btn-primary" *ngIf="estado=='products'">Añadir Producto +</button></li>
-          <li><button type="button" class="btn btn-primary"*ngIf="estado=='users'">Añadir Empleado +</button></li>
+          <li><button type="button" class="btn btn-primary" *ngIf="estado=='products'" (click)="openDialog('')">Añadir Producto +</button></li>
+          <li><button type="button" class="btn btn-primary"*ngIf="estado=='users'" (click)="openDialogUser()">Añadir Empleado +</button></li>
         </ul>
     </nav>
     <table class="table" *ngIf="estado == 'products'">
@@ -30,8 +30,8 @@
             <td>{{product.price}}</td>
             <td>{{product.type}}</td>
             <td>
-                <button type="button" class="btn btn-outline-info" >Editar</button>
-                <button type="button" class="btn btn-outline-danger">Eliminar</button>
+                <button type="button" class="btn btn-outline-info" (click)="openDialog(product.id)">Editar</button>
+                <button type="button" class="btn btn-outline-danger" (click)="deleteProduct(product.id)">Eliminar</button>
             </td>
           </tr>
         </tbody>

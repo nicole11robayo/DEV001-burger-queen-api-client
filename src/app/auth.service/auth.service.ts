@@ -36,5 +36,25 @@ export class AuthService {
    getAllUsers(){
     return this.http.get('https://mocki.io/v1/e33dd6a6-dc7a-4b0a-a5c7-544ba6d0ff31')
    }
+
+   getAllUsers2(){
+    return this.http.get('https://api.npoint.io/fb087e778cabace91792')
+   }
+
+   crearUserMul(item: any, item1: any){
+    let orderEl : any = {
+      users: [
+        item1
+      ]
+    }
+    item.forEach((item2: any) => {
+       orderEl.users.push(item2)
+    })
+    return orderEl
+  }
+
+  setUserDemo(item: any){
+    return this.http.post(`https://api.npoint.io/fb087e778cabace91792`,item)
+  }
    
 }

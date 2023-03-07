@@ -21,14 +21,45 @@ export class ProductsService {
   showAllProducts(){
     return this.http.get('https://mocki.io/v1/32313748-b4d4-47c9-8cc9-196b03fe0350')
  }
+ getAllProducts() {
+  return this.http.get('https://api.npoint.io/13831094a52f73187288');
+}
   getProduct(id: number) {
     return this.http.get(`http://localhost:3000/products/${id}`);
   }
   getProductDemo(id: number) {
     return this.http.get(`https://api.npoint.io/13831094a52f73187288/products/${id}`);
   }
+
+  setProductDemo(item: any){
+    return this.http.post(`https://api.npoint.io/13831094a52f73187288`,item)
+  }
   getArrayProducts() {
     return this.productsArray;
+  }
+  productsAferDelete(item:any){
+    let orderEl : any = {
+      products: 
+        item
+      
+    }
+    return orderEl
+  }
+  
+  crearProductMul(item: any, item1: any){
+    let orderEl : any = {
+      products: [
+        item1
+      ]
+    }
+    item.forEach((item2: any) => {
+       orderEl.products.push(item2)
+    })
+    return orderEl
+  }
+
+  newProduct(){
+
   }
 
   getProductClick(id: number) {

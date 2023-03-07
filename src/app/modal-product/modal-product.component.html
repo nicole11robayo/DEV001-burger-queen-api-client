@@ -1,1 +1,35 @@
-<p>modal-product works!</p>
+<h1 mat-dialog-title>Nuevo producto</h1>
+<form [formGroup]="Reactiveform" (ngSubmit)="SaveEmployee()">
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Id</mat-label>
+            <input type="number" placeholder="Id" matInput formControlName="id">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input placeholder="Nombre" matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Precio</mat-label>
+            <input type="number" placeholder="Precio" matInput formControlName="price">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>URL imagen</mat-label>
+            <input placeholder="Url imagen" matInput formControlName="image">
+        </mat-form-field>
+
+        <mat-radio-group formControlName="type" aria-label="Selecciona un tipo">
+            <mat-label>Selecciona un tipo:</mat-label><br>
+            <mat-radio-button value="desayuno">desayuno</mat-radio-button>
+            <mat-radio-button value="comida">comida</mat-radio-button>
+
+          </mat-radio-group>
+ 
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+      <button type="submit" mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='save'">save</button>
+      <button type="submit" mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='editar'">editar</button>
+    </div>
+</form>
+

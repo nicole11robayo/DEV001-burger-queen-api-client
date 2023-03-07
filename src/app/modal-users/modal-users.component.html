@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Nuevo usuario</h1>
+<form [formGroup]="Reactiveform" (ngSubmit)="SaveEmployee()">
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Id</mat-label>
+            <input type="number" placeholder="Id" matInput formControlName="id" value="1">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Correo</mat-label>
+            <input placeholder="Correo" matInput formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+            <input placeholder="Contraseña" matInput formControlName="password">
+        </mat-form-field>
+
+        <mat-radio-group formControlName="rol" aria-label="Selecciona un rol">
+            <mat-label>Selecciona un rol:</mat-label><br>
+            <mat-radio-button value="mesero">Mesero</mat-radio-button>
+            <mat-radio-button value="cocina">Cocina</mat-radio-button>
+            <mat-radio-button value="admin">Admin</mat-radio-button>
+
+          </mat-radio-group>
+ 
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+      <button type="submit" mat-raised-button color="primary" cdkFocusInitial>Save</button>
+    </div>
+</form>
