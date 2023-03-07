@@ -35,7 +35,7 @@ export class ModalProductComponent implements OnInit {
 
   }
 
-  SaveEmployee() {
+  saveProduct() {
     if (this.Reactiveform.valid) {
       console.log(this.Reactiveform.value)
 
@@ -71,7 +71,7 @@ export class ModalProductComponent implements OnInit {
       this.productsService.getAllProducts().subscribe({
         next: (data: any) => {
           let productEdit = data.products.filter((product: any) => product.id == `${id}`)
-          let productsKeep = data.products.filter((product: any) => product.id != `${id}`)
+          //let productsKeep = data.products.filter((product: any) => product.id != `${id}`)
           this.editData = productEdit[0]
           console.log(this.editData)
           this.Reactiveform.setValue({
@@ -79,9 +79,46 @@ export class ModalProductComponent implements OnInit {
             image: this.editData.image, type: this.editData.type
           })
 
+          
+          
+
+
+        }
+
+      })
+    }
+
+    editProductClick() {
+      this.actionButton='editar'
+      this.productsService.getAllProducts().subscribe({
+        next: (data: any) => {
+          //let productEdit = data.products.filter((product: any) => product.id == `${id}`)
+          let productsKeep = data.products.filter((product: any) => product.id != this.Reactiveform.value.id)
+          
+
           if(this.Reactiveform.valid){
             let productsNew = this.productsService.crearProductMul(productsKeep, this.Reactiveform.value)
             console.log(productsNew)
+            this.productsService.setProductDemo(productsNew).subscribe({
+              next: (data: any) => {
+      
+                Swal.fire(
+                  'Good job!',
+                  'You clicked the button!',
+                  'success'
+                )
+      
+              },
+              error: (error) => {
+                Swal.fire(
+                  'Good job!',
+                  'You clicked the button!',
+                  'error'
+                )
+      
+              }
+            })
+            this.dialogref.close('save');
           }
           
 

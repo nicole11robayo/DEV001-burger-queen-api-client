@@ -62,7 +62,7 @@ pageChangeEvent(event: number){
 
 }
 llamarDB(tipo: string){
-  this.productsService.getAllProducts().subscribe({
+  this.productsService.showAllProducts().subscribe({
     next: (data: any) => {
       if(tipo === 'desayuno'){
         let item = data.products;

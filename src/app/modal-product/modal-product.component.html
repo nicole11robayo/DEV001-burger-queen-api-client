@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Nuevo producto</h1>
-<form [formGroup]="Reactiveform" (ngSubmit)="SaveEmployee()">
+<form [formGroup]="Reactiveform" >
     <div mat-dialog-content>
         <mat-form-field>
             <mat-label>Id</mat-label>
@@ -28,8 +28,8 @@
     </div>
     <div mat-dialog-actions>
       <button mat-raised-button color="warn" mat-dialog-close>Close</button>
-      <button type="submit" mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='save'">save</button>
-      <button type="submit" mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='editar'">editar</button>
+      <button mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='save'" (click)="saveProduct()">save</button>
+      <button mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='editar'" (click)="editProductClick()">editar</button>
     </div>
-</form>
+</form> 
 

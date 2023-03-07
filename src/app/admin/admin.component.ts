@@ -34,8 +34,10 @@ export class AdminComponent implements OnInit{
         empcode:code
       }
     }).afterClosed().subscribe(val => {
-      if(val == 'save'){
+      if(val == 'save' ){
         this.showDBProducts();
+      }else if(val == 'editar'){
+        this.showDBProducts()
       }
     })
   }
