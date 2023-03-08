@@ -1,26 +1,22 @@
 <nav>
   <div class="nav-container">
     <div class="logo">
-      <img
-            src="https://i.postimg.cc/Xqmd3Vc8/logo-Burger-Amarillo-removebg-preview.png"
-            height="60"
-            alt=""
-            loading="lazy"
-          />
+      <img src="https://i.postimg.cc/Xqmd3Vc8/logo-Burger-Amarillo-removebg-preview.png" height="60" alt=""
+        loading="lazy" />
     </div>
 
     <div class="container">
       <div class="botones">
-        <button routerLink="/products" routerLinkActive="activebutton" *ngIf="role=='mesero'">Product</button>
-        <button  routerLink="/cocina" routerLinkActive="activebutton" *ngIf="role=='mesero'">Pedidos</button>
-        <button  (click)= "deleteToken()">Salir</button>
-       
-        
+        <button routerLink="/products" routerLinkActive="activebutton" *ngIf="role=='mesero'">Productos</button>
+        <button routerLink="/cocina" routerLinkActive="activebutton" *ngIf="role=='mesero'">Pedidos</button>
+        <button (click)="deleteToken()">Salir</button>
+
+
       </div>
     </div>
-   
+
   </div>
-  
+
 </nav>
 
 <!--<nav class="navbar navbar-custom">

@@ -46,8 +46,6 @@ export class MenuComponent implements OnInit{
   }
 pageChangeEvent(event: number){
     this.p = event;
-   
-
 }
 
   @Output() newItemEvent = new EventEmitter<number>();    

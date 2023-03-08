@@ -57,7 +57,7 @@ export class AuthComponent {
             confirmButtonColor: '#FFC900',
             icon: 'error',
             title: 'Oops...',
-            text: 'Something went wrong!',
+            text: 'Algo ha salido mal. Revisa tu correo y/o contraseña!',
             //text: 'Something went wrong!',
           })
         }
@@ -73,7 +73,7 @@ export class AuthComponent {
         confirmButtonColor: '#FFC900',
         icon: 'error',
         title: 'Oops...',
-        text: 'Invalid Form!',
+        text: 'Formulario inválido!',
         
       })
     }

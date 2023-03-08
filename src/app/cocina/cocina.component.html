@@ -23,10 +23,10 @@
           <h1 class="card__name">Pedido # {{order.id}}</h1>
           <h2 class="card__name">Mesero: {{order.userId}}</h2>
           <h2 class="card__name">Cliente: {{order.client}}</h2>
-          <div class="card__time" *ngIf="order.status == 'delivered'">
-            <button type="button"  (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
-          </div>
 
+          <div class="card__time" *ngIf="order.status == 'delivered'">
+            <button type="button" (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
+          </div>
           <h3 class="card__type card__type_{{order.status}}">
             {{order.status}}
           </h3>
@@ -86,6 +86,7 @@
           <tr>
             <button type="button" class="btn btn-warning" *ngIf="role=='cocinero'" (click)="cambiarStatus(order.id, 'delivering')">Finish</button>
             <button type="button" class="btn btn-warning" *ngIf="role=='mesero'" (click)="cambiarStatus(order.id, 'delivered')">Entregado</button>
+
           </tr>
         </tbody>
       </table>
