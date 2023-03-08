@@ -4,12 +4,23 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule,FormsModule} from '@angular/forms';
 import { AuthComponent } from './auth.component';
-//import { AuthService } from '../auth.service/auth.service';
+import { AuthService } from '../auth.service/auth.service';
+import { of } from 'rxjs';
 
 describe('AuthComponent', () => {
+  const mockResultLogin = {
+    accessToken: 'xxx.xxx.xxx',
+    user: {
+      id: 1,
+      email: 'olivier@mail.com',
+      rol: 'mesero',
+    },
+  };
   let component: AuthComponent;
   let fixture: ComponentFixture<AuthComponent>;
-  
+  let authService : AuthService
+
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -17,12 +28,13 @@ describe('AuthComponent', () => {
         HttpClientModule,
         ReactiveFormsModule,
         FormsModule],
-      providers: [ AuthComponent]
+      providers: [ AuthComponent, AuthService]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(AuthComponent);
     component = fixture.componentInstance;
+    authService = TestBed.inject(AuthService)
     fixture.detectChanges();
   });
 

@@ -53,9 +53,6 @@ export class OrdersService {
     return orderEl
   }
 
-  deleteOrder(id:any){
-    return this.http.delete(`http://localhost:3000/orders/${id}`)
-  }
 
   editarOrder(id:any,item: any ){
     return this.http.put(`http://localhost:3000/orders/${id}`, item)
