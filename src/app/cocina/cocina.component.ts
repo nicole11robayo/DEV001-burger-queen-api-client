@@ -33,47 +33,13 @@ export class CocinaComponent implements OnInit {
   }
  
 
-  deleteOrder(id:any){
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.orderService.deleteOrder(id).subscribe({
-          next: (data: any) => {
-            Swal.fire(
-              'Deleted!',
-              `Your file has been deleted. ${id}`,
-              'success'
-            );
-            this.orderPending()
-    
-          },
-        
-        });
-      }
-    })
-    
-   
-    
-  }
   
   cambiarStatus(id: number, statusOrder: any){
-    
-    //console.log(this.bdTemporal)
     let cards = this.bdTemporal.filter((product: any) => product.id == `${id}`);
     let cards2 = this.bdTemporal.filter((product: any) => product.id != `${id}`)
-    //console.log(cards);
-    let statusChange = this.orderService.objetoStatus(cards[0], statusOrder);
-    //console.log(statusChange);
-    let orderChange = this.orderService.crearOrdenMul(cards2, statusChange)
-    //console.log(orderChange);
-    this.orderService.setOrderDemo(orderChange).subscribe({
+   let statusChange = this.orderService.objetoStatus(cards[0], statusOrder);
+   let orderChange = this.orderService.crearOrdenMul(cards2, statusChange)
+   this.orderService.setOrderDemo(orderChange).subscribe({
       next: (data: any) => {
         Swal.fire(
           'Good job!',
@@ -83,10 +49,12 @@ export class CocinaComponent implements OnInit {
         this.getAllOrders()
         this.orderPending()
       }
-    })
+    });
+
+    //TODO CODIGO DE API
     // this.orderService.obtenerOrden(id).subscribe({
     //   next: (data: any) => {
-    //       //console.log(data);
+   
     //       this.orderService.editarOrder(id, this.orderService.objetoStatus(data, statusOrder)).subscribe({
     //         next: (datos: any) => {
     //            alert('Orden editada con exito')
@@ -98,13 +66,11 @@ export class CocinaComponent implements OnInit {
   }
 
   tiempoOrders(tp1: any, tp2: any){
-  //console.log(tp1, tp2) 
+ 
   const Hm1 =  moment(tp1).format('LT');
   const gira = '2023-03-02 13:22:59'
   const momentHi = moment(tp1);
-  //const momentHf = moment(tp2).format('LT');
   const momentHf = moment(tp2);
-  //console.log(momentHi, momentHf)
   let diferenciaEnMinutos = momentHf.diff(momentHi, 'minutes');
     let hora =  diferenciaEnMinutos/ 60;
     let min = diferenciaEnMinutos % 60
@@ -123,6 +89,8 @@ export class CocinaComponent implements OnInit {
     this.orders= cards;
     this.total = cards.length;
     this.pageChangeEvent(1)
+
+     //TODO CODIGO DE API
     //this.getAllOrders('pending')
     //  this.orderService.getAllOrder('pending').subscribe({
     //   next: (data: any) => {
@@ -140,6 +108,8 @@ export class CocinaComponent implements OnInit {
     this.orders= cards;
     this.total = cards.length;
     this.pageChangeEvent(1)
+
+     //TODO CODIGO DE API
     //.getAllOrders('delivering')
     // this.orderService.getAllOrder('delivering').subscribe({
     //   next: (data: any) => {
@@ -158,6 +128,8 @@ export class CocinaComponent implements OnInit {
     this.orders= cards;
     this.total = cards.length;
     this.pageChangeEvent(1)
+
+     //TODO CODIGO DE API
     //this.getAllOrders('canceled')
     // this.orderService.getAllOrder('canceled').subscribe({
     //   next: (data: any) => {
@@ -175,6 +147,8 @@ export class CocinaComponent implements OnInit {
     this.orders= cards;
     this.total = cards.length;
     this.pageChangeEvent(1)
+
+     //TODO CODIGO DE API
     //this.getAllOrders('delivered')
     // this.orderService.getAllOrder('delivered').subscribe({
     //   next: (data: any) => {
@@ -189,14 +163,8 @@ export class CocinaComponent implements OnInit {
 getAllOrders(){
   this.orderService.getOrderDemo().subscribe({
     next: (data: any) => {
-      // let item = data.orders;
-      // let cards = item.filter((product: any) => product.status == `${status}`);
-      // this.orders= cards;
-
       this.bdTemporal = data.orders
       this.orderPending()
-      //this.total = cards.length;
-      //this.pageChangeEvent(1)
     }
   })
 }

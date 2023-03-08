@@ -9,12 +9,12 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
   
   constructor(private http: HttpClient, private cookies: CookieService) {}
-  login(user: any ){
+  login(user: object ):Observable<any>{
     return this.http.post("http://localhost:3004/login", user);
   }
   setToken(token: string) {
-    this.cookies.set("token", token);
-    //console.log(token);
+     return this.cookies.set("token", token);
+    
   }
   getToken() {
     return this.cookies.get("token");
@@ -24,9 +24,9 @@ export class AuthService {
   }
   getUser(token : string) {
     const token1 = token
-    //return this.getToken()
      return this.http.get(`http://localhost:3004/users/${token1}`);
    }
+   
    getUserLogged() {
      const token = this.getToken();
      return token

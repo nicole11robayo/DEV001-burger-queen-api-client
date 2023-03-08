@@ -22,31 +22,26 @@ export class MenuComponent implements OnInit{
   }
   
   showProductsDesayuno() {
-    this.llamarDB('desayuno');
-    //toDo codigo para Api
-    // this.productsService.showProducts('desayuno').subscribe({
-    //   next: (data: any) => {
-    //     this.products = data;
-    //     this.total = data.length;
+    this.productsService.showProducts('desayuno').subscribe({
+      next: (data: any) => {
+        this.products = data;
+        this.total = data.length;
        
-    //     this.pageChangeEvent(1)
-    //   }
-    // })
+        this.pageChangeEvent(1)
+      }
+    })
   
   }
 
   showProductsComida() {
-
-    this.llamarDB('comida');
-    //toDo codigo para Api
-    // this.productsService.showProducts('comida').subscribe({
-    //   next: (data: any) => {
-    //     this.products = data;
-    //     this.total = data.length;
+   this.productsService.showProducts('comida').subscribe({
+      next: (data: any) => {
+        this.products = data;
+        this.total = data.length;
        
-    //     this.pageChangeEvent(1)
-    //   }
-    // })
+        this.pageChangeEvent(1)
+      }
+    })
    
   }
 pageChangeEvent(event: number){
@@ -54,27 +49,7 @@ pageChangeEvent(event: number){
    
 
 }
-llamarDB(tipo: string){
-  this.productsService.showAllProducts().subscribe({
-    next: (data: any) => {
-      if(tipo === 'desayuno'){
-        let item = data.products;
-        
-        let desayuno = item.filter((product: any) => product.type == "desayuno");
-        
-        this.products = desayuno;
-        this.total = desayuno.length;
-        this.pageChangeEvent(1)
-      }else{
-        let item = data.products;
-        let comida= item.filter((product: any) => product.type == "comida");
-        this.products = comida;
-        this.total = comida.length;
-        this.pageChangeEvent(1)
-      }
-    }
-  })
-}
+
   @Output() newItemEvent = new EventEmitter<number>();    
   onClickMe(comida: number) {
    
