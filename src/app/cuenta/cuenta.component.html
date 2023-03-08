@@ -1,9 +1,11 @@
 <section class="containerPrincipal">
-<div class="ordenes">
-   <app-menu (newItemEvent)="addItem($event)"></app-menu>
-</div>
+  
 
-<div class="tableCuenta" id="cuentaContenedor">
+<section class="ordenes">
+   <app-menu (newItemEvent)="addItem($event)"></app-menu>
+</section>
+
+<aside class="tableCuenta" id="cuentaContenedor">
   <table class="table table-bordered">
     <tbody>
       <tr>
@@ -24,20 +26,20 @@
             <div class="form-group mb-0">
               <div class="input-group mx-auto mb-0">
                 <div class="number-input">
-                  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"  (click)="valorMas(identificador.value, product.id)"></button>
                   <input class="quantity bg-light" min="1" name="quantity" value='{{product.cant}}' type="number" #identificador>
-                  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus" (click)="valorMas(identificador.value, product.id)"></button>
                 </div>
               </div>
             </div>
           </div>
           
-          <button (click)="valor1(identificador.value, product.id)">OK</button>
+          
          
         </td>
         <td>${{product.price}}</td>
         <td>${{product.price*product.cant}}</td>
-        <td> <button type="button" class="btn btn-danger" (click)="eliminarElementos(product.id)">eliminar</button></td>
+        <td> <button type="button" class="btn btn-danger" (click)="eliminarElDemo(product.id)">eliminar</button></td>
       </tr>
 
       <tr>
@@ -47,10 +49,10 @@
       </tr>
       
       <tr>
-        <td colspan="4"><button (click)="enviarDB()">ENVIAR</button></td>
+        <td colspan="4"><button (click)="enviarDbDemo()">ENVIAR</button></td>
       </tr>
     </tbody>
   </table>
-</div>
+</aside>
 
 </section>

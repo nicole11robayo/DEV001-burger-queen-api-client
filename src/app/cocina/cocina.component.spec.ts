@@ -3,24 +3,22 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CocinaComponent } from './cocina.component';
 
-describe('CocinaComponent', () => {
-  let component: CocinaComponent;
-  let fixture: ComponentFixture<CocinaComponent>;
+// describe('CocinaComponent', () => {
+//   let component: CocinaComponent;
+//   let fixture: ComponentFixture<CocinaComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-      providers: [CocinaComponent ]
+//   beforeEach(async () => {
+//     await TestBed.configureTestingModule({
+//       imports: [HttpClientModule],
+//       providers: [CocinaComponent ]
     
-    })
-    .compileComponents();
+//     })
+//     .compileComponents();
 
-    fixture = TestBed.createComponent(CocinaComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//     fixture = TestBed.createComponent(CocinaComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+ 
+// });

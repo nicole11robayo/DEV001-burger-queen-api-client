@@ -2,7 +2,7 @@ nav {
     background: linear-gradient(120deg, #f6d365 0%, rgba(247, 214, 37, 0.9) 100%);
    /* background-color: #F7D625;*/
     width: 100%;
-
+    position:fixed;
 }
 .logo{
     width: 60%;
@@ -88,6 +88,13 @@ nav {
     background-color: #89ff00;
   }
   
+  .botones button:nth-child(3):before {
+    background-color: #ff00f2;
+  }
+  
+  .botones button:nth-child(3):after {
+    background-color: #00ccff;
+  }
   
   
   .botones button:hover {

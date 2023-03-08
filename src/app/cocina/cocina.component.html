@@ -1,32 +1,94 @@
-<app-navbar></app-navbar>
-<div class="todo">
-  <div *ngFor="let order of orders">
 
-    <div class="card" style="width: 18rem;">
+<section class="cocina">
+  <div class="mnu">
+    <app-navbar></app-navbar>
+  </div>
+    
+  
+  
+  <nav class="menu-order">
+    <ul>
+      <li><button type="button" class="btn btn-outline-warning" (click)="orderPending()">pending</button></li>
+      <li><button type="button" class="btn btn-outline-info" (click)="orderDelivering()">delivering</button></li>
+      <li><button type="button" class="btn btn-outline-success" (click)="orderDelivered()">delivered</button></li>
+      <li><button type="button" class="btn btn-outline-danger" (click)="orderCanceled()">canceled</button></li>
+    </ul>
+  </nav>
+  <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
+  <section class="todo">
+    <div class="cards " *ngFor="let order of orders  | paginate: { itemsPerPage: 6, currentPage: p, totalItems: total}">
+      <figure class="card card--{{order.status}}">
 
-      <div class="card-header">
-        <p>Pedido # {{order.id}}</p>
+        <figcaption class="card__caption">
+          <h1 class="card__name">Pedido # {{order.id}}</h1>
+          <h2 class="card__name">Mesero: {{order.userId}}</h2>
+          <h2 class="card__name">Cliente: {{order.client}}</h2>
+          <div class="card__time" *ngIf="order.status == 'delivered'">
+            <button type="button"  (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
+          </div>
+
+          <h3 class="card__type card__type_{{order.status}}">
+            {{order.status}}
+          </h3>
+
+          <table class="card__stats">
+            <tbody>
+              <tr *ngFor="let item of order.products">
+                <th>{{item.product}}</th>
+                <td>{{item.qty}}</td>
+
+              </tr>
+
+            </tbody>
+          </table>
+
+          <div class="card__abilities">
+            <button type="button" class="btn-eliminar-order" *ngIf="role=='mesero' && order.status == 'pending' " (click)="cambiarStatus(order.id, 'canceled')">
+              <i class='bx bx-x-circle'   ></i>
+
+            </button>
+            <button class="btn-order-check" *ngIf="role=='cocinero' && order.status == 'pending'" (click)="cambiarStatus(order.id, 'delivering')">
+              <i class='bx bxs-check-circle'></i>
+            </button>
+            <button class="btn-order-check"*ngIf="role=='mesero' && order.status == 'delivering'" (click)="cambiarStatus(order.id, 'delivered')" >
+              <i class='bx bxs-check-circle'></i>
+            </button>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+</section>
+<!--<div class="todo">
+  <div >
+
+    <div class="card" style="width: 18rem;" >
+
+      <div class="card-header" id="{{order.status}}">
+        <p>Pedido # {{order.id}}</p> <button type="button" *ngIf="order.status == 'delivered'" (click)= "tiempoOrders(order.dateEntry, order.dateProcessed)"><i class='bx bx-time'></i></button>
         <button type="button" class="btn btn-danger" *ngIf="role=='mesero'" (click)="deleteOrder(order.id)">Eliminar</button>
       </div>
-      <table class="card-table table">
+      <table class="card-table table" >
         <thead>
           <tr>
             <th scope="col">Products</th>
             <th scope="col">Amount</th>
+           
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of order.products">
             <td>{{item.product}}</td>
             <td>{{item.qty}}</td>
+            
           </tr>
 
           <tr>
-            <button type="button" class="btn btn-warning">Finish</button>
-
+            <button type="button" class="btn btn-warning" *ngIf="role=='cocinero'" (click)="cambiarStatus(order.id, 'delivering')">Finish</button>
+            <button type="button" class="btn btn-warning" *ngIf="role=='mesero'" (click)="cambiarStatus(order.id, 'delivered')">Entregado</button>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-</div>
+</div>-->
