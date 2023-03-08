@@ -37,6 +37,23 @@ export class AuthService {
     return this.http.get('https://mocki.io/v1/e33dd6a6-dc7a-4b0a-a5c7-544ba6d0ff31')
    }
 
+   showUsersJson(){
+    return this.http.get(`http://localhost:3004/users`);
+   }
+
+   newUserJson(item:any){
+    return this.http.post(`http://localhost:3004/users`, item);
+  }
+
+  editUserJson(id:any, item:any){
+    return this.http.put(`http://localhost:3004/users/${id}`, item);
+  }
+
+
+   deleteUserJson(id:any){
+    return this.http.delete(`http://localhost:3004/users/${id}`);
+   }
+
    getAllUsers2(){
     return this.http.get('https://api.npoint.io/fb087e778cabace91792')
    }
@@ -50,6 +67,15 @@ export class AuthService {
     item.forEach((item2: any) => {
        orderEl.users.push(item2)
     })
+    return orderEl
+  }
+
+  usersAferDelete(item:any){
+    let orderEl : any = {
+      users: 
+        item
+      
+    }
     return orderEl
   }
 

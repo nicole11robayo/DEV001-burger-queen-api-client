@@ -27,9 +27,9 @@
  
     </div>
     <div mat-dialog-actions>
-      <button mat-raised-button color="warn" mat-dialog-close>Close</button>
-      <button mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='save'" (click)="saveProduct()">save</button>
-      <button mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='editar'" (click)="editProductClick()">editar</button>
+      <button mat-raised-button color="warn" mat-dialog-close>Cancelar</button>
+      <button type="submit" mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='save'" (click)="saveProduct()">Agregar</button>
+      <button type="submit" mat-raised-button color="primary" cdkFocusInitial *ngIf="actionButton=='editar'" (click)="editProduct()">editar</button>
     </div>
 </form> 
 

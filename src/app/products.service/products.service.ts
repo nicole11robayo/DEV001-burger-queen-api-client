@@ -17,6 +17,22 @@ export class ProductsService {
   showProducts(type: string) {
     return this.http.get(`http://localhost:3000/products?type=${type}`);
   }
+
+  showProductsJson(){
+    return this.http.get(`http://localhost:3000/products`);
+  }
+
+  newProductJson(item:any){
+    return this.http.post(`http://localhost:3000/products`, item);
+  }
+
+  editProductJson(id:any, item:any){
+    return this.http.put(`http://localhost:3000/products/${id}`, item);
+  }
+
+  deleteProductJson(id:any){
+    return this.http.delete(`http://localhost:3000/products/${id}`);
+  }
   //all los productos
   showAllProducts(){
     return this.http.get('https://mocki.io/v1/32313748-b4d4-47c9-8cc9-196b03fe0350')

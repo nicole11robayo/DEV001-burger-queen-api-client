@@ -9,7 +9,7 @@
           <li><button type="button" class="btn btn-outline-warning" (click)="showDBProducts()">PRODUCTOS</button></li>
           <li><button type="button" class="btn btn-outline-info" (click)="showDBUsers()">EMPLEADOS</button></li>
           <li><button type="button" class="btn btn-primary" *ngIf="estado=='products'" (click)="openDialog('')">Añadir Producto +</button></li>
-          <li><button type="button" class="btn btn-primary"*ngIf="estado=='users'" (click)="openDialogUser()">Añadir Empleado +</button></li>
+          <li><button type="button" class="btn btn-primary"*ngIf="estado=='users'" (click)="openDialogUser('')">Añadir Empleado +</button></li>
         </ul>
     </nav>
     <table class="table" *ngIf="estado == 'products'">
@@ -52,8 +52,8 @@
             <td>{{user.email}}</td>
             <td>{{user.rol}}</td>
             <td>
-                <button type="button" class="btn btn-outline-info" >Editar</button>
-                <button type="button" class="btn btn-outline-danger">Eliminar</button>
+                <button type="button" class="btn btn-outline-info" (click)="openDialogUser(user.id)">Editar</button>
+                <button type="button" class="btn btn-outline-danger" (click)="deleteUser(user.id)">Eliminar</button>
             </td>
           </tr>
         </tbody>

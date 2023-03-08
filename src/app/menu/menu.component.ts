@@ -58,9 +58,8 @@ export class MenuComponent implements OnInit{
   }
 pageChangeEvent(event: number){
     this.p = event;
-   
-
 }
+
 llamarDB(tipo: string){
   this.productsService.showAllProducts().subscribe({
     next: (data: any) => {
