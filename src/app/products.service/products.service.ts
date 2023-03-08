@@ -10,57 +10,97 @@ export class ProductsService {
   isMesero = false;
 
 
-  constructor(private http: HttpClient ,private authService: AuthService) {}
-  idProductNew =  this.authService.getToken();
-  showProducts() {
-    return this.http.get('http://localhost:3000/products');
+  constructor(private http: HttpClient, private authService: AuthService) { }
+  idProductNew = this.authService.getToken();
+
+  showProducts(type: string) {
+    return this.http.get(`https://my-json-server.typicode.com/khammylv/bdProducts/products?type=${type}`);
   }
 
   getProduct(id: number) {
-    return this.http.get(`http://localhost:3000/products/${id}`);
-  }
-  getArrayProducts() {
-    return this.productsArray;
+    return this.http.get(`https://my-json-server.typicode.com/khammylv/bdProducts/products/${id}`);
   }
 
-  getProductClick(id: number) {
-    let producto = '';
-   
-    this.getProduct(id).subscribe((product) => {
-    let item = this.objetoNew(this.crearObjeto(product));
-    console.log(item);
-      this.getProductItem(item).subscribe({
-        next: (data) => {
-          console.log(data);
-          producto = 'agregado';
-        },
-        error: (error) => {
-          producto = 'error';
-        },
-      });
-     });
-    return producto;
+  showProductsJson() {
+    return this.http.get(`http://localhost:3000/products`);
   }
-  getProductClick2(id: number, item: any) {
-    
-    let producto = '';
-    this.getProduct(id).subscribe((product) => {
-      let item2 = this.agregarItem(this.crearObjeto(product), item);
-      this.getProductItem2(item2).subscribe({
-        next: (data) => {
-          producto = 'agregado';
-        },
-        error: (error) => {
-          producto = 'error';
-        },
-      });
-      //console.log(item2)
-    });
-    return producto;
+
+  getProductJson(id: number) {
+    return this.http.get(`http://localhost:3000/products/${id}`);
+  }
+
+  newProductJson(item: any) {
+    return this.http.post(`http://localhost:3000/products`, item);
+  }
+
+  editProductJson(id: any, item: any) {
+    return this.http.put(`http://localhost:3000/products/${id}`, item);
+  }
+
+  deleteProductJson(id: any) {
+    return this.http.delete(`http://localhost:3000/products/${id}`);
+  }
+
+  getAllProducts() {
+    return this.http.get('https://api.npoint.io/13831094a52f73187288');
+  }
+
+  getProductDemo(id: number) {
+    return this.http.get(`https://api.npoint.io/13831094a52f73187288/products/${id}`);
+  }
+
+  setProductDemo(item: any) {
+    return this.http.post(`https://api.npoint.io/13831094a52f73187288`, item)
+  }
+
+  productsAferDelete(item: any) {
+    let orderEl: any = {
+      products:
+        item
+
+    }
+    return orderEl
+  }
+
+  crearProductMul(item: any, item1: any) {
+    let orderEl: any = {
+      products: [
+        item1
+      ]
+    }
+    item.forEach((item2: any) => {
+      orderEl.products.push(item2)
+    })
+    return orderEl
+  }
+
+
+  elementosEditados(item: any, numero: string) {
+    let objetoNuevo = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      type: item.type,
+      dateEntry: item.dateEntry,
+      cant: numero,
+    };
+
+    return objetoNuevo;
+  }
+
+  filter(item: any, id: number) {
+    let filterId = item.filter((product: any) => product.id == id);
+    return filterId;
+  }
+  filter2(item: any, id: number) {
+    let filterId = item.filter((product: any) => product.id != id);
+    return filterId;
   }
   objetoNew(item: any) {
     let objetoEditar = {
       id: this.idProductNew,
+
       pedido: [item]
     };
     return objetoEditar;
@@ -68,6 +108,7 @@ export class ProductsService {
   agregarItem(item: any, item2: any) {
     let objetoEditar = {
       id: this.idProductNew,
+
       pedido: [item]
     };
     objetoEditar.pedido.push();
@@ -87,18 +128,10 @@ export class ProductsService {
 
     return objetoEditar;
   }
-  getProductItem2(item: any): Observable<any> {
-    return this.http.put(`http://localhost:3000/productsTemporal/${this.idProductNew}`, item);
-  }
-  getProductItem(item: any): Observable<any> {
-    return this.http.post('http://localhost:3000/productsTemporal', item);
-    
-  }
-  setProductItem(): Observable<any> {
-    return this.http.get(`http://localhost:3000/productsTemporal/${this.idProductNew}`, );
-    
-  }
+
+
   crearObjeto(item: any) {
+
     let objetoNuevo = {
       id: item.id,
       name: item.name,
@@ -111,17 +144,6 @@ export class ProductsService {
 
     return objetoNuevo;
   }
-
-  showProducts2() {
-    return this.http.get('http://localhost:3000/productsTemporal');
-  }
-
-  deleteAll() {
-    return this.http.delete(`http://localhost:3000/productsTemporal/${this.idProductNew}`);
-  }
-
-  addItemNew(id: number) {}
-
   getrole() {
     return sessionStorage.getItem('role') != null
       ? sessionStorage.getItem('role')?.toString()
@@ -139,4 +161,6 @@ export class ProductsService {
 
     return this.isMesero;
   }
+
+
 }

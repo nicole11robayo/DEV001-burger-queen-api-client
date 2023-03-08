@@ -1,19 +1,39 @@
 .containerPrincipal{
   display: flex;
-  width: 80%;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   
+  
+  flex-wrap: wrap;
+}
+
+.title{
+  font-weight: bold;
 }
 .ordenes{
-  width: 60%;
-  height: 90%;
-  overflow: scroll;
-}
-#cuentaContenedor{
-  width: 40%;
+  width: 32%;
   height: 100%;
- 
+  overflow: scroll;
+  
 }
+.ordenes::-webkit-scrollbar{
+  display: none;
+  
+} 
+  
+
+
+#cuentaContenedor{
+  width: 68%;
+  height: 100%;
+  overflow: scroll;
+  
+}
+
+#cuentaContenedor::-webkit-scrollbar{
+  display: none;
+  
+} 
 /* #botonCantidad{
     display:none;
 }
@@ -106,4 +126,25 @@ input[type=number]::-webkit-outer-spin-button {
 .number-input{
     border: solid #c2c4c6;
     border-width:2px;
+}
+
+@media only screen and (min-width: 1200px){
+  .ordenes{
+    width: 40%;
+    height: 100%;
+    overflow: scroll;
+    margin-right: 15px;
+    
+  }
+
+  
+  
+  #cuentaContenedor{
+    width: 55%;
+    height: 100%;
+    overflow: scroll;
+    
+  }
+
+  
 }

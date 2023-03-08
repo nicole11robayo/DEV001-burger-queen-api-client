@@ -13,80 +13,58 @@ export class CuentaComponent implements OnInit {
   valor: string = '';
   id: string = '';
 
-  constructor(private productsService: ProductsService, private orderService : OrdersService) {}
+  constructor(
+    private productsService: ProductsService,
+    private orderService: OrdersService
+  ) {}
 
- 
   productsPedido: any = [];
 
   localArray: object[] = [];
   objetoelem: any = [];
+  objetoelemDemo: any = [];
   arrayOrder: any = [];
   total: number = 0;
-  nombreCliente :any = '';
+  nombreCliente: any = '';
   ngOnInit() {
-    this.productsService.getCliente()
+    this.productsService.getCliente();
     this.arrayItem();
     this.mostrarProduct();
-    if(this.productsService.getCliente() != undefined){
-      this.nombreCliente = this.productsService.getCliente();    
+
+    if (this.productsService.getCliente() != undefined) {
+      this.nombreCliente = this.productsService.getCliente();
     }
-    // const date = moment();
-    // const ahora = date.format('YYYY-MM-DD hh:mm:ss');
-    // console.log(ahora);
-    // let hi = '2023-02-20 08:26:42';
-    // let hf = '2023-02-20 09:32:41';
-    // const momentHi = moment(hi);
-    // const momentHf = moment(hf);
-    // let diferenciaEnMinutos = momentHf.diff(momentHi, 'minutes');
-
-    // console.log(diferenciaEnMinutos);
-
+    localStorage.setItem('product', JSON.stringify(this.objetoelemDemo));
+    let local = JSON.parse(sessionStorage.getItem('products')!);
    
   }
   mostrarProduct() {
-    this.productsService.showProducts2().subscribe({
-      next: (data: any) => {
-        data.forEach((product: any) => {
-          this.productsPedido = product.pedido;
-          this.total = this.productsPedido.reduce(
-            (acc: any, obj: any) => acc + obj.price * obj.cant,
-            0
-          );
-          console.log('Total: ', this.total);
-        });
-      },
-    });
+    let local = JSON.parse(sessionStorage.getItem('products')!);
+    this.productsPedido = local.pedido;
+    this.total = this.productsPedido.reduce(
+      (acc: any, obj: any) => acc + obj.price * obj.cant,
+      0
+    );
+ 
   }
   addItem(newItem: number) {
-    this.arrayItem();
     this.agregarElemento(newItem);
     this.mostrarProduct();
+    this.arrayItem();
   }
-
-  valor1(numero: string, id: number) {
- 
-    this.productsService.showProducts2().subscribe({
-      next: (data: any) => {
-        data.forEach((datos: any) => {
-          let edit: never[] = [];
-          this.filter(datos.pedido, id).forEach((datos2: any) => {
-            return (edit = datos2);
-          });
-        
-
-          this.elementosEditados(edit, numero);
-          let itemEl = this.productsService.agregarItem(
-            this.elementosEditados(edit, numero),
-            this.filter2(datos.pedido, id)
-          );
-          this.productsService.getProductItem2(itemEl).subscribe((data) => {
-            console.log('cambios agregados');
-            this.mostrarProduct();
-          });
-         
-        });
-      },
+  valorMas(numero: string, id: number) {
+    let local = JSON.parse(sessionStorage.getItem('products')!);
+    let edit: never[] = [];
+    this.productsService.filter(local.pedido, id).forEach((datos2: any) => {
+      return (edit = datos2);
     });
+    this.productsService.elementosEditados(edit, numero);
+    let itemEl = this.productsService.agregarItem(
+      this.productsService.elementosEditados(edit, numero),
+      this.productsService.filter2(local.pedido, id)
+    );
+
+    sessionStorage.setItem('products', JSON.stringify(itemEl));
     this.mostrarProduct();
   }
 
@@ -95,203 +73,165 @@ export class CuentaComponent implements OnInit {
     return cantidadNumber * precio;
   }
 
-  elementosEditados(item: any, numero: string) {
-    let objetoNuevo = {
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      image: item.image,
-      type: item.type,
-      dateEntry: item.dateEntry,
-      cant: numero,
-    };
+ 
+  enviarDbDemo() {
+    if (this.nombreCliente === '') {
+      Swal.fire('Bad job!', 'agrega un nombre!', 'warning');
+    } else {
+      let orderProduct: any[] = [];
+      let data = JSON.parse(sessionStorage.getItem('products')!);
+      data.pedido.forEach((product: any) => {
+        let productos = {
+          product: product.name,
+          qty: product.cant,
+        };
 
-    return objetoNuevo;
-  }
-  enviarDB() {
-    if(this.nombreCliente === ''){
-      Swal.fire(
-        'Bad job!',
-        'agrega un nombre!',
-        'warning'
-      )
-      
-    }else{
-      let orderProduct: any[] =[
-       
-      ]
-      this.productsService.setProductItem().subscribe( {
+        orderProduct.push(productos);
+      });
+      const dataOrder = this.orderService.crearOrder(
+        orderProduct,
+        this.nombreCliente
+      );
+
+      let orderEl: any = {
+        orders: [dataOrder],
+      };
+      console.log(orderEl);
+      this.orderService.getOrderDemo().subscribe({
         next: (data: any) => {
-          data.pedido.forEach((datos: any) => {
-           
-            let productos ={
-              product: datos.name,
-              qty : datos.cant
-            }
-            orderProduct.push(productos)
-            
-            
-           })
-           const dataOrder = this.orderService.crearOrder(orderProduct)
-           console.log(dataOrder)
-          
-           this.crearOrden(dataOrder)
-           this.limpiarPantalla();
-           
-        }
-        
-        
-      })
-     
-  
+          if (data.orders === undefined) {
+            this.crearOrderDemo(orderEl);
+
+            this.productsPedido = [];
+            this.nombreCliente = '';
+            this.total = 0;
+            this.objetoelem = [];
+            this.objetoelemDemo = [];
+            sessionStorage.removeItem('cliente');
+            sessionStorage.removeItem('products');
+          } else {
+            const ordenMul = this.crearOrdenMul(data.orders, dataOrder);
+            this.crearOrderDemo(ordenMul);
+            this.productsPedido = [];
+            this.nombreCliente = '';
+            this.total = 0;
+            this.objetoelem = [];
+            this.objetoelemDemo = [];
+            sessionStorage.removeItem('cliente');
+            sessionStorage.removeItem('products');
+          }
+        },
+      });
     }
-   
-    
+  }
+  crearOrdenMul(item: any, item1: any) {
+    let orderEl: any = {
+      orders: [item1],
+    };
+    item.forEach((item2: any) => {
+      orderEl.orders.push(item2);
+    });
+    return orderEl;
   }
   crearOrden(item: any) {
-     this.orderService.getOrderItem(item).subscribe({
+    this.orderService.getOrderItem(item).subscribe({
       next: (data: any) => {
-      
-        Swal.fire(
-          'Good job!',
-          'You clicked the button!',
-          'success'
-        )
-        
+        Swal.fire('Pedido enviado con éxito!', 'Podrás ver el estado de tu orden en pedidos!', 'success');
       },
       error: (error) => {
-        Swal.fire(
-          'Good job!',
-          'You clicked the button!',
-          'error'
-        )
-       
-      }
-    })
-    
+        Swal.fire('Error!', 'No se ha podido enviar tu orden!', 'error');
+      },
+    });
+  }
+
+  crearOrderDemo(item: any) {
+    this.orderService.setOrderDemo(item).subscribe({
+      next: (data: any) => {
+        Swal.fire('Pedido enviado con éxito!', 'Podrás ver el estado de tu orden en pedidos!', 'success');
+      },
+      error: (error) => {
+        Swal.fire('Error!', 'No se ha podido enviar tu orden!', 'error');
+      },
+    });
   }
   arrayItem() {
-    this.productsService.showProducts2().subscribe({
-      next: (data: any) => {
-        data.forEach((datos: any) => {
-          datos.pedido.forEach((el: any) => {
-            this.objetoelem.push(el.id);
-          });
-        });
-      },
+    let local = JSON.parse(sessionStorage.getItem('products')!);
+    local.pedido.forEach((item: any) => {
+      this.objetoelem.push(item.id);
     });
   }
+
   agregarElemento(id: number) {
-    let array3: any[] = [];
-    this.productsService.showProducts2().subscribe({
+    let local = JSON.parse(sessionStorage.getItem('products')!);
+    this.productsService.getProduct(id).subscribe({
       next: (data: any) => {
-        if (data.length == 0) {
-          this.productsService.getProductClick(id);
+        if (local === null) {
+          const product = this.productsService.objetoNew(
+            this.productsService.crearObjeto(data)
+          );
+          console.log(product);
+          sessionStorage.setItem('products', JSON.stringify(product));
           this.mostrarProduct();
         } else {
-          data.forEach((datos: any) => {
-            if (this.objetoelem.includes(id)) {
-              console.log(this.objetoelem.includes(id));
-              this.mostrarProduct();
-              console.log('el producto ya existe');
-            } else {
-              console.log('en el else');
-              console.log(this.objetoelem.includes(id));
-              this.productsService.getProductClick2(id, datos.pedido);
-              datos.pedido.forEach((data: any) => {
-                this.productsService.getProductClick2(id, data);
-                this.mostrarProduct();
-              });
-              this.mostrarProduct();
-            }
+          if (this.objetoelem.includes(id)) {
+            Swal.fire('Error!', 'El producto ya existe', 'error');
+          }else{
+            const item3 = local.pedido;
+            let item2 = this.productsService.agregarItem(
+              this.productsService.crearObjeto(data),
+              item3
+            );
+            console.log(item2);
+            sessionStorage.setItem('products', JSON.stringify(item2));
             this.mostrarProduct();
-          });
-          this.mostrarProduct();
+          }
+         
         }
-        this.mostrarProduct();
-      },
-      error: (error) => {
-        console.log(error);
       },
     });
   }
-  eliminarElementos(id: number) {
+
+ 
+  eliminarElDemo(id: number) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Estás seguro?',
+      text: "No podrás revertir esta acción!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productsService.showProducts2().subscribe({
-          next: (data: any) => {
-            data.forEach((datos: any) => {
-              const filter = this.filter2(datos.pedido, id);
-              const pedido = this.productsService.eliminarItem(filter);
-              this.productsService.getProductItem2(pedido).subscribe({
-                next: () => {
-                  Swal.fire(
-                    'Deleted!',
-                    `Your file has been deleted. ${id}`,
-                    'success'
-                  );
-                  this.mostrarProduct();
-                  this.objetoelem = [];
-                  //this.arrayItem();
-                },
-               
-              });
-            });
-          },
-        });
-       
+        let data = JSON.parse(sessionStorage.getItem('products')!);
+        const filter = this.productsService.filter2(data.pedido, id);
+        const pedido = this.productsService.eliminarItem(filter);
+        sessionStorage.setItem('products', JSON.stringify(pedido));
+        this.mostrarProduct();
+
+        Swal.fire('Eliminado!', `Producto eliminado`, 'success');
+        this.mostrarProduct();
+        this.objetoelem = [];
+        this.objetoelemDemo = [];
+        this.arrayItem();
       }
     });
   }
-  
-   agregarUsuario() {
+  agregarUsuario() {
     Swal.fire({
-        title: "Tu nombre",
-        input: "text",
-        showCancelButton: true,
-        confirmButtonText: "Guardar",
-        cancelButtonText: "Cancelar",
-        
-    })
-    .then(resultado => {
-        if (resultado.value) {
-            
-            let nombre = resultado.value;
-            sessionStorage.setItem('cliente', nombre );
-            Swal.fire('Nombre agregado exitosamente' + nombre);
-            this.productsService.getCliente();
-            this.nombreCliente = this.productsService.getCliente();
-        }
+      title: 'Nombre cliente',
+      input: 'text',
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+    }).then((resultado) => {
+      if (resultado.value) {
+        let nombre = resultado.value;
+        sessionStorage.setItem('cliente', nombre);
+        this.productsService.getCliente();
+        this.nombreCliente = this.productsService.getCliente();
+      }
     });
-    
-  }
-  limpiarPantalla(){
-   
-      this.productsService.productsArray = []
-      this.productsService.deleteAll().subscribe({
-        next : () => {
-          this.productsPedido = [];
-          this.nombreCliente = '';
-          this.total = 0;
-          sessionStorage.removeItem('cliente');
-        }
-      })
-     
-  }
-  filter(item: any, id: number) {
-    let filterId = item.filter((product: any) => product.id == id);
-    return filterId;
-  }
-  filter2(item: any, id: number) {
-    let filterId = item.filter((product: any) => product.id != id);
-    return filterId;
   }
 }
